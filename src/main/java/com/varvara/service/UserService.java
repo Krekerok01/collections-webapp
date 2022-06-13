@@ -8,6 +8,9 @@ import com.varvara.repository.RoleRepository;
 import com.varvara.repository.UserRepository;
 import com.varvara.user.CrmUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,20 +18,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
 	private RoleRepository roleRepository;
-
-	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-
+	@Autowired
+	public UserService(@Lazy UserRepository userRepository, @Lazy RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@Transactional
 	public User findByUsername(String username) {
@@ -38,7 +42,7 @@ public class UserService implements org.springframework.security.core.userdetail
 
 			throw new UsernameNotFoundException("User Not Found");
 		}
-		// passwordEncoder.matches("123", user.get().getPassword());
+
 		User user1 = user.get();
 
 		return user1;
@@ -86,20 +90,34 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
+//	@Override
+//	//@Transactional
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		Optional<User> user = userRepository.findByUsername(username);
+//
+//		if(!user.isPresent()) {
+//
+//			throw new UsernameNotFoundException("User Not Found");
+//		}
+//
+//		User user1 = user.get();
+//		return user1;
+//	}
+
 	@Override
-	//@Transactional
+	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> user = userRepository.findByUsername(username);
-
-		if(!user.isPresent()) {
-
-			throw new UsernameNotFoundException("User Not Found");
+		User user = userRepository.findByUsername(username).get();
+		if (user == null) {
+			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-
-		User user1 = user.get();
-		return user1;
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				mapRolesToAuthorities(user.getRoles()));
 	}
 
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
 
 }
 
