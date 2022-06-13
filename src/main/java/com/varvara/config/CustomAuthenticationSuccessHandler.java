@@ -42,6 +42,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		User theUser = userService.findByUsername(userName);
 		authenticationUserId = theUser.getId();
 
+		//System.out.println("*** Roles: " + theUser.getRoles().toString());
+
 
 		HttpSession session = request.getSession();
 		session.setAttribute("user", theUser);

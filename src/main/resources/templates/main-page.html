@@ -40,7 +40,7 @@
         </div>
 
         <div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
-            <button class="button">Page for Administration</button>
+            <button onclick="window.location.href='users/list'" class="button">Page for Administration</button>
         </div>
 
 

@@ -8,9 +8,28 @@
         rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
         crossorigin="anonymous">
 
-    <title>Title</title>
+    <title>Users List</title>
 </head>
 <body>
+
+<div class="links">
+    <a th:href="@{/}" class="btn btn-outline-primary btn-sm mb-3">
+        Back to main page
+    </a>
+</div>
+
+<form action="#" th:action="@{/logout}"
+      method="POST">
+
+    <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+
+</form>
+
+<h3>User Directory</h3>
+
+
+
+
 
   <table class="table table-bordered table-striped" >
     <thead class="thead-dark">
@@ -19,6 +38,7 @@
         <th>Last Name</th>
         <th>Email</th>
         <th>Status</th>
+        <th />
     </tr>
   </thead>
 
@@ -27,7 +47,29 @@
         <td th:text="${user.firstName}" />
         <td th:text="${user.lastName}" />
         <td th:text="${user.email}" />
-        <td th:text="${user.age}" />
+        <td th:text="${user.status}" />
+
+        <td>
+
+            <a th:href="@{deleteUser(userId=${user.id})}"
+               class="btn btn-danger btn-sm"
+               onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false" >
+                Delete
+            </a>
+
+            <a th:href="@{blockUser(username=${user.username})}"
+               class="btn btn-secondary btn-sm"
+            >
+                Block
+            </a>
+
+            <a th:href="@{unblockUser(username=${user.username})}"
+               class="btn btn-success btn-sm"
+            >
+                Unblock
+            </a>
+
+        </td>
 
     </tr>
   </tbody>
