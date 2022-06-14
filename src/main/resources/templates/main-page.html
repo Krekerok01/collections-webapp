@@ -36,7 +36,7 @@
 <div class="header">
 
         <div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
-            <button  class="button">Page for authorized users</button>
+            <button onclick="window.location.href='user/info'" class="button">Your page</button>
         </div>
 
         <div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
