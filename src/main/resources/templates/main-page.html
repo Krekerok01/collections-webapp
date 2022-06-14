@@ -17,54 +17,106 @@
         .login {
             position: absolute;
             top: 15px;
+            right: 20px;
+            line-height: 1px;
+        }
+
+
+
+         .registration {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            line-height: 1px;
+        }
+
+
+         .pageForAdministration {
+            position: absolute;
+            top: 30px;
+            right: 250px;
+            line-height: 1px;
+        }
+
+        .yourPageButton {
+            position: absolute;
+            top: 30px;
+            right: 125px;
+            line-height: 1px;
+        }
+
+         .logout {
+            position: absolute;
+            top: 15px;
             right: 15px;
             line-height: 1px;
         }
 
-         .registration {
+        .centralInformation {
             position: absolute;
-            top: 50px;
-            right: 15px;
-            line-height: 1px;
+            top: 100px;
+
         }
+
+        .hr-double {
+	       margin: 100px 0;
+	       padding: 0;
+	       height: 0;
+	       border: none;
+	       border-top: 2px solid #C4D9F5;
+	       border-bottom: 2px solid #330D64;
+        }
+
+        .header-text {
+             position: absolute;
+             top: 20px;
+             left: 500px;
+        }
+
+
     </style>
 </head>
 <body>
 
 
-
+<div>
 <div class="header">
 
-        <div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
-            <button onclick="window.location.href='user/info'" class="button">Your page</button>
+        <div sec:authorize="hasRole('ROLE_USER')" class="yourPageButton">
+            <button onclick="window.location.href='user/info'" class="btn btn-primary btn-sm mb-3">Your page</button>
         </div>
 
-        <div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
-            <button onclick="window.location.href='users/list'" class="button">Page for Administration</button>
+        <div sec:authorize="hasRole('ROLE_ADMIN')" class="pageForAdministration">
+            <button onclick="window.location.href='users/list'" class="btn btn-primary btn-sm mb-3">Page for Administration</button>
         </div>
 
 
-        <div style="margin-left: 600px;">
-            <h1 class="main">The world of collections</h1>
-
-            <sec:authorize access="isAuthenticated()">
-                <form action="#" th:action="@{/logout}"
-                      method="POST">
-
-                    <input type="submit" value="Logout" class="logout_button" />
-                </form>
-            </sec:authorize>
+        <div sec:authorize="isAuthenticated()" class="logout">
+            <form action="#" th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+            </form>
         </div>
 
-        <div class="login">
+
+        <div sec:authorize="isAnonymous()" class="login">
             <button onclick="window.location.href='login'" class="btn btn-primary btn-sm mb-3">Login</button>
         </div>
 
-        <div class="registration">
+        <div sec:authorize="isAnonymous()" class="registration">
             <button onclick="window.location.href='register/registration'" class="btn btn-primary btn-sm mb-3">Registration</button>
         </div>
 
+       <h1 class="header-text">The world of collections</h1>
 
+
+</div>
+</div>
+
+<hr class="hr-double">
+
+<div class="centralInformation">
+
+    <h1>MAIN PAGE</h1>
 </div>
 
 
@@ -72,7 +124,6 @@
 
 
 
-<h1>MAIN PAGE</h1>
 
 </body>
 </html>
