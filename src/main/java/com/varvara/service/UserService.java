@@ -90,19 +90,6 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
-//	@Override
-//	//@Transactional
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		Optional<User> user = userRepository.findByUsername(username);
-//
-//		if(!user.isPresent()) {
-//
-//			throw new UsernameNotFoundException("User Not Found");
-//		}
-//
-//		User user1 = user.get();
-//		return user1;
-//	}
 
 	@Override
 	@Transactional
@@ -117,6 +104,20 @@ public class UserService implements org.springframework.security.core.userdetail
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
+
+	@Transactional
+	public Role findRoleByName(String name) {
+
+		Optional<Role> role = roleRepository.findRoleByName(name);
+
+		if(!role.isPresent()) {
+
+			throw new UsernameNotFoundException("Role Not Found");
+		}
+
+
+		return role.get();
 	}
 
 }

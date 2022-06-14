@@ -1,6 +1,7 @@
 package com.varvara.controller;
 
 
+import com.varvara.entity.Role;
 import com.varvara.entity.User;
 import com.varvara.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserId;
@@ -21,6 +23,7 @@ import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticati
 public class AdminController {
 
     private UserService userService;
+
 
     @Autowired
     public AdminController(@Lazy UserService userService) {
@@ -77,5 +80,42 @@ public class AdminController {
         userService.saveUser(user);
         return "redirect:/users/list";
     }
+
+    @GetMapping("/addToAdmins")
+    public String addToAdmins(@RequestParam("username") String username){
+
+        User user = userService.findByUsername(username);
+
+        List<Role> roles = (List<Role>) user.getRoles();
+        if (roles.size() == 1){
+            Role role = userService.findRoleByName("ROLE_ADMIN");
+            roles.add(role);
+        }
+
+        user.setRoles(roles);
+
+        userService.saveUser(user);
+        return "redirect:/users/list";
+    }
+
+
+    @GetMapping("/removeFromAdmins")
+    public String removeFromAdmins(@RequestParam("username") String username){
+
+        User user = userService.findByUsername(username);
+
+        List<Role> roles = new ArrayList<>();
+
+        Role role = userService.findRoleByName("ROLE_USER");
+        roles.add(role);
+
+        user.setRoles(roles);
+
+
+        userService.saveUser(user);
+        return "redirect:/users/list";
+    }
+
+
 
 }

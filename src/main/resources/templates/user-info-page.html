@@ -9,6 +9,13 @@
           crossorigin="anonymous">
 
     <title>Info</title>
+
+    <style>
+        body {
+             background: #B9D6ED;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -16,7 +23,7 @@
 
 <form action="#" th:object="${user}" method="get">
 
-   <h1 th:text="*{firstName}" />
+   <h1 th:text="*{username}" />
 
 
     <table>
@@ -34,7 +41,7 @@
             <td th:text="*{firstName}" />
             <td th:text="*{lastName}" />
             <td th:text="*{email}" />
-            <td th:text="*{roles}" />
+            <td th:text="${rolesString}" />
         </tr>
         </tbody>
 
