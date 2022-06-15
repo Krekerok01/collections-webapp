@@ -2,7 +2,7 @@ package com.varvara.controller;
 
 
 import com.varvara.service.UserService;
-import com.varvara.user.CrmUser;
+import com.varvara.dto.CrmUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

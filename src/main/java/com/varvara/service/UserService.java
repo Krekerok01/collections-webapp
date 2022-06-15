@@ -6,7 +6,7 @@ import com.varvara.entity.Role;
 import com.varvara.entity.User;
 import com.varvara.repository.RoleRepository;
 import com.varvara.repository.UserRepository;
-import com.varvara.user.CrmUser;
+import com.varvara.dto.CrmUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
