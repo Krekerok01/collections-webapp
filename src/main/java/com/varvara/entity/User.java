@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -50,10 +49,14 @@ public class User implements UserDetails {
 	@JoinTable(name = "users_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Collection<Role> roles;
+	private java.util.Collection<Role> roles;
 
 
-
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(name = "users_collections",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "collection_id"))
+	private List<Collection> collections;
 
 
 
@@ -70,7 +73,7 @@ public class User implements UserDetails {
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public java.util.Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
 	}
 

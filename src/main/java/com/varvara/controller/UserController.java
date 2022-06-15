@@ -1,14 +1,20 @@
 package com.varvara.controller;
 
+import com.varvara.entity.Collection;
 import com.varvara.entity.Role;
 import com.varvara.entity.User;
+import com.varvara.service.CollectionService;
 import com.varvara.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
@@ -19,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CollectionService collectionService;
 
     @GetMapping("/info")
     public String showInfoPage(Model model){
@@ -37,6 +46,27 @@ public class UserController {
 
         model.addAttribute("rolesString", rolesString);
 
+        List<Collection> collections = user.getCollections();
+        model.addAttribute("collections", collections);
+
         return "user-info-page";
+    }
+
+
+    @GetMapping("/showFormForAddCollection")
+    public String showFormForAddCollection(Model model){
+
+        Collection collection = new Collection();
+
+        model.addAttribute("collection", collection);
+
+        return "collection-add-form";
+    }
+
+    @PostMapping("/saveCollection")
+    public String saveCollection(@ModelAttribute("collection") Collection collection){
+        collectionService.save(collection);
+
+        return "redirect:/user/info";
     }
 }

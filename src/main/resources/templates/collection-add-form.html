@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+
+    <h3>Collection Directory</h3>
+    <hr>
+
+    <p class="h4 mb-4">Add new Collection</p>
+
+    <form action="#" th:action="@{saveCollection}"
+          th:object="${collection}" method="POST">
+
+        <!-- Add a hidden form field to handle update  -->
+        <input type="hidden" th:field="*{id}" />
+
+        Collection name:
+        <input type="text" th:field="*{name}"
+               class="form-control mb-4 col-4" placeholder="Collection name" />
+
+
+
+        Theme:
+        <input type="text" th:field="*{theme}"
+               class="form-control mb-4 col-4" placeholder="Theme" />
+
+
+        Description:
+        <input type="text" th:field="*{description}"
+               class="form-control mb-4 col-4" placeholder="Description" />
+
+
+
+        Image URL:
+        <input type="text" th:field="*{imageUrl}"
+               class="form-control mb-4 col-4" placeholder="Image URL" />
+
+
+
+        <br><br>
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+
+    <hr>
+
+
+</div>
+
+</body>
+</html>
