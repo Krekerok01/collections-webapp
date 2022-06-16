@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+<div class="container">
+
+    <p class="h4 mb-4">Add New Item: </p>
+
+    <form action="#" th:action="@{saveItem}"
+          th:object="${item}" method="POST">
+
+        <!-- Add a hidden form field to handle update  -->
+        <input type="hidden" th:field="*{id}" />
+
+
+        <input type="text" th:field="*{name}"
+               class="form-control mb-4 col-4" placeholder="Collection name" />
+
+
+
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+
+
+
+
+</div>
+
+
+
+</body>
+</html>

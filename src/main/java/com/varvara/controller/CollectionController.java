@@ -1,6 +1,7 @@
 package com.varvara.controller;
 
 import com.varvara.entity.Collection;
+import com.varvara.entity.Item;
 import com.varvara.entity.User;
 import com.varvara.service.CollectionServiceImpl;
 import com.varvara.service.UserService;
@@ -18,6 +19,8 @@ import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticati
 @Controller
 @RequestMapping("user")
 public class CollectionController {
+
+    private Collection collection;
 
     @Autowired
     private UserService userService;
@@ -53,11 +56,36 @@ public class CollectionController {
     }
 
     @GetMapping("/addItem")
-    public String addItem(@RequestParam("collectionId") int collectionId){
+    public String addItem(@RequestParam("collectionId") int collectionId, Model model){
 
-        Collection collection = collectionService.getCollectionById(collectionId);
+        collection = collectionService.getCollectionById(collectionId);
+        Item item = new Item();
+
+        model.addAttribute("collection", collection);
+        model.addAttribute("item", item);
+
 
         return "item-add-form";
+    }
+
+    @PostMapping("/saveItem")
+    public String saveItem(@ModelAttribute("item") Item item){
+
+
+        System.out.println("Collection: " + collection);
+        List<Item> items = collection.getItems();
+        items.add(item);
+        collection.setItems(items);
+
+        System.out.println(item.toString());
+        System.out.println("items: " + items);
+
+        collectionService.saveCollection(collection);
+
+        System.out.println("Collection: " + collection);
+
+        return "redirect:/user/info";
+
     }
 
 }
