@@ -5,24 +5,25 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Data
 public class CrmUser {
 
-	@NotBlank(message = "Required field")
+	@NotBlank(message = "is required field")
 	private String username;
 
-	@NotBlank(message = "Required field")
+	@NotBlank(message = "is required field")
 	private String password;
 
-	@NotBlank(message = "Required field")
+	@NotBlank(message = "is required field")
 	private String firstName;
 
-	@NotBlank(message = "Required field")
+	@NotBlank(message = "is required field")
 	private String lastName;
 
-	@NotBlank
-	@Email(regexp = "[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]+", message = "It must be a valid email and end with 'gmail.com'")
+	@NotBlank(message = "is required field")
+	@Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
 	private String email;
 
 	public CrmUser() {

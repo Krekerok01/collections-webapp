@@ -32,11 +32,9 @@ public class RegistrationController {
 	}
 
 	@PostMapping("/processRegistrationForm")
-	public String processRegistrationForm(@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, Model theModel,  BindingResult result) {
+	public String processRegistrationForm(@ModelAttribute("crmUser") @Valid CrmUser theCrmUser, BindingResult result, Model theModel) {
 
-		//???
 		if (result.hasErrors()){
-			System.out.println("ERR");
 			return "registration";
 		}
 
