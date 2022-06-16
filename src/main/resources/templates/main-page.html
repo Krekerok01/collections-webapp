@@ -73,6 +73,13 @@
              left: 500px;
         }
 
+        .collections-info {
+            position: absolute;
+            top: 160px;
+            right: 200px;
+            left: 200px;
+        }
+
 
     </style>
 </head>
@@ -112,11 +119,20 @@
 
 <hr class="hr-double">
 
-<div class="centralInformation">
+<div class="collections-info">
 
-    <h1>MAIN PAGE</h1>
+    <h3>Collections: </h3>
+
+    <table class="table table-bordered table-striped" >
+
+        <tbody>
+            <tr th:each="str : ${collectionsString}">
+                <td th:text="${str}" />
+            </tr>
+        </tbody>
+    </table>
+
 </div>
-
 
 
 
