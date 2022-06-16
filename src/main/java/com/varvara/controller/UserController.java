@@ -7,11 +7,13 @@ import com.varvara.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
@@ -59,8 +61,11 @@ public class UserController {
     }
 
     @PostMapping("/saveCollection")
-    public String saveCollection(@ModelAttribute("collection") Collection collection){
+    public String saveCollection(@ModelAttribute("collection") @Valid  Collection collection, BindingResult result, Model model){
 
+        if (result.hasErrors()){
+            return "collection-add-form";
+        }
         User user = userService.findByUsername(authenticationUserName);
         List<Collection> userCollections = user.getCollections();
 
@@ -68,5 +73,6 @@ public class UserController {
         userService.saveUser(user);
 
         return "redirect:/user/info";
+
     }
 }

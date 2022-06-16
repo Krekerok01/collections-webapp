@@ -3,6 +3,7 @@ package com.varvara.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -21,15 +22,19 @@ public class Collection {
     private int id;
 
     @Column(name = "name")
+    @NotBlank(message = "The field name is required")
     private String name;
 
     @Column(name = "theme")
+    @NotBlank(message = "The field theme is required")
     private String theme;
 
     @Column(name = "description")
+    @NotBlank(message = "The field description is required")
     private String description;
 
     @Column(name = "image_url")
+    @NotBlank(message = "The field image URL is required")
     private String imageUrl;
 
 
