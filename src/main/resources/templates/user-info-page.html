@@ -134,6 +134,7 @@
             <th>Theme</th>
             <th>Description</th>
             <th>Img</th>
+            <th/>
         </tr>
         </thead>
 
@@ -143,7 +144,13 @@
             <td th:text="${collect.theme}" />
             <td th:text="${collect.description}" />
             <td th:text="${collect.imageUrl}" />
+            <td>
+                <a th:href="@{addItem(collectionId=${collect.id})}"
+                   class="btn btn-danger btn-sm">
+                    Add item
+                </a>
 
+            </td>
         </tr>
         </tbody>
 
