@@ -22,7 +22,6 @@ public class User implements UserDetails {
 	@Column(name = "id")
 	private int id;
 
-
 	@Column(name = "username")
 	private String username;
 

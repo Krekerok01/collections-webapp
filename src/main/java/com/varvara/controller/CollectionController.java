@@ -55,13 +55,39 @@ public class CollectionController {
 
     }
 
+    @GetMapping("/showItems")
+    public String showItems(@RequestParam("collectionId") int collectionId, Model model){
+
+        Collection collection = collectionService.getCollectionById(collectionId);
+        model.addAttribute("collection", collection);
+
+        List<Item> items = collection.getItems();
+        model.addAttribute("items", items);
+
+        return "items-page";
+    }
+
+//    @GetMapping("/addItem")
+//    public String addItem(@RequestParam("collectionId") int collectionId, Model model){
+//
+//        collection = collectionService.getCollectionById(collectionId);
+//        Item item = new Item();
+//
+//        System.out.println(collection);
+//
+//        model.addAttribute("item", item);
+//
+//
+//        return "item-add-form";
+//    }
+
+
     @GetMapping("/addItem")
     public String addItem(@RequestParam("collectionId") int collectionId, Model model){
 
         collection = collectionService.getCollectionById(collectionId);
         Item item = new Item();
 
-        model.addAttribute("collection", collection);
         model.addAttribute("item", item);
 
 
@@ -71,21 +97,15 @@ public class CollectionController {
     @PostMapping("/saveItem")
     public String saveItem(@ModelAttribute("item") Item item){
 
+        System.out.println("saveItem method()");
 
-        System.out.println("Collection: " + collection);
         List<Item> items = collection.getItems();
         items.add(item);
         collection.setItems(items);
 
-        System.out.println(item.toString());
-        System.out.println("items: " + items);
-
         collectionService.saveCollection(collection);
 
-        System.out.println("Collection: " + collection);
-
         return "redirect:/user/info";
-
     }
 
 }

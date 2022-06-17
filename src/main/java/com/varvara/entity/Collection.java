@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Collection {
 
     @Id
@@ -42,4 +41,17 @@ public class Collection {
             mappedBy = "collection",
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Item> items;
+
+
+    @Override
+    public String toString() {
+        return "Collection{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", theme='" + theme + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.varvara.service;
 
 import com.varvara.entity.Collection;
+import com.varvara.entity.Item;
 import com.varvara.repository.CollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,14 @@ public class CollectionServiceImpl implements CollectionService{
     @Transactional
     @Override
     public void saveCollection(Collection collection) {
+        // айтем попадает сюда но не сохраняется
+        System.out.println(collection.getName());
+
+
+        List<Item> items = collection.getItems();
+        for (Item i: items){
+            System.out.println("Item: " + i.getName());
+        }
         collectionRepository.save(collection);
     }
 }
