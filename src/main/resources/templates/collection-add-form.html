@@ -56,8 +56,8 @@
 
         <select name="themes" th:field="*{theme}"  class="form-select form-select-lg mb-3">
            <!-- <option value="books">Books</option> -->
-            <option value="theme" th:each="t : ${themeslist}" >Theme
-            </option>
+            <option  th:each="t : ${themeslist}" th:value="${t}" th:text="${t}" />
+
         </select>
         </p>
 
