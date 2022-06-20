@@ -77,23 +77,17 @@ public class CollectionController {
 
         model.addAttribute("item", item);
 
-
         return "item-add-form";
     }
 
     @PostMapping("/saveItem")
     public String saveItem(@ModelAttribute("item") Item item){
 
-        System.out.println("saveItem method()");
-
         item.setCollection(collection);
-
         List<Item> items = collection.getItems();
         items.add(item);
+
         collection.setItems(items);
-
-
-
         collectionService.saveCollection(collection);
 
         return "redirect:/user/info";
