@@ -60,6 +60,13 @@
             right: 100px;
         }
 
+        .items-content {
+            position: absolute;
+            top: 250px;
+            left: 100px;
+            right: 100px;
+        }
+
     </style>
 </head>
 <body>
@@ -118,33 +125,34 @@
 </div>
 
 <div class="items-content">
-    <p>
-    <h1 style="display:inline;">Items: </h1>
-    </p>
 
-    <table class="table table-bordered table-striped" >
-        <thead class="thead-dark">
-        <tr>
-            <th>Item name</th>
-            <th/>
-        </tr>
-        </thead>
+    <form action="#" th:object="${collection}" method="get">
+        <p>
+            <h1 style="display:inline;">Items: </h1>
+        </p>
 
-        <tbody>
+        <table class="table table-bordered table-striped" >
+            <thead class="thead-dark">
+                <tr>
+                    <th>Item name</th>
+                </tr>
+            </thead>
 
-        <tr th:each="i : ${items}">
-            <td th:text="${i.name}" />
-        </tr>
+            <tbody>
+                <tr th:each="i : ${items}">
+                    <td th:text="${i.name}" />
+                </tr>
+            </tbody>
+        </table>
 
-        </tbody>
 
-    </table>
+        <td>
+            <a th:href="@{addItem(collectionId=*{id})}" class="btn btn-danger btn-sm">
+                Add item
+            </a>
+        </td>
 
-    <!-- add a button -->
-
-    <a th:href="@{showFormForAddItem}" class="btn btn-primary btn-sm mb-3">
-        Add Item
-    </a>
+    </form>
 
 </div>
 

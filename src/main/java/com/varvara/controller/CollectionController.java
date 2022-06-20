@@ -67,19 +67,6 @@ public class CollectionController {
         return "items-page";
     }
 
-//    @GetMapping("/addItem")
-//    public String addItem(@RequestParam("collectionId") int collectionId, Model model){
-//
-//        collection = collectionService.getCollectionById(collectionId);
-//        Item item = new Item();
-//
-//        System.out.println(collection);
-//
-//        model.addAttribute("item", item);
-//
-//
-//        return "item-add-form";
-//    }
 
 
     @GetMapping("/addItem")
@@ -99,9 +86,13 @@ public class CollectionController {
 
         System.out.println("saveItem method()");
 
+        item.setCollection(collection);
+
         List<Item> items = collection.getItems();
         items.add(item);
         collection.setItems(items);
+
+
 
         collectionService.saveCollection(collection);
 

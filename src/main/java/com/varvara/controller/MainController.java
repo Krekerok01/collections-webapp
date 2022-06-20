@@ -30,36 +30,42 @@ public class MainController {
     public String showMainPage(Model model){
 
         List<User> users = userService.getAllUsers();
-        List<String> collectionsString = new ArrayList<>();
+        List<String> collectionsString = workWithCollections(users);
 
+
+        model.addAttribute("collectionsString", collectionsString);
+
+        return "main-page";
+    }
+
+
+
+
+    private List<String> workWithCollections( List<User> users){
+        List<String> collectionsString = new ArrayList<>();
 
         for (User u: users){
             String username = u.getUsername();
             List<Collection> userCollections = u.getCollections();
 
-
             if (!userCollections.isEmpty()){
                 for (Collection collection : userCollections){
-                    StringBuilder sb = new StringBuilder();
-
-                    sb.append("Owner : ");
-                    sb.append(username);
-                    sb.append(", Collection: ");
-                    sb.append("name - ");
-                    sb.append(collection.getName());
-                    sb.append("theme - ");
-                    sb.append(collection.getTheme());
-                    sb.append(", description - ");
-                    sb.append(collection.getDescription());
-
-                    collectionsString.add(sb.toString());
+                    collectionsString.add(buildCollectionString(username, collection));
                 }
-
             }
         }
 
-        model.addAttribute("collectionsString", collectionsString);
+        return collectionsString;
+    }
 
-        return "main-page";
+    private String buildCollectionString(String username, Collection collection){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Owner : ").append(username);
+        sb.append(", Collection: ").append("name - ").append(collection.getName());
+        sb.append(", theme - ").append(collection.getTheme());
+        sb.append(", description - ").append(collection.getDescription());
+
+        return sb.toString();
     }
 }
