@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
@@ -32,9 +34,12 @@ public class CollectionController {
     @GetMapping("/showFormForAddCollection")
     public String showFormForAddCollection(Model model){
 
+        List<String> themes = getThemesListFromFile();
+
         Collection collection = new Collection();
 
         model.addAttribute("collection", collection);
+        model.addAttribute("themeslist", themes);
 
         return "collection-add-form";
     }
@@ -91,6 +96,24 @@ public class CollectionController {
         collectionService.saveCollection(collection);
 
         return "redirect:/user/info";
+    }
+
+    private List<String> getThemesListFromFile(){
+        List<String> themes = new ArrayList<>();
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File("src/main/resources/static/themes.txt")));
+
+            String s = reader.readLine();
+            while (s != null){
+                themes.add(s);
+                s = reader.readLine();
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return themes;
     }
 
 }
