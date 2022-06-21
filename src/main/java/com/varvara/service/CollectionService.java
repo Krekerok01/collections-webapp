@@ -11,4 +11,6 @@ public interface CollectionService {
     public Collection getCollectionById(int id);
 
     public void saveCollection(Collection collection);
+
+    public void deleteCollectionById(int id);
 }

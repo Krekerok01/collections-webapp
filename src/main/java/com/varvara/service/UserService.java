@@ -35,6 +35,18 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 	@Transactional
+	public User findById(int id){
+		Optional<User> user = userRepository.findById(id);
+
+		if(!user.isPresent()) {
+
+			throw new UsernameNotFoundException("User Not Found");
+		}
+
+		return user.get();
+	}
+
+	@Transactional
 	public User findByUsername(String username) {
 		Optional<User> user = userRepository.findByUsername(username);
 

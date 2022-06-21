@@ -45,13 +45,6 @@
         <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
 
 
-        <!--
-        <input type="text" th:field="*{theme}"
-               class="form-control mb-4 col-4" placeholder="Theme" />
-        <p th:if="${#fields.hasErrors('theme')}" th:errorclass="error" th:errors="*{theme}" />
-        -->
-
-
         <p>
 
         <select name="themes" th:field="*{theme}"  class="form-select form-select-lg mb-3">
@@ -67,7 +60,7 @@
         <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}" />
 
 
-        <input type="text" th:field="*{imageUrl}"
+        <input type="url" th:field="*{imageUrl}"
                class="form-control mb-4 col-4" placeholder="Image URL" />
         <p th:if="${#fields.hasErrors('imageUrl')}" th:errorclass="error" th:errors="*{imageUrl}" />
 

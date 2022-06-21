@@ -45,4 +45,10 @@ public class CollectionServiceImpl implements CollectionService{
 
         collectionRepository.save(collection);
     }
+
+    @Transactional
+    @Override
+    public void deleteCollectionById(int id) {
+        collectionRepository.deleteById(id);
+    }
 }

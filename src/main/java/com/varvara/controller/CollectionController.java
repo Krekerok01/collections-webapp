@@ -105,6 +105,16 @@ public class CollectionController {
         return "redirect:/user/info";
     }
 
+    @GetMapping("/deleteCollection")
+    public String deleteCollection(@RequestParam("collectionId") int collectionId){
+
+        System.out.println(">>> first message from deleteCollection() method");
+        collectionService.deleteCollectionById(collectionId);
+        System.out.println(">>> second message from deleteCollection() method");
+
+        return "redirect:/user/info";
+    }
+
     private List<String> getThemesListFromFile(){
         List<String> themes = new ArrayList<>();
 

@@ -1,8 +1,10 @@
 package com.varvara.controller;
 
 
+import com.varvara.entity.Collection;
 import com.varvara.entity.Role;
 import com.varvara.entity.User;
+import com.varvara.service.CollectionService;
 import com.varvara.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -23,10 +25,11 @@ import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticati
 public class AdminController {
 
     private UserService userService;
+    private CollectionService collectionService;
 
 
     @Autowired
-    public AdminController(@Lazy UserService userService) {
+    public AdminController(@Lazy UserService userService, @Lazy CollectionService collectionService) {
         this.userService = userService;
     }
 
@@ -44,6 +47,8 @@ public class AdminController {
 
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("userId") int id){
+
+
         userService.delete(id);
 
         if (id == authenticationUserId) {
