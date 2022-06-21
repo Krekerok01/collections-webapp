@@ -2,6 +2,7 @@ package com.varvara.controller;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
+import com.varvara.entity.Tag;
 import com.varvara.entity.User;
 import com.varvara.service.CollectionServiceImpl;
 import com.varvara.service.UserService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
@@ -86,8 +89,12 @@ public class CollectionController {
     }
 
     @PostMapping("/saveItem")
-    public String saveItem(@ModelAttribute("item") Item item){
+    public String saveItem(@ModelAttribute("item") Item item, @RequestParam(value = "tagsString") String tagsString){
 
+        List<Tag> tags = getTagsFromTagsString(item, tagsString);
+
+
+        item.setTags(tags);
         item.setCollection(collection);
         List<Item> items = collection.getItems();
         items.add(item);
@@ -114,6 +121,22 @@ public class CollectionController {
         }
 
         return themes;
+    }
+
+    private List<Tag> getTagsFromTagsString(Item item, String tagsString){
+
+        List<Tag> tags = new ArrayList<>();
+
+
+        List<String> stringTagsList = Arrays.asList(tagsString.split("[, ]+"));
+        for (String s: stringTagsList){
+            Tag tag = new Tag();
+            tag.setName(s);
+            tag.setItem(item);
+            tags.add(tag);
+        }
+
+        return tags;
     }
 
 }

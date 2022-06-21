@@ -43,9 +43,7 @@ public class UserService implements org.springframework.security.core.userdetail
 			throw new UsernameNotFoundException("User Not Found");
 		}
 
-		User user1 = user.get();
-
-		return user1;
+		return user.get();
 	}
 
 
