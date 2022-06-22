@@ -20,7 +20,7 @@ public class ContentController {
     private TagService tagService;
 
     @Autowired
-    public ContentController(@Lazy UserService userService, TagService tagService) {
+    public ContentController(UserService userService, TagService tagService) {
         this.userService = userService;
         this.tagService = tagService;
     }

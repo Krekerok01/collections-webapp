@@ -18,11 +18,15 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
-	
-    @Autowired
+
     private UserService userService;
-	
-    private Logger logger = Logger.getLogger(getClass().getName());
+
+	@Autowired
+	public RegistrationController(UserService userService) {
+		this.userService = userService;
+	}
+
+	private Logger logger = Logger.getLogger(getClass().getName());
 
 	
 	@GetMapping("/registration")

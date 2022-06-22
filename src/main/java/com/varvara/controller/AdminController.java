@@ -25,11 +25,9 @@ import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticati
 public class AdminController {
 
     private UserService userService;
-    private CollectionService collectionService;
-
 
     @Autowired
-    public AdminController(@Lazy UserService userService, @Lazy CollectionService collectionService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 

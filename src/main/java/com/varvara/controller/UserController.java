@@ -20,10 +20,12 @@ import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticati
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
-
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/info")
     public String showInfoPage(Model model){

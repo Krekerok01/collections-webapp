@@ -4,6 +4,7 @@ import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
 import com.varvara.entity.Tag;
 import com.varvara.entity.User;
+import com.varvara.service.CollectionService;
 import com.varvara.service.CollectionServiceImpl;
 import com.varvara.service.ItemService;
 import com.varvara.service.UserService;
@@ -26,16 +27,18 @@ import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticati
 @RequestMapping("user")
 public class CollectionController {
 
-    private Collection collection;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private CollectionServiceImpl collectionService;
-
-    @Autowired
+    private CollectionService collectionService;
     private ItemService itemService;
+
+    @Autowired
+    public CollectionController(UserService userService, CollectionService collectionService, ItemService itemService) {
+        this.userService = userService;
+        this.collectionService = collectionService;
+        this.itemService = itemService;
+    }
+
+    private Collection collection;
 
 
     @GetMapping("/showFormForAddCollection")
