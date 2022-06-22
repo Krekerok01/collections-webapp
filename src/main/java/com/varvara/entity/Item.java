@@ -23,7 +23,7 @@ public class Item {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "collection_id")
     private Collection collection;
 

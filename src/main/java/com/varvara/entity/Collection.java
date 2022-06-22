@@ -39,7 +39,7 @@ public class Collection {
 
     @OneToMany(fetch = FetchType.EAGER,
             mappedBy = "collection",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.REMOVE)
     private List<Item> items;
 
 

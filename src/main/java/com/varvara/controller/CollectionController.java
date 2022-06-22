@@ -100,17 +100,15 @@ public class CollectionController {
 
         item.setTags(tags);
         item.setCollection(collection);
-        List<Item> items = collection.getItems();
-        items.add(item);
 
-        collection.setItems(items);
-        collectionService.saveCollection(collection);
+        itemService.saveItem(item);
 
         return "redirect:/user/info";
     }
 
     @GetMapping("/deleteItem")
     public String deleteItem(@RequestParam("itemId") int itemId){
+
         itemService.deleteItemById(itemId);
 
         return "redirect:/user/info";
@@ -121,7 +119,7 @@ public class CollectionController {
 
         collectionService.deleteCollectionById(collectionId);
 
-        return "redirect:/user/showItems";
+        return "redirect:/user/info";
     }
 
     private List<String> getThemesListFromFile(){
