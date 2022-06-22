@@ -80,6 +80,13 @@
             left: 200px;
         }
 
+         .tags-info {
+            position: absolute;
+            top: 300px;
+            right: 200px;
+            left: 200px;
+        }
+
 
     </style>
 </head>
@@ -133,6 +140,22 @@
     </table>
 
 </div>
+
+<div class="tags-info">
+
+    <h3>All tags: </h3>
+
+    <table class="table table-bordered table-striped" >
+
+        <tbody>
+        <tr th:each="t : ${tagsList}">
+            <td th:text="${t}" />
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
 
 
 

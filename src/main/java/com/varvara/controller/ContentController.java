@@ -2,6 +2,7 @@ package com.varvara.controller;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.User;
+import com.varvara.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import com.varvara.service.UserService;
@@ -10,20 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
 
 @Controller
-public class MainController {
+public class ContentController {
 
     private UserService userService;
+    private TagService tagService;
 
     @Autowired
-    public MainController(@Lazy UserService userService) {
+    public ContentController(@Lazy UserService userService, TagService tagService) {
         this.userService = userService;
+        this.tagService = tagService;
     }
 
     @GetMapping("/")
@@ -32,8 +31,12 @@ public class MainController {
         List<User> users = userService.getAllUsers();
         List<String> collectionsString = workWithCollections(users);
 
+        List<String> listOfStringTags = tagService.getStringListOfAllTags();
+
 
         model.addAttribute("collectionsString", collectionsString);
+        model.addAttribute("tagsList", listOfStringTags);
+
 
         return "main-page";
     }
