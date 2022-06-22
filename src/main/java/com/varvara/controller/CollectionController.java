@@ -5,6 +5,7 @@ import com.varvara.entity.Item;
 import com.varvara.entity.Tag;
 import com.varvara.entity.User;
 import com.varvara.service.CollectionServiceImpl;
+import com.varvara.service.ItemService;
 import com.varvara.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class CollectionController {
 
     @Autowired
     private CollectionServiceImpl collectionService;
+
+    @Autowired
+    private ItemService itemService;
 
 
     @GetMapping("/showFormForAddCollection")
@@ -105,14 +109,19 @@ public class CollectionController {
         return "redirect:/user/info";
     }
 
+    @GetMapping("/deleteItem")
+    public String deleteItem(@RequestParam("itemId") int itemId){
+        itemService.deleteItemById(itemId);
+
+        return "redirect:/user/info";
+    }
+
     @GetMapping("/deleteCollection")
     public String deleteCollection(@RequestParam("collectionId") int collectionId){
 
-        System.out.println(">>> first message from deleteCollection() method");
         collectionService.deleteCollectionById(collectionId);
-        System.out.println(">>> second message from deleteCollection() method");
 
-        return "redirect:/user/info";
+        return "redirect:/user/showItems";
     }
 
     private List<String> getThemesListFromFile(){

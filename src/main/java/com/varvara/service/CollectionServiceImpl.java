@@ -46,6 +46,7 @@ public class CollectionServiceImpl implements CollectionService{
         collectionRepository.save(collection);
     }
 
+    // удаляет коллекцию только если там нет айтемов
     @Transactional
     @Override
     public void deleteCollectionById(int id) {

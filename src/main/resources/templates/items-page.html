@@ -136,6 +136,7 @@
                 <tr>
                     <th>Item name</th>
                     <th>Tags</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -148,6 +149,11 @@
                         <h5 style="display:inline" th:text="${t.name}"/>
                         <h5 style="display:inline;">></h5>
                         </span>
+                    </td>
+                    <td>
+                        <a th:href="@{deleteItem(itemId=${i.id})}" class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
                     </td>
                 </tr>
             </tbody>

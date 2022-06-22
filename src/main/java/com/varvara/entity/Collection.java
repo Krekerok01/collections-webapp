@@ -39,7 +39,7 @@ public class Collection {
 
     @OneToMany(fetch = FetchType.EAGER,
             mappedBy = "collection",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = CascadeType.ALL)
     private List<Item> items;
 
 
