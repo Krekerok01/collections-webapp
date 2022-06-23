@@ -82,9 +82,73 @@
 
          .tags-info {
             position: absolute;
-            top: 300px;
+            top: 500px;
             right: 200px;
             left: 200px;
+        }
+
+        .tags-list {
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .tags-list>li {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .tags-list>li>a {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            background: #000;
+            color: #fff;
+            border-radius: 15px;
+        }
+
+        .tags-list>li>a:hover {
+            background: #f00;
+        }
+
+        .tags-list>li>a[data-tooltip]:before {
+            position: absolute;
+            left: 50%;
+            top: -100%;
+            background: #ccc;
+            color: #000;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 15px;
+            content: attr(data-tooltip);
+            white-space: nowrap;
+            transform: translateX(-50%);
+        }
+
+        .tags-list>li>a[data-tooltip]:after {
+            position: absolute;
+            left: 50%;
+            top: -10px;
+            margin-left: -7px;
+            border-top: 7px solid #ccc;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            content: "";
+        }
+
+        .tags-list>li>a[data-tooltip]:before,
+        .tags-list>li>a[data-tooltip]:after {
+            pointer-events: none;
+            visibility: hidden;
+            opacity: 0;
+            transition: all .3s ease;
+        }
+
+        .tags-list>li>a[data-tooltip]:hover:after,
+        .tags-list>li>a[data-tooltip]:hover:before {
+            visibility: visible;
+            opacity: 1;
         }
 
 
@@ -145,20 +209,14 @@
 
     <h3>All tags: </h3>
 
-    <table class="table table-bordered table-striped" >
+    <ul class="tags-list" >
+        <li th:each="t : ${tagsList}">
+            <a href="#" data-tooltip="ToolTip" th:text="${t}" />
+        </li>
 
-        <tbody>
-        <tr th:each="t : ${tagsList}">
-            <td th:text="${t}" />
-        </tr>
-        </tbody>
-    </table>
+    </ul>
 
 </div>
-
-
-
-
 
 
 

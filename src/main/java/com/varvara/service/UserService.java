@@ -143,6 +143,43 @@ public class UserService implements org.springframework.security.core.userdetail
 		return rolesString;
 	}
 
+	public Role findRoleByName(String name) {
+		Optional<Role> role = roleRepository.findRoleByName(name);
+
+		if(!role.isPresent()) {
+			throw new UsernameNotFoundException("Role Not Found");
+		}
+
+		return role.get();
+	}
+
+
+	public List<String> getAllCollections(){
+		List<User> users = getAllUsers();
+		List<String> collectionsString = workWithCollections(users);
+
+		return collectionsString;
+	}
+
+	private List<String> workWithCollections( List<User> users){
+		List<String> collectionsString = new ArrayList<>();
+
+		for (User user: users){
+			List<com.varvara.entity.Collection> userCollections = user.getCollections();
+
+			if (!userCollections.isEmpty()){
+				for (com.varvara.entity.Collection collection : userCollections){
+					String string = ("Owner - " + user.getUsername() + ", Collection: name - " + collection.getName() + ", theme - " + collection.getTheme() + ", description - " + collection.getDescription());
+					collectionsString.add(string);
+				}
+			}
+		}
+
+		return collectionsString;
+	}
+
+
+
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -157,19 +194,6 @@ public class UserService implements org.springframework.security.core.userdetail
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
-
-
-
-	public Role findRoleByName(String name) {
-		Optional<Role> role = roleRepository.findRoleByName(name);
-
-		if(!role.isPresent()) {
-			throw new UsernameNotFoundException("Role Not Found");
-		}
-
-		return role.get();
-	}
-
 }
 
 

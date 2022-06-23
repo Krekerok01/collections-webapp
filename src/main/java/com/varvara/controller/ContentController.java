@@ -28,47 +28,15 @@ public class ContentController {
     @GetMapping("/")
     public String showMainPage(Model model){
 
-        List<User> users = userService.getAllUsers();
-        List<String> collectionsString = workWithCollections(users);
-
+        List<String> stringListOfAllCollections = userService.getAllCollections();
         List<String> listOfStringTags = tagService.getStringListOfAllTags();
 
 
-        model.addAttribute("collectionsString", collectionsString);
+        model.addAttribute("collectionsString", stringListOfAllCollections);
         model.addAttribute("tagsList", listOfStringTags);
 
 
         return "first-content-page";
     }
 
-
-
-
-    private List<String> workWithCollections( List<User> users){
-        List<String> collectionsString = new ArrayList<>();
-
-        for (User u: users){
-            String username = u.getUsername();
-            List<Collection> userCollections = u.getCollections();
-
-            if (!userCollections.isEmpty()){
-                for (Collection collection : userCollections){
-                    collectionsString.add(buildCollectionString(username, collection));
-                }
-            }
-        }
-
-        return collectionsString;
-    }
-
-    private String buildCollectionString(String username, Collection collection){
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Owner : ").append(username);
-        sb.append(", Collection: ").append("name - ").append(collection.getName());
-        sb.append(", theme - ").append(collection.getTheme());
-        sb.append(", description - ").append(collection.getDescription());
-
-        return sb.toString();
-    }
 }
