@@ -43,15 +43,13 @@ public class RegistrationController {
 		}
 
 		String userName = theCrmUser.getUsername();
-		logger.info("Processing registration form for: " + userName);
 
+		logger.info("Processing registration form for: " + userName);
 		logger.info("theCrmUser: " + theCrmUser);
 
 
-        // create user account        						
         userService.save(theCrmUser);
 
-        
         logger.info("Successfully created user: " + userName);
         
         return "registration-confirmation";		

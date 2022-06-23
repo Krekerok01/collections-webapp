@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -25,24 +26,22 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     public static String authenticationUserName;
     public static int authenticationUserId;
+	private Logger logger = Logger.getLogger(getClass().getName());
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
 
-		System.out.println("***** In customAuthenticationSuccessHandler");
 
-		String userName = authentication.getName();
-		authenticationUserName = userName;
-
-		
-		System.out.println("***** username = " + userName);
+		String username = authentication.getName();
+		authenticationUserName = username;
 
 
-		User theUser = userService.findByUsername(userName);
+		logger.info("Successfully authenticated user with username - " + username);
+
+
+		User theUser = userService.findByUsername(username);
 		authenticationUserId = theUser.getId();
-
-		//System.out.println("*** Roles: " + theUser.getRoles().toString());
 
 
 		HttpSession session = request.getSession();
