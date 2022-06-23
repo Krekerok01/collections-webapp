@@ -6,7 +6,7 @@ import com.varvara.entity.Role;
 import com.varvara.entity.User;
 import com.varvara.repository.RoleRepository;
 import com.varvara.repository.UserRepository;
-import com.varvara.dto.CrmUser;
+import com.varvara.dto.UserDataFromInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
@@ -59,15 +59,15 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
-	public void save(CrmUser crmUser) {
+	public void save(UserDataFromInput userDataFromInput) {
 
 		User user = new User();
 
-		user.setUsername(crmUser.getUsername());
-		user.setPassword(passwordEncoder.encode(crmUser.getPassword()));
-		user.setFirstName(crmUser.getFirstName());
-		user.setLastName(crmUser.getLastName());
-		user.setEmail(crmUser.getEmail());
+		user.setUsername(userDataFromInput.getUsername());
+		user.setPassword(passwordEncoder.encode(userDataFromInput.getPassword()));
+		user.setFirstName(userDataFromInput.getFirstName());
+		user.setLastName(userDataFromInput.getLastName());
+		user.setEmail(userDataFromInput.getEmail());
 
 		Role role = roleRepository.findRoleByName("ROLE_USER").get();
 		user.setRoles(Arrays.asList(role));
@@ -100,7 +100,7 @@ public class UserService implements org.springframework.security.core.userdetail
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username).get();
-		if (user == null) {
+		if (user == null || user.getStatus().equals("BLOCKED")) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
@@ -110,6 +110,7 @@ public class UserService implements org.springframework.security.core.userdetail
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
+
 
 
 	public Role findRoleByName(String name) {

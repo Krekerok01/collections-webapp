@@ -2,7 +2,7 @@ package com.varvara.controller;
 
 
 import com.varvara.service.UserService;
-import com.varvara.dto.CrmUser;
+import com.varvara.dto.UserDataFromInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,24 +31,24 @@ public class RegistrationController {
 	
 	@GetMapping("/registration")
 	public String showRegistrationPage(Model theModel) {
-		theModel.addAttribute("crmUser", new CrmUser());
+		theModel.addAttribute("userDataFromInput", new UserDataFromInput());
 		return "registration";
 	}
 
 	@PostMapping("/processRegistrationForm")
-	public String processRegistrationForm(@ModelAttribute("crmUser") @Valid CrmUser theCrmUser, BindingResult result, Model theModel) {
+	public String processRegistrationForm(@ModelAttribute("userDataFromInput") @Valid UserDataFromInput userDataFromInput, BindingResult result, Model theModel) {
 
 		if (result.hasErrors()){
 			return "registration";
 		}
 
-		String userName = theCrmUser.getUsername();
+		String userName = userDataFromInput.getUsername();
 
 		logger.info("Processing registration form for: " + userName);
-		logger.info("theCrmUser: " + theCrmUser);
+		logger.info("UserDataFromInput: " + userDataFromInput);
 
 
-        userService.save(theCrmUser);
+        userService.save(userDataFromInput);
 
         logger.info("Successfully created user: " + userName);
         

@@ -69,6 +69,7 @@ public class User implements UserDetails {
 		}
 	}
 
+
 	public void setStatus(String status) {
 		this.status = status;
 	}

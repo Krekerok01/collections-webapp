@@ -3,12 +3,11 @@ package com.varvara.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-public class CrmUser {
+public class UserDataFromInput {
 
 	@NotBlank(message = "is required field")
 	private String username;
@@ -26,7 +25,7 @@ public class CrmUser {
 	@Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
 	private String email;
 
-	public CrmUser() {
+	public UserDataFromInput() {
 	}
 
 
