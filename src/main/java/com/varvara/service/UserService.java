@@ -28,13 +28,13 @@ public class UserService implements org.springframework.security.core.userdetail
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(@Lazy UserRepository userRepository, @Lazy RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository,  RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	@Transactional
+
 	public User findById(int id){
 		Optional<User> user = userRepository.findById(id);
 
@@ -46,7 +46,7 @@ public class UserService implements org.springframework.security.core.userdetail
 		return user.get();
 	}
 
-	@Transactional
+
 	public User findByUsername(String username) {
 		Optional<User> user = userRepository.findByUsername(username);
 
@@ -59,8 +59,6 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
-
-	@Transactional
 	public void save(CrmUser crmUser) {
 
 		User user = new User();
@@ -83,18 +81,15 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
-	@Transactional
 	public void saveUser(User user) {
 		userRepository.save(user);
 	}
 
-	@Transactional
 	public void delete(int id) {
 		userRepository.deleteById(id);
 	}
 
 
-	@Transactional
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
@@ -116,7 +111,7 @@ public class UserService implements org.springframework.security.core.userdetail
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 
-	@Transactional
+
 	public Role findRoleByName(String name) {
 
 		Optional<Role> role = roleRepository.findRoleByName(name);
@@ -125,7 +120,6 @@ public class UserService implements org.springframework.security.core.userdetail
 
 			throw new UsernameNotFoundException("Role Not Found");
 		}
-
 
 		return role.get();
 	}

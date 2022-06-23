@@ -27,8 +27,7 @@ public class Item {
     @JoinColumn(name = "collection_id")
     private Collection collection;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "item",
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item",
+               cascade = CascadeType.ALL)
     private List<Tag> tags;
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Collection {
 
     @Id
@@ -37,21 +38,8 @@ public class Collection {
     private String imageUrl;
 
 
-    @OneToMany(fetch = FetchType.EAGER,
-            mappedBy = "collection",
-            cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "collection",
+               cascade = CascadeType.REMOVE)
     private List<Item> items;
 
-
-    @Override
-    public String toString() {
-        return "Collection{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", theme='" + theme + '\'' +
-                ", description='" + description + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", items=" + items +
-                '}';
-    }
 }

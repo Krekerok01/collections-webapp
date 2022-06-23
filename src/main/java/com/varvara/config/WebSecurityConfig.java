@@ -24,11 +24,11 @@ public class WebSecurityConfig extends  WebSecurityConfigurerAdapter{
     @Autowired
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-
 
 
     @Override
@@ -50,13 +50,6 @@ public class WebSecurityConfig extends  WebSecurityConfigurerAdapter{
                 .logout().permitAll();
     }
 
-//    @Override
-//    public void configure(WebSecurity web) {
-//        web.ignoring().antMatchers("/css/**","/js/**","/fonts/**","/images/**");
-//    }
-
-
-
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -67,8 +60,8 @@ public class WebSecurityConfig extends  WebSecurityConfigurerAdapter{
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userService); //set the custom user details service
-        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
+        auth.setUserDetailsService(userService);
+        auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
 
