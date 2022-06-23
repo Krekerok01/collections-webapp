@@ -42,15 +42,8 @@ public class RegistrationController {
 			return "registration";
 		}
 
-		String userName = userDataFromInput.getUsername();
-
-		logger.info("Processing registration form for: " + userName);
-		logger.info("UserDataFromInput: " + userDataFromInput);
-
-
-        userService.save(userDataFromInput);
-
-        logger.info("Successfully created user: " + userName);
+        userService.saveUserDataFromInput(userDataFromInput);
+        logger.info("Successfully created user: " + userDataFromInput.getUsername());
         
         return "registration-confirmation";		
 	}

@@ -57,7 +57,7 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
-	public void save(UserDataFromInput userDataFromInput) {
+	public void saveUserDataFromInput(UserDataFromInput userDataFromInput) {
 
 		User user = new User();
 
@@ -76,6 +76,45 @@ public class UserService implements org.springframework.security.core.userdetail
 
 
 		userRepository.save(user);
+	}
+
+	public void addUserToAdmins(String username){
+		User user = findByUsername(username);
+
+		List<Role> roles = (List<Role>) user.getRoles();
+		if (roles.size() == 1){
+			Role role = findRoleByName("ROLE_ADMIN");
+			roles.add(role);
+		}
+
+		user.setRoles(roles);
+
+		saveUser(user);
+	}
+
+	public void removeUserFromAdmins(String username){
+		User user = findByUsername(username);
+
+		List<Role> roles = new ArrayList<>();
+
+		Role role = findRoleByName("ROLE_USER");
+		roles.add(role);
+
+		user.setRoles(roles);
+
+		saveUser(user);
+	}
+
+	public void blockUser(String username){
+		User user = findByUsername(username);
+		user.setAccountNonLocked(false);
+		saveUser(user);
+	}
+
+	public void unblockUser(String username){
+		User user = findByUsername(username);
+		user.setAccountNonLocked(true);
+		saveUser(user);
 	}
 
 
