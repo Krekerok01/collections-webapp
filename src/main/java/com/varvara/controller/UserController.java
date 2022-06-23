@@ -33,19 +33,8 @@ public class UserController {
         User user = userService.findByUsername(authenticationUserName);
 
         model.addAttribute("user", user);
-
-        List<Role> roles = (List<Role>) user.getRoles();
-
-        String rolesString = "";
-
-        for (Role r: roles){
-            rolesString += r.getName() + " ";
-        }
-
-        model.addAttribute("rolesString", rolesString);
-
-        List<Collection> collections = user.getCollections();
-        model.addAttribute("collections", collections);
+        model.addAttribute("stringOfUserRoles", userService.getStringOfUserRoles(user));
+        model.addAttribute("collections", user.getCollections());
 
         return "user-info-page";
     }

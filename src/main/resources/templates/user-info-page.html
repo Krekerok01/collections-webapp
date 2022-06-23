@@ -112,7 +112,7 @@
                     <td th:text="*{firstName}" />
                     <td th:text="*{lastName}" />
                     <td th:text="*{email}" />
-                    <td th:text="${rolesString}" />
+                    <td th:text="${stringOfUserRoles}" />
                 </tr>
             </tbody>
 
@@ -150,7 +150,7 @@
                         Show items
                     </a>
 
-                    |
+                    <p></p>
 
                     <a th:href="@{deleteCollection(collectionId=${collect.id})}" class="btn btn-danger btn-sm">
                         Delete collection

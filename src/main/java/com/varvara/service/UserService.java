@@ -39,7 +39,6 @@ public class UserService implements org.springframework.security.core.userdetail
 		Optional<User> user = userRepository.findById(id);
 
 		if(!user.isPresent()) {
-
 			throw new UsernameNotFoundException("User Not Found");
 		}
 
@@ -51,7 +50,6 @@ public class UserService implements org.springframework.security.core.userdetail
 		Optional<User> user = userRepository.findByUsername(username);
 
 		if(!user.isPresent()) {
-
 			throw new UsernameNotFoundException("User Not Found");
 		}
 
@@ -95,6 +93,16 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
+	public String getStringOfUserRoles(User user){
+		List<Role> roles = (List<Role>) user.getRoles();
+
+		String rolesString = "";
+
+		for (Role r: roles){
+			rolesString += r.getName() + " ";
+		}
+		return rolesString;
+	}
 
 	@Override
 	@Transactional
@@ -114,11 +122,9 @@ public class UserService implements org.springframework.security.core.userdetail
 
 
 	public Role findRoleByName(String name) {
-
 		Optional<Role> role = roleRepository.findRoleByName(name);
 
 		if(!role.isPresent()) {
-
 			throw new UsernameNotFoundException("Role Not Found");
 		}
 

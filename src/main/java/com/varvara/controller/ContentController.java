@@ -38,7 +38,7 @@ public class ContentController {
         model.addAttribute("tagsList", listOfStringTags);
 
 
-        return "main-page";
+        return "first-content-page";
     }
 
 

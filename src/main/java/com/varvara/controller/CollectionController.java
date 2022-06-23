@@ -58,6 +58,9 @@ public class CollectionController {
     public String saveCollection(@ModelAttribute("collection") @Valid Collection collection, BindingResult result, Model model){
 
         if (result.hasErrors()){
+
+            model.addAttribute("themeslist", getThemesListFromFile());
+
             return "collection-add-form";
         }
         User user = userService.findByUsername(authenticationUserName);
