@@ -79,9 +79,16 @@
             left: 200px;
         }
 
+        .last-added-collections-info {
+            position: absolute;
+            top: 450px;
+            right: 200px;
+            left: 200px;
+        }
+
          .tags-info {
             position: absolute;
-            top: 500px;
+            top: 750px;
             right: 200px;
             left: 200px;
         }
@@ -161,6 +168,21 @@
             <tr th:each="str : ${collectionsString}">
                 <td th:text="${str}" />
             </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div class="last-added-collections-info">
+
+    <h3>Last added collections: </h3>
+
+    <table class="table table-bordered table-striped" >
+
+        <tbody>
+     <!--   <tr th:each="collection : ${fiveLastAddedCollections}">
+            <td th:text="${collection}" />
+        </tr> -->
         </tbody>
     </table>
 

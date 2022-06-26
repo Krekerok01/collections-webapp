@@ -32,8 +32,10 @@ public class ContentController {
         List<String> stringListOfAllCollections = userService.getAllCollections();
         Set<String> setOfStringTags = tagService.getStringListOfAllTags();
 
+        List<String> fiveBigCollections = userService.getBigCollections();
 
-        model.addAttribute("collectionsString", stringListOfAllCollections);
+
+        model.addAttribute("collectionsString", fiveBigCollections);
         model.addAttribute("tagsSet", setOfStringTags);
 
 

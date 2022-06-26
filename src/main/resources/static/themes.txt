@@ -5,3 +5,7 @@ Books
 Animals
 Flowers
 Trees
+Colors
+Shapes
+Fabrics
+Clothes

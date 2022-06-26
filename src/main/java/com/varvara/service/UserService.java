@@ -25,13 +25,15 @@ public class UserService implements org.springframework.security.core.userdetail
 
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
+	private CollectionService collectionService;
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository,  RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository,  RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, CollectionService collectionService) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.collectionService = collectionService;
 	}
 
 
@@ -154,11 +156,61 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
+
 	public List<String> getAllCollections(){
 		List<User> users = getAllUsers();
 		List<String> collectionsString = workWithCollections(users);
 
 		return collectionsString;
+	}
+
+	public List<String> getBigCollections(){
+		List<com.varvara.entity.Collection> allCollections = collectionService.getAllCollections();
+
+		Set<String> fiveBigCollections = new HashSet<>();
+
+		Map<com.varvara.entity.Collection, Integer> map = new HashMap<>();
+
+		List<Integer> integers = new LinkedList<>();
+
+
+		for (com.varvara.entity.Collection collection: allCollections){
+			int itemsSize = collection.getItems().size();
+			map.put(collection, itemsSize);
+		}
+
+		for (Map.Entry<com.varvara.entity.Collection, Integer> entry: map.entrySet()){
+			integers.add(entry.getValue());
+		}
+
+		Collections.sort(integers);
+		Collections.reverse(integers);
+
+		List<Integer> fiveItegers = new LinkedList<>();
+
+		for (int i = 0; i < 5; i++){
+			int integ = integers.get(i);
+			fiveItegers.add(integ);
+		}
+
+
+
+		for (Integer i: fiveItegers){
+			for (Map.Entry<com.varvara.entity.Collection, Integer> entry: map.entrySet()){
+				if (entry.getValue() == i){
+					fiveBigCollections.add(entry.getKey().getName());
+				}
+			}
+		}
+
+		List<String> result = new ArrayList<>();
+		for (String s: fiveBigCollections){
+			System.out.println("Collection - " + s);
+			result.add(s);
+		}
+
+
+		return result;
 	}
 
 	private List<String> workWithCollections( List<User> users){
@@ -169,7 +221,7 @@ public class UserService implements org.springframework.security.core.userdetail
 
 			if (!userCollections.isEmpty()){
 				for (com.varvara.entity.Collection collection : userCollections){
-					String string = ("Owner - " + user.getUsername() + ", Collection: name - " + collection.getName() + ", theme - " + collection.getTheme() + ", description - " + collection.getDescription());
+					String string = ("Owner - " + user.getUsername() + ", Collection:  theme - " + collection.getTheme() + ", name - " + collection.getName());
 					collectionsString.add(string);
 				}
 			}
