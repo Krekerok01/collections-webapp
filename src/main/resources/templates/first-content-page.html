@@ -160,13 +160,13 @@
 
 <div class="collections-info">
 
-    <h3>Collections: </h3>
+    <h3>Largest collections: </h3>
 
     <table class="table table-bordered table-striped" >
 
         <tbody>
-            <tr th:each="str : ${collectionsString}">
-                <td th:text="${str}" />
+            <tr th:each="collection : ${largestCollectionsList}">
+                <td th:text="${collection}" />
             </tr>
         </tbody>
     </table>
@@ -175,7 +175,7 @@
 
 <div class="last-added-collections-info">
 
-    <h3>Last added collections: </h3>
+    <h3>Last added items: </h3>
 
     <table class="table table-bordered table-striped" >
 

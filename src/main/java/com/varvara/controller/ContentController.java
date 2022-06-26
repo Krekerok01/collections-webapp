@@ -29,14 +29,8 @@ public class ContentController {
     @GetMapping("/")
     public String showMainPage(Model model){
 
-        List<String> stringListOfAllCollections = userService.getAllCollections();
-        Set<String> setOfStringTags = tagService.getStringListOfAllTags();
-
-        List<String> fiveBigCollections = userService.getBigCollections();
-
-
-        model.addAttribute("collectionsString", fiveBigCollections);
-        model.addAttribute("tagsSet", setOfStringTags);
+        model.addAttribute("largestCollectionsList", userService.getLargestCollections());
+        model.addAttribute("tagsSet", tagService.getStringListOfAllTags());
 
 
         return "first-content-page";

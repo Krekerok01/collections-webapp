@@ -51,4 +51,15 @@ public class CollectionServiceImpl implements CollectionService{
     public void deleteCollectionById(int id) {
         collectionRepository.deleteById(id);
     }
+
+    @Override
+    public Collection getCollectionByName(String name) {
+        Optional<Collection> optionalCollection = collectionRepository.findCollectionByName(name);
+
+        if (!optionalCollection.isPresent()){
+            throw new RuntimeException("Collection didn't find");
+        }
+
+        return optionalCollection.get();
+    }
 }

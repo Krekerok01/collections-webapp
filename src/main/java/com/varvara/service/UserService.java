@@ -2,6 +2,7 @@ package com.varvara.service;
 
 
 
+import com.varvara.entity.Collection;
 import com.varvara.entity.Role;
 import com.varvara.entity.User;
 import com.varvara.repository.RoleRepository;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -157,78 +159,86 @@ public class UserService implements org.springframework.security.core.userdetail
 
 
 
-	public List<String> getAllCollections(){
-		List<User> users = getAllUsers();
-		List<String> collectionsString = workWithCollections(users);
 
-		return collectionsString;
-	}
+	public List<String> getLargestCollections(){
 
-	public List<String> getBigCollections(){
-		List<com.varvara.entity.Collection> allCollections = collectionService.getAllCollections();
+		Map<Collection, Integer> collectionsAndItemsSizeMap = fillCollectionsAndItemsSizeMap(collectionService.getAllCollections());
 
-		Set<String> fiveBigCollections = new HashSet<>();
+		List<Integer> collectionsSizeList = fillCollectionsSizeList(collectionsAndItemsSizeMap);
 
-		Map<com.varvara.entity.Collection, Integer> map = new HashMap<>();
+		Set<String> theNamesOfTheFiveLargestCollections
+				= fillSetWithTheNamesOfTheLargestCollections(getFiveNumbersWithTheMaximumSizesOfItemsInTheCollections(collectionsSizeList), collectionsAndItemsSizeMap);
 
-		List<Integer> integers = new LinkedList<>();
-
-
-		for (com.varvara.entity.Collection collection: allCollections){
-			int itemsSize = collection.getItems().size();
-			map.put(collection, itemsSize);
-		}
-
-		for (Map.Entry<com.varvara.entity.Collection, Integer> entry: map.entrySet()){
-			integers.add(entry.getValue());
-		}
-
-		Collections.sort(integers);
-		Collections.reverse(integers);
-
-		List<Integer> fiveItegers = new LinkedList<>();
-
-		for (int i = 0; i < 5; i++){
-			int integ = integers.get(i);
-			fiveItegers.add(integ);
-		}
-
-
-
-		for (Integer i: fiveItegers){
-			for (Map.Entry<com.varvara.entity.Collection, Integer> entry: map.entrySet()){
-				if (entry.getValue() == i){
-					fiveBigCollections.add(entry.getKey().getName());
-				}
-			}
-		}
-
-		List<String> result = new ArrayList<>();
-		for (String s: fiveBigCollections){
-			System.out.println("Collection - " + s);
-			result.add(s);
-		}
+		List<String> result = getFiveLargestCollections(theNamesOfTheFiveLargestCollections);
 
 
 		return result;
 	}
 
-	private List<String> workWithCollections( List<User> users){
-		List<String> collectionsString = new ArrayList<>();
 
-		for (User user: users){
-			List<com.varvara.entity.Collection> userCollections = user.getCollections();
 
-			if (!userCollections.isEmpty()){
-				for (com.varvara.entity.Collection collection : userCollections){
-					String string = ("Owner - " + user.getUsername() + ", Collection:  theme - " + collection.getTheme() + ", name - " + collection.getName());
-					collectionsString.add(string);
-				}
+	private Map<Collection, Integer> fillCollectionsAndItemsSizeMap(List<Collection> allCollectionsList){
+		Map<Collection, Integer> collectionsAndItemsSizeMap = new HashMap<>();
+
+		for (Collection collection: allCollectionsList){
+			int itemsSize = collection.getItems().size();
+			collectionsAndItemsSizeMap.put(collection, itemsSize);
+		}
+
+		return collectionsAndItemsSizeMap;
+	}
+
+
+	private List<Integer> fillCollectionsSizeList(Map<Collection, Integer> collectionsAndItemsSizeMap) {
+		List<Integer> collectionsSizeList = new LinkedList<>();
+
+		for (Map.Entry<Collection, Integer> entry: collectionsAndItemsSizeMap.entrySet()){
+			collectionsSizeList.add(entry.getValue());
+		}
+
+		Collections.sort(collectionsSizeList);
+		Collections.reverse(collectionsSizeList);
+
+		return collectionsSizeList;
+	}
+
+
+	private Set<String> fillSetWithTheNamesOfTheLargestCollections
+			(List<Integer> fiveNumbersWithTheMaximumSizesOfItemsInTheCollections, Map<Collection, Integer> collectionsAndItemsSizeMap){
+
+		Set<String> theNamesOfTheFiveLargestCollections = new HashSet<>();
+
+		for (Integer number: fiveNumbersWithTheMaximumSizesOfItemsInTheCollections){
+			for (Map.Entry<Collection, Integer> entry: collectionsAndItemsSizeMap.entrySet()){
+				if (entry.getValue() == number) theNamesOfTheFiveLargestCollections.add(entry.getKey().getName());
 			}
 		}
 
-		return collectionsString;
+		return theNamesOfTheFiveLargestCollections;
 	}
+
+	private List<Integer> getFiveNumbersWithTheMaximumSizesOfItemsInTheCollections(List<Integer> collectionsSizeList) {
+		List<Integer> fiveNumbersWithTheMaximumSizesOfItemsInTheCollections = new LinkedList<>();
+
+		for (int i = 0; i < 5; i++){
+			fiveNumbersWithTheMaximumSizesOfItemsInTheCollections.add(collectionsSizeList.get(i));
+		}
+
+		return fiveNumbersWithTheMaximumSizesOfItemsInTheCollections;
+	}
+
+	private List<String> getFiveLargestCollections(Set<String> theNamesOfTheFiveLargestCollections) {
+
+		List<String> result = new ArrayList<>();
+		int i = 1;
+		for (String s: theNamesOfTheFiveLargestCollections){
+
+			Collection collection = collectionService.getCollectionByName(s);
+			result.add( i++ + ".   Collection:  Name - " + collection.getName() + "; Theme - " + collection.getTheme() + ".");
+		}
+		return result;
+	}
+
 
 
 
@@ -243,7 +253,7 @@ public class UserService implements org.springframework.security.core.userdetail
 				mapRolesToAuthorities(user.getRoles()));
 	}
 
-	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+	private java.util.Collection<? extends GrantedAuthority> mapRolesToAuthorities(java.util.Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 }

@@ -13,4 +13,6 @@ public interface CollectionService {
     public void saveCollection(Collection collection);
 
     public void deleteCollectionById(int id);
+
+    public Collection getCollectionByName(String name);
 }
