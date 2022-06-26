@@ -27,15 +27,13 @@ public class UserService implements org.springframework.security.core.userdetail
 
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
-	private CollectionService collectionService;
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository,  RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, CollectionService collectionService) {
+	public UserService(UserRepository userRepository,  RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
-		this.collectionService = collectionService;
 	}
 
 
@@ -156,90 +154,6 @@ public class UserService implements org.springframework.security.core.userdetail
 
 		return role.get();
 	}
-
-
-
-
-	public List<String> getLargestCollections(){
-
-		Map<Collection, Integer> collectionsAndItemsSizeMap = fillCollectionsAndItemsSizeMap(collectionService.getAllCollections());
-
-		List<Integer> collectionsSizeList = fillCollectionsSizeList(collectionsAndItemsSizeMap);
-
-		Set<String> theNamesOfTheFiveLargestCollections
-				= fillSetWithTheNamesOfTheLargestCollections(getFiveNumbersWithTheMaximumSizesOfItemsInTheCollections(collectionsSizeList), collectionsAndItemsSizeMap);
-
-		List<String> result = getFiveLargestCollections(theNamesOfTheFiveLargestCollections);
-
-
-		return result;
-	}
-
-
-
-	private Map<Collection, Integer> fillCollectionsAndItemsSizeMap(List<Collection> allCollectionsList){
-		Map<Collection, Integer> collectionsAndItemsSizeMap = new HashMap<>();
-
-		for (Collection collection: allCollectionsList){
-			int itemsSize = collection.getItems().size();
-			collectionsAndItemsSizeMap.put(collection, itemsSize);
-		}
-
-		return collectionsAndItemsSizeMap;
-	}
-
-
-	private List<Integer> fillCollectionsSizeList(Map<Collection, Integer> collectionsAndItemsSizeMap) {
-		List<Integer> collectionsSizeList = new LinkedList<>();
-
-		for (Map.Entry<Collection, Integer> entry: collectionsAndItemsSizeMap.entrySet()){
-			collectionsSizeList.add(entry.getValue());
-		}
-
-		Collections.sort(collectionsSizeList);
-		Collections.reverse(collectionsSizeList);
-
-		return collectionsSizeList;
-	}
-
-
-	private Set<String> fillSetWithTheNamesOfTheLargestCollections
-			(List<Integer> fiveNumbersWithTheMaximumSizesOfItemsInTheCollections, Map<Collection, Integer> collectionsAndItemsSizeMap){
-
-		Set<String> theNamesOfTheFiveLargestCollections = new HashSet<>();
-
-		for (Integer number: fiveNumbersWithTheMaximumSizesOfItemsInTheCollections){
-			for (Map.Entry<Collection, Integer> entry: collectionsAndItemsSizeMap.entrySet()){
-				if (entry.getValue() == number) theNamesOfTheFiveLargestCollections.add(entry.getKey().getName());
-			}
-		}
-
-		return theNamesOfTheFiveLargestCollections;
-	}
-
-	private List<Integer> getFiveNumbersWithTheMaximumSizesOfItemsInTheCollections(List<Integer> collectionsSizeList) {
-		List<Integer> fiveNumbersWithTheMaximumSizesOfItemsInTheCollections = new LinkedList<>();
-
-		for (int i = 0; i < 5; i++){
-			fiveNumbersWithTheMaximumSizesOfItemsInTheCollections.add(collectionsSizeList.get(i));
-		}
-
-		return fiveNumbersWithTheMaximumSizesOfItemsInTheCollections;
-	}
-
-	private List<String> getFiveLargestCollections(Set<String> theNamesOfTheFiveLargestCollections) {
-
-		List<String> result = new ArrayList<>();
-		int i = 1;
-		for (String s: theNamesOfTheFiveLargestCollections){
-
-			Collection collection = collectionService.getCollectionByName(s);
-			result.add( i++ + ".   Collection:  Name - " + collection.getName() + "; Theme - " + collection.getTheme() + ".");
-		}
-		return result;
-	}
-
-
 
 
 	@Override

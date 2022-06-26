@@ -180,9 +180,9 @@
     <table class="table table-bordered table-striped" >
 
         <tbody>
-     <!--   <tr th:each="collection : ${fiveLastAddedCollections}">
-            <td th:text="${collection}" />
-        </tr> -->
+            <tr th:each="item : ${lastAddedItemsList}">
+                <td th:text="${item}" />
+            </tr>
         </tbody>
     </table>
 

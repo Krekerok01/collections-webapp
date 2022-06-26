@@ -15,4 +15,6 @@ public interface CollectionService {
     public void deleteCollectionById(int id);
 
     public Collection getCollectionByName(String name);
+
+    public List<String> getLargestCollections();
 }
