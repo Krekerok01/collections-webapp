@@ -86,19 +86,19 @@
             left: 200px;
         }
 
-        .tags-list {
+        .tags-set {
             padding: 20px;
             margin: 25px 0;
         }
 
-        .tags-list>li {
+        .tags-set>li {
             display: inline-block;
             vertical-align: top;
             margin-right: 5px;
             margin-bottom: 5px;
         }
 
-        .tags-list>li>a {
+        .tags-set>li>a {
             position: relative;
             display: block;
             padding: 10px 15px;
@@ -108,7 +108,7 @@
             text-decoration: none;
         }
 
-        .tags-list>li>a:hover {
+        .tags-set>li>a:hover {
             background: #4F8FC4;
         }
 
@@ -170,8 +170,8 @@
 
     <h3>All tags: </h3>
 
-    <ul class="tags-list" >
-        <li th:each="tag : ${tagsList}">
+    <ul class="tags-set" >
+        <li th:each="tag : ${tagsSet}">
             <a href="#" th:text="${tag}" />
         </li>
 

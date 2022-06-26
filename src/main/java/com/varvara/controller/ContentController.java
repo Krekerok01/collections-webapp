@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ContentController {
@@ -29,11 +30,11 @@ public class ContentController {
     public String showMainPage(Model model){
 
         List<String> stringListOfAllCollections = userService.getAllCollections();
-        List<String> listOfStringTags = tagService.getStringListOfAllTags();
+        Set<String> setOfStringTags = tagService.getStringListOfAllTags();
 
 
         model.addAttribute("collectionsString", stringListOfAllCollections);
-        model.addAttribute("tagsList", listOfStringTags);
+        model.addAttribute("tagsSet", setOfStringTags);
 
 
         return "first-content-page";

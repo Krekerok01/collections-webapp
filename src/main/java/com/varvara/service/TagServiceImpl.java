@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TagServiceImpl implements TagService{
@@ -19,17 +21,17 @@ public class TagServiceImpl implements TagService{
     }
 
     @Override
-    public List<String> getStringListOfAllTags() {
+    public Set<String> getStringListOfAllTags() {
 
         List<Tag> tags = tagRepository.findAll();
 
-        List<String> tagsStringList = new ArrayList<>();
+        Set<String> tagsStringSet = new HashSet<>();
 
         for (Tag tag: tags){
             String tagString = "<" + tag.getName() + ">";
-            tagsStringList.add(tagString);
+            tagsStringSet.add(tagString);
         }
 
-        return tagsStringList;
+        return tagsStringSet;
     }
 }
