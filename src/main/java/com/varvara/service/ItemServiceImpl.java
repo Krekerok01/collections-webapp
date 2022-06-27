@@ -1,6 +1,8 @@
 package com.varvara.service;
 
+import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
+import com.varvara.entity.User;
 import com.varvara.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,22 +37,51 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public List<String> getLastAddedItems() {
 
-        List<Item> allItems = new LinkedList<>();
+        List<Item> allItems = reverseItemLinkedList(getLinkedListOfItems());
 
-        List<Item> items = getAllItems();
+        List<String> lastAddedItemsStringList = new LinkedList<>();
+        fillLastAddedItemsStringListFromAllItemsList(allItems, lastAddedItemsStringList);
 
-        for (Item i: items){
-            allItems.add(i);
+        return lastAddedItemsStringList;
+    }
+
+
+
+    public LinkedList<Item> getLinkedListOfItems(){
+        LinkedList<Item> allItems = new LinkedList<>();
+        addItemsToTheLinkedList(getAllItems(), allItems);
+
+        return allItems;
+    }
+
+    private void  addItemsToTheLinkedList(List<Item> allItems, LinkedList<Item> linkedListOfTheaAllItems){
+        for (Item i: allItems){
+            linkedListOfTheaAllItems.add(i);
         }
+    }
 
-        Collections.reverse(allItems);
+    public LinkedList<Item> reverseItemLinkedList(LinkedList<Item> items){
+        Collections.reverse(items);
+        return items;
+    }
 
-        List<String> lastAddedItemsList = new ArrayList<>();
-
+    private void fillLastAddedItemsStringListFromAllItemsList(List<Item> allItems,  List<String> lastAddedItemsStringList){
         for (int i = 0; i < 5; i++){
-            lastAddedItemsList.add(allItems.get(i).getName());
-        }
+            String itemName = allItems.get(i).getName();
+            String collectionName = allItems.get(i).getCollection().getName();
+            List<User> users = allItems.get(i).getCollection().getUsers();
 
-        return lastAddedItemsList;
+            findUsernameAndMergeAllData(itemName, collectionName, users, lastAddedItemsStringList);
+        }
+    }
+
+
+    private void findUsernameAndMergeAllData(String itemName, String collectionName, List<User> users, List<String> lastAddedItemsStringList){
+        for (User u: users){
+            String username = u.getUsername();
+
+            String resultItemString = "Item name - " + itemName  + ", collection name - " + collectionName + ", owner username - " + username;
+            lastAddedItemsStringList.add(resultItemString);
+        }
     }
 }

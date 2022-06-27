@@ -42,4 +42,9 @@ public class Collection {
                cascade = CascadeType.REMOVE)
     private List<Item> items;
 
+    @ManyToMany()
+    @JoinTable(name = "users_collections",
+            joinColumns = @JoinColumn(name = "collection_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users;
 }

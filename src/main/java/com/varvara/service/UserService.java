@@ -156,6 +156,7 @@ public class UserService implements org.springframework.security.core.userdetail
 	}
 
 
+
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
