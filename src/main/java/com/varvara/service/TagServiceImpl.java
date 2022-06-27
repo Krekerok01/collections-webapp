@@ -1,14 +1,13 @@
 package com.varvara.service;
 
 import com.varvara.entity.Tag;
+import com.varvara.entity.User;
 import com.varvara.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class TagServiceImpl implements TagService{
@@ -20,18 +19,35 @@ public class TagServiceImpl implements TagService{
         this.tagRepository = tagRepository;
     }
 
+
+
     @Override
-    public Set<String> getStringListOfAllTags() {
+    public Set<Tag> getSetOfAllTags() {
 
         List<Tag> tags = tagRepository.findAll();
+        Set<Tag> tagsSet = new HashSet<>();
 
-        Set<String> tagsStringSet = new HashSet<>();
+        fillTagsFromTheListToTheSet(tags, tagsSet);
 
-        for (Tag tag: tags){
-            String tagString = "<" + tag.getName() + ">";
-            tagsStringSet.add(tagString);
+
+        return tagsSet;
+    }
+
+    @Override
+    public Tag getTagById(int id) {
+
+        Optional<Tag> tag = tagRepository.findById(id);
+
+        if(!tag.isPresent()) {
+            throw new UsernameNotFoundException("User Not Found");
         }
 
-        return tagsStringSet;
+        return tag.get();
+    }
+
+    private void fillTagsFromTheListToTheSet(List<Tag> tags, Set<Tag> tagsSet){
+        for (Tag tag: tags){
+            tagsSet.add(tag);
+        }
     }
 }

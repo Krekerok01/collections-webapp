@@ -235,7 +235,7 @@
         <h3>All tags: </h3>
 
         <li th:each="tag : ${tagsSet}">
-            <a href="#" th:text="${tag}" />
+            <a th:href="@{showItemsByTag(tagId=${tag.id})}" th:text="${'<' + tag.name + '>'}" />
         </li>
 
     </ul>
