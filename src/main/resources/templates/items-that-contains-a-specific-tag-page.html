@@ -14,42 +14,15 @@
              background: #B9D6ED;
         }
 
-        .login {
+
+
+        .back-home {
             position: absolute;
             top: 15px;
             right: 20px;
             line-height: 1px;
         }
 
-
-         .registration {
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            line-height: 1px;
-        }
-
-
-         .pageForAdministration {
-            position: absolute;
-            top: 30px;
-            right: 250px;
-            line-height: 1px;
-        }
-
-        .yourPageButton {
-            position: absolute;
-            top: 30px;
-            right: 125px;
-            line-height: 1px;
-        }
-
-         .logout {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            line-height: 1px;
-        }
 
         .centralInformation {
             position: absolute;
@@ -105,28 +78,10 @@
 
 <div class="header">
 
-    <div sec:authorize="hasRole('ROLE_USER')" class="yourPageButton">
-        <button onclick="window.location.href='user/info'" class="btn btn-primary btn-sm mb-3">Your page</button>
-    </div>
-
-    <div sec:authorize="hasRole('ROLE_ADMIN')" class="pageForAdministration">
-        <button onclick="window.location.href='users/list'" class="btn btn-primary btn-sm mb-3">Page for Administration</button>
-    </div>
-
-
-    <div sec:authorize="isAuthenticated()" class="logout">
-        <form action="#" th:action="@{/logout}" method="POST">
-            <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
-        </form>
-    </div>
-
-
-    <div sec:authorize="isAnonymous()" class="login">
-        <button onclick="window.location.href='login'" class="btn btn-primary btn-sm mb-3">Login</button>
-    </div>
-
-    <div sec:authorize="isAnonymous()" class="registration">
-        <button onclick="window.location.href='register/registration'" class="btn btn-primary btn-sm mb-3">Registration</button>
+    <div class="back-home">
+        <a th:href="@{/}" class="btn btn-outline-primary btn-sm mb-3">
+            Back to main page
+        </a>
     </div>
 
     <h1 class="header-text">The world of collections</h1>
@@ -134,6 +89,8 @@
 
 
 <hr class="hr-double">
+
+
 
 
 <div>
