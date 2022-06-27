@@ -13,4 +13,6 @@ public interface ItemService {
     public List<Item> getAllItems();
 
     public List<String> getLastAddedItems();
+
+    public List<Item> getItemsThatContainsTheSpecificTag(String tagName);
 }

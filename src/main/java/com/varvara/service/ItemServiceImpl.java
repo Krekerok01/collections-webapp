@@ -2,6 +2,7 @@ package com.varvara.service;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
+import com.varvara.entity.Tag;
 import com.varvara.entity.User;
 import com.varvara.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,21 @@ public class ItemServiceImpl implements ItemService{
         return lastAddedItemsStringList;
     }
 
+    @Override
+    public List<Item> getItemsThatContainsTheSpecificTag(String tagName) {
+
+        List<Item> result = new ArrayList<>();
+
+        for (Item item: getAllItems()){
+            for (Tag t: item.getTags()){
+                if (tagName.equals(t.getName())){
+                    result.add(item);
+                }
+            }
+        }
+
+        return result;
+    }
 
 
     public LinkedList<Item> getLinkedListOfItems(){

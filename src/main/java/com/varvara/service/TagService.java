@@ -1,5 +1,6 @@
 package com.varvara.service;
 
+import com.varvara.entity.Item;
 import com.varvara.entity.Tag;
 
 import java.util.List;
