@@ -72,30 +72,73 @@
              left: 500px;
         }
 
-        .collections-info {
+
+        .collections-list {
             position: absolute;
-            top: 160px;
+            top: 95px;
             right: 200px;
             left: 200px;
+            padding: 20px;
+            margin: 25px 0;
         }
 
-        .last-added-collections-info {
-            position: absolute;
-            top: 450px;
-            right: 200px;
-            left: 200px;
+        .collections-list>li {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
 
-         .tags-info {
+        .collections-list>li>a {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            background: #95A4AD;
+            color: #053852;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .collections-list>li>a:hover {
+            background: #4F8FC4;
+        }
+
+
+
+
+        .items-list {
             position: absolute;
-            top: 750px;
+            top: 340px;
             right: 200px;
             left: 200px;
+            padding: 20px;
+            margin: 25px 0;
         }
+
+        .items-list>li {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .items-list>li>h4 {
+            padding: 5px 15px;
+            background: #4C87A1;
+            color: #3B3E45;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+
 
         .tags-set {
             padding: 20px;
             margin: 25px 0;
+            position: absolute;
+            top: 700px;
+            right: 200px;
+            left: 200px;
         }
 
         .tags-set>li {
@@ -118,6 +161,9 @@
         .tags-set>li>a:hover {
             background: #4F8FC4;
         }
+
+
+
 
     </style>
 
@@ -158,41 +204,36 @@
 
 <hr class="hr-double">
 
-<div class="collections-info">
+<div>
+    <ul class="collections-list">
+        <h3>Largest collections: </h3>
 
-    <h3>Largest collections: </h3>
+        <li th:each="collection : ${largestCollectionsList}">
+            <a href="#" th:text="${collection}" />
+        </li>
 
-    <table class="table table-bordered table-striped" >
-
-        <tbody>
-            <tr th:each="collection : ${largestCollectionsList}">
-                <td th:text="${collection}" />
-            </tr>
-        </tbody>
-    </table>
+    </ul>
 
 </div>
 
-<div class="last-added-collections-info">
+<div>
 
-    <h3>Last added items: </h3>
+    <ul class="items-list">
+        <h3>Last added items: </h3>
 
-    <table class="table table-bordered table-striped" >
+        <li th:each="item : ${lastAddedItemsList}">
+            <h4 th:text="${item}"/>
+        </li>
 
-        <tbody>
-            <tr th:each="item : ${lastAddedItemsList}">
-                <td th:text="${item}" />
-            </tr>
-        </tbody>
-    </table>
+    </ul>
 
 </div>
 
 <div class="tags-info">
 
-    <h3>All tags: </h3>
-
     <ul class="tags-set" >
+        <h3>All tags: </h3>
+
         <li th:each="tag : ${tagsSet}">
             <a href="#" th:text="${tag}" />
         </li>

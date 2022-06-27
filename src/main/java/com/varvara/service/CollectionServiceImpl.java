@@ -133,11 +133,10 @@ public class CollectionServiceImpl implements CollectionService{
     private List<String> getFiveLargestCollections(Set<String> theNamesOfTheFiveLargestCollections) {
 
         List<String> result = new ArrayList<>();
-        int i = 1;
         for (String s: theNamesOfTheFiveLargestCollections){
 
             Collection collection = getCollectionByName(s);
-            result.add( i++ + ".   Collection:  Name - " + collection.getName() + "; Theme - " + collection.getTheme() + ".");
+            result.add("Collection:  Name - " + collection.getName() + "; Theme - " + collection.getTheme() + ".");
         }
         return result;
     }
