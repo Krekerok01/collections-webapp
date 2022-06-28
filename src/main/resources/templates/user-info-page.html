@@ -144,7 +144,9 @@
                 <td th:text="${collect.name}" />
                 <td th:text="${collect.theme}" />
                 <td th:text="${collect.description}" />
-                <td th:text="${collect.imageUrl}" />
+                <td>
+                    <img th:src="${collect.imageUrl}" width="100" height="100"/>
+                </td>
                 <td>
                     <a th:href="@{showItems(collectionId=${collect.id})}" class="btn btn-danger btn-sm">
                         Show items
@@ -163,7 +165,7 @@
 
     </table>
 
-    <!-- add a button -->
+
 
     <a th:href="@{showFormForAddCollection}" class="btn btn-primary btn-sm mb-3">
         Add Collection
