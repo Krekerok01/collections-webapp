@@ -3,6 +3,7 @@ package com.varvara.service;
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
 import com.varvara.repository.CollectionRepository;
+import com.varvara.service.interfaces.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-public class CollectionServiceImpl implements CollectionService{
+public class CollectionServiceImpl implements CollectionService {
 
     private CollectionRepository collectionRepository;
 

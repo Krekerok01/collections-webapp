@@ -1,7 +1,7 @@
 package com.varvara.controller;
 
 
-import com.varvara.service.UserService;
+import com.varvara.service.UserServiceImpl;
 import com.varvara.dto.UserDataFromInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,11 @@ import java.util.logging.Logger;
 @RequestMapping("/register")
 public class RegistrationController {
 
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
 	@Autowired
-	public RegistrationController(UserService userService) {
-		this.userService = userService;
+	public RegistrationController(UserServiceImpl userServiceImpl) {
+		this.userServiceImpl = userServiceImpl;
 	}
 
 	private Logger logger = Logger.getLogger(getClass().getName());
@@ -42,7 +42,7 @@ public class RegistrationController {
 			return "registration";
 		}
 
-        userService.saveUserDataFromInput(userDataFromInput);
+        userServiceImpl.saveUserDataFromInput(userDataFromInput);
         logger.info("Successfully created user: " + userDataFromInput.getUsername());
         
         return "registration-confirmation";		

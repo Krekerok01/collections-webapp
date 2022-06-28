@@ -1,4 +1,4 @@
-package com.varvara.service;
+package com.varvara.service.interfaces;
 
 import com.varvara.entity.Item;
 import com.varvara.entity.Tag;

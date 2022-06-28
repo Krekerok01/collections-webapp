@@ -5,13 +5,14 @@ import com.varvara.entity.Item;
 import com.varvara.entity.Tag;
 import com.varvara.entity.User;
 import com.varvara.repository.ItemRepository;
+import com.varvara.service.interfaces.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
 
     private ItemRepository itemRepository;
 
@@ -47,9 +48,9 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<Item> getItemsThatContainsTheSpecificTag(String tagName) {
+    public Set<Item> getItemsThatContainsTheSpecificTag(String tagName) {
 
-        List<Item> result = new ArrayList<>();
+        Set<Item> result = new HashSet<>();
 
         for (Item item: getAllItems()){
             for (Tag t: item.getTags()){

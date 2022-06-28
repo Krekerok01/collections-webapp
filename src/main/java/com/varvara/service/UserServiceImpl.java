@@ -25,14 +25,14 @@ import java.util.stream.Collectors;
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
 
 @Service
-public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
 
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository,  RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;

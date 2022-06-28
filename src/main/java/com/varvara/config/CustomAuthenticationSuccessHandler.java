@@ -2,7 +2,7 @@ package com.varvara.config;
 
 
 import com.varvara.entity.User;
-import com.varvara.service.UserService;
+import com.varvara.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -13,16 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     public static String authenticationUserName;
     public static int authenticationUserId;
@@ -40,7 +37,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		logger.info("Successfully authenticated user with username - " + username);
 
 
-		User theUser = userService.findByUsername(username);
+		User theUser = userServiceImpl.findByUsername(username);
 		authenticationUserId = theUser.getId();
 
 

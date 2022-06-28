@@ -1,8 +1,8 @@
 package com.varvara.service;
 
 import com.varvara.entity.Tag;
-import com.varvara.entity.User;
 import com.varvara.repository.TagRepository;
+import com.varvara.service.interfaces.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class TagServiceImpl implements TagService{
+public class TagServiceImpl implements TagService {
 
     private TagRepository tagRepository;
 

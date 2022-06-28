@@ -2,9 +2,9 @@ package com.varvara.controller;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
-import com.varvara.service.CollectionService;
-import com.varvara.service.ItemService;
-import com.varvara.service.UserService;
+import com.varvara.service.interfaces.CollectionService;
+import com.varvara.service.interfaces.ItemService;
+import com.varvara.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +19,14 @@ public class CollectionController {
 
     private Collection collection;
 
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     private CollectionService collectionService;
     private ItemService itemService;
 
 
     @Autowired
-    public CollectionController(UserService userService, CollectionService collectionService, ItemService itemService) {
-        this.userService = userService;
+    public CollectionController(UserServiceImpl userServiceImpl, CollectionService collectionService, ItemService itemService) {
+        this.userServiceImpl = userServiceImpl;
         this.collectionService = collectionService;
         this.itemService = itemService;
     }
@@ -50,7 +50,7 @@ public class CollectionController {
             return "collection-add-form";
         }
 
-        userService.saveCollectionToTheUser(collection);
+        userServiceImpl.saveCollectionToTheUser(collection);
 
         return "redirect:/user/info";
 

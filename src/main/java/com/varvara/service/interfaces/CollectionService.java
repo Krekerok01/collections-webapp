@@ -1,4 +1,4 @@
-package com.varvara.service;
+package com.varvara.service.interfaces;
 
 import com.varvara.entity.Collection;
 
