@@ -62,6 +62,15 @@ public class ItemServiceImpl implements ItemService{
         return result;
     }
 
+    @Override
+    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection) {
+        List<Tag> tags = getTagsFromTagsString(item, tagsString);
+
+        item.setTags(tags);
+        item.setCollection(collection);
+        saveItem(item);
+    }
+
 
     public LinkedList<Item> getLinkedListOfItems(){
         LinkedList<Item> allItems = new LinkedList<>();
@@ -99,5 +108,21 @@ public class ItemServiceImpl implements ItemService{
             String resultItemString = "Item name - " + itemName  + ", collection name - " + collectionName + ", owner username - " + username;
             lastAddedItemsStringList.add(resultItemString);
         }
+    }
+
+    private List<Tag> getTagsFromTagsString(Item item, String tagsString){
+
+        List<Tag> tags = new ArrayList<>();
+
+
+        List<String> stringTagsList = Arrays.asList(tagsString.split("[, ]+"));
+        for (String s: stringTagsList){
+            Tag tag = new Tag();
+            tag.setName(s);
+            tag.setItem(item);
+            tags.add(tag);
+        }
+
+        return tags;
     }
 }

@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
+
 @Service
 public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
 
@@ -153,6 +155,14 @@ public class UserService implements org.springframework.security.core.userdetail
 		}
 
 		return role.get();
+	}
+
+	public void saveCollectionToTheUser(Collection collection){
+		User user = findByUsername(authenticationUserName);
+		List<Collection> userCollections = user.getCollections();
+
+		userCollections.add(collection);
+		saveUser(user);
 	}
 
 

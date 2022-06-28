@@ -50,10 +50,9 @@ public class ContentController {
     public String showTheSelectedCollection(@RequestParam("collectionId") int collectionId, Model model){
 
         Collection collection = collectionService.getCollectionById(collectionId);
-        List<Item> items = collection.getItems();
 
         model.addAttribute("collection", collection);
-        model.addAttribute("items", items);
+        model.addAttribute("items", collection.getItems());
         model.addAttribute("owner", collection.getUsers().get(0));
 
         return "collection-and-items-page";

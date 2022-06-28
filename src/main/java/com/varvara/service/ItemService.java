@@ -1,5 +1,6 @@
 package com.varvara.service;
 
+import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface ItemService {
     public List<String> getLastAddedItems();
 
     public List<Item> getItemsThatContainsTheSpecificTag(String tagName);
+
+    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection);
 }

@@ -6,6 +6,10 @@ import com.varvara.repository.CollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -78,6 +82,24 @@ public class CollectionServiceImpl implements CollectionService{
         return result;
     }
 
+    @Override
+    public List<String> getThemesNamesList() {
+        List<String> themes = new ArrayList<>();
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File("src/main/resources/static/themes.txt")));
+
+            String s = reader.readLine();
+            while (s != null){
+                themes.add(s);
+                s = reader.readLine();
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return themes;
+    }
 
 
     private Map<Collection, Integer> fillCollectionsAndItemsSizeMap(List<Collection> allCollectionsList){

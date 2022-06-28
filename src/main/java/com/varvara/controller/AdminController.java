@@ -27,7 +27,6 @@ public class AdminController {
     public String showListPage(Model model){
 
         model.addAttribute("users", userService.getAllUsers());
-
         return "users_list.html";
     }
 
@@ -35,12 +34,7 @@ public class AdminController {
     public String deleteUser(@RequestParam("userId") int id){
 
         userService.delete(id);
-
-        if (id == authenticationUserId) {
-            return "redirect:/login";
-        } else {
-            return "redirect:/users/list";
-        }
+        return (id == authenticationUserId) ? "redirect:/login" : "redirect:/users/list";
     }
 
 
@@ -48,19 +42,13 @@ public class AdminController {
     public String blockUser(@RequestParam("username") String username){
 
         userService.blockUser(username);
-
-        if (username.equals(authenticationUserName)){
-            return "redirect:/login";
-        } else {
-            return "redirect:/users/list";
-        }
+        return username.equals(authenticationUserName) ? "redirect:/login": "redirect:/users/list";
     }
 
     @GetMapping("/unblockUser")
     public String unblockUser(@RequestParam("username") String username){
 
         userService.unblockUser(username);
-
         return "redirect:/users/list";
     }
 
@@ -68,7 +56,6 @@ public class AdminController {
     public String addToAdmins(@RequestParam("username") String username){
 
         userService.addUserToAdmins(username);
-
         return "redirect:/users/list";
     }
 
@@ -77,7 +64,6 @@ public class AdminController {
     public String removeFromAdmins(@RequestParam("username") String username){
 
         userService.removeUserFromAdmins(username);
-
         return "redirect:/users/list";
     }
 }
