@@ -204,7 +204,7 @@
         <h3>Largest collections: </h3>
 
         <li th:each="collection : ${largestCollectionsList}">
-            <a href="#" th:text="${collection}" />
+            <a th:href="@{showTheSelectedCollection(collectionId=${collection.id})}" th:text="${'Collection: NAME - ' + collection.name + ', THEME - ' + collection.theme + '.'}" />
         </li>
 
     </ul>

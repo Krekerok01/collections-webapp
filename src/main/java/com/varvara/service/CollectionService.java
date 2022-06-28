@@ -16,5 +16,5 @@ public interface CollectionService {
 
     public Collection getCollectionByName(String name);
 
-    public List<String> getLargestCollections();
+    public List<Collection> getLargestCollections();
 }

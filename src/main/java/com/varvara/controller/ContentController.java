@@ -1,6 +1,8 @@
 package com.varvara.controller;
 
 
+import com.varvara.entity.Collection;
+import com.varvara.entity.Item;
 import com.varvara.service.CollectionService;
 import com.varvara.service.ItemService;
 import com.varvara.service.TagService;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 
 
 @Controller
@@ -41,6 +44,22 @@ public class ContentController {
 
         return "first-content-page";
     }
+
+
+    @GetMapping("/showTheSelectedCollection")
+    public String showTheSelectedCollection(@RequestParam("collectionId") int collectionId, Model model){
+
+        Collection collection = collectionService.getCollectionById(collectionId);
+        List<Item> items = collection.getItems();
+
+        model.addAttribute("collection", collection);
+        model.addAttribute("items", items);
+        model.addAttribute("owner", collection.getUsers().get(0));
+
+        return "collection-and-items-page";
+    }
+
+
 
     @GetMapping("/showItemsByTag")
     public String showItemsByTag(@RequestParam("tagId") int tagId, Model model){

@@ -63,7 +63,7 @@ public class CollectionServiceImpl implements CollectionService{
         return optionalCollection.get();
     }
 
-    public List<String> getLargestCollections(){
+    public List<Collection> getLargestCollections(){
 
         Map<Collection, Integer> collectionsAndItemsSizeMap = fillCollectionsAndItemsSizeMap(getAllCollections());
 
@@ -72,7 +72,7 @@ public class CollectionServiceImpl implements CollectionService{
         Set<String> theNamesOfTheFiveLargestCollections
                 = fillSetWithTheNamesOfTheLargestCollections(getFiveNumbersWithTheMaximumSizesOfItemsInTheCollections(collectionsSizeList), collectionsAndItemsSizeMap);
 
-        List<String> result = getFiveLargestCollections(theNamesOfTheFiveLargestCollections);
+        List<Collection> result = getFiveLargestCollections(theNamesOfTheFiveLargestCollections);
 
 
         return result;
@@ -130,13 +130,11 @@ public class CollectionServiceImpl implements CollectionService{
         return fiveNumbersWithTheMaximumSizesOfItemsInTheCollections;
     }
 
-    private List<String> getFiveLargestCollections(Set<String> theNamesOfTheFiveLargestCollections) {
+    private List<Collection> getFiveLargestCollections(Set<String> theNamesOfTheFiveLargestCollections) {
 
-        List<String> result = new ArrayList<>();
+        List<Collection> result = new ArrayList<>();
         for (String s: theNamesOfTheFiveLargestCollections){
-
-            Collection collection = getCollectionByName(s);
-            result.add("Collection:  Name - " + collection.getName() + "; Theme - " + collection.getTheme() + ".");
+            result.add(getCollectionByName(s));
         }
         return result;
     }
