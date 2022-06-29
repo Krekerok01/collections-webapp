@@ -59,9 +59,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Set<Item> getItemsThatContainsTheSpecificTag(String tagName) {
+    public List<Item> getItemsThatContainsTheSpecificTag(String tagName) {
 
-        Set<Item> result = new HashSet<>();
+        List<Item> result = new ArrayList<>();
 
         for (Item item: getAllItems()){
             for (Tag t: item.getTags()){

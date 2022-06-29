@@ -63,7 +63,7 @@ public class ContentController {
         String tagName = tagService.getTagById(tagId).getName();
 
         model.addAttribute("tagName", tagName);
-        model.addAttribute("itemsThatContainsSpecificTagSet", itemService.getItemsThatContainsTheSpecificTag(tagName));
+        model.addAttribute("itemsThatContainsSpecificTagList", itemService.getItemsThatContainsTheSpecificTag(tagName));
 
         return "items-that-contains-a-specific-tag-page";
     }

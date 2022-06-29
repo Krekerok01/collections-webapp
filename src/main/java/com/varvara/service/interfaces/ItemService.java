@@ -18,7 +18,7 @@ public interface ItemService {
 
     public List<String> getLastAddedItems();
 
-    public Set<Item> getItemsThatContainsTheSpecificTag(String tagName);
+    public List<Item> getItemsThatContainsTheSpecificTag(String tagName);
 
     public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection);
 }

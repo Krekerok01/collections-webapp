@@ -170,7 +170,14 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username).get();
+
+		Optional<User> optionalUser = userRepository.findByUsername(username);
+
+		if (!optionalUser.isPresent()){
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+
+		User user = optionalUser.get();
 		if (user == null || user.getStatus().equals("BLOCKED")) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}

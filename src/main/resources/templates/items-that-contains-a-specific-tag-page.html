@@ -101,7 +101,7 @@
     <ul class="items-list">
         <h1 >Items that contains this tag:  </h1>
 
-        <li th:each="item : ${itemsThatContainsSpecificTagSet}">
+        <li th:each="item : ${itemsThatContainsSpecificTagList}">
             <a th:href="@{item/showItemInfo(itemId=${item.id})}" th:text="${item.name}"/>
         </li>
     </ul>
