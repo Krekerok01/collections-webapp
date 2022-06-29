@@ -7,6 +7,8 @@
           rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
 
+
+
     <title>Item info</title>
 
     <style>
@@ -45,13 +47,6 @@
              left: 500px;
         }
 
-        .comments {
-            position: absolute;
-            top: 150px;
-            right: 200px;
-            left: 600px;
-            background: #C1C7E0;
-        }
 
 
         .item-info {
@@ -76,6 +71,16 @@
             color: #3B3E45;
             border-radius: 5px;
             text-decoration: none;
+        }
+
+
+
+        .comments {
+            position: absolute;
+            top: 150px;
+            right: 200px;
+            left: 600px;
+            background: #C1C7E0;
         }
 
 
@@ -119,7 +124,8 @@
         <h1 >Comments:  </h1>
 
         <li th:each="comment : ${itemComments}">
-            <h4 th:text="${comment.commentText}"/>
+            <h4 style="display:inline;" th:text="${comment.user.firstName + ': '}"/>
+            <h4 style="display:inline;" th:text="${comment.commentText}"/>
         </li>
     </ul>
 
@@ -128,10 +134,16 @@
 
         <input type="hidden" th:field="*{id}" />
 
-        <input type="text"  th:field="*{commentText}"
-               class="form-control mb-4 col-4" placeholder="Type your comment..." />
+        <div class="input-group">
+            <input type="text"  th:field="*{commentText}" class="form-control input-sm chat_input" placeholder="Type your comment..." />
 
-        <button type="submit" class="btn btn-secondary btn-sm">Send</button>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-secondary">Send</button>
+            </span>
+        </div>
+
+
+
 
     </form>
 
