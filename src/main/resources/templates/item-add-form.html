@@ -41,8 +41,10 @@
         <input type="text" th:field="*{name}"
                class="form-control mb-4 col-4" placeholder="Collection name" />
 
-        <!-- Tags? -->
-        <input type="text" name="tagsString" id="tagsString"  class="form-control mb-4 col-4" placeholder="Tags">
+
+        <p class="fst-italic">Tags should be separated by a comma with a space.</p>
+        <input type="text" pattern="[[a-zA-Z]+, ]+" name="tagsString" id="tagsString"  class="form-control mb-4 col-4" placeholder="Tags">
+
 
 
         <button type="submit" class="btn btn-info col-2">Save</button>

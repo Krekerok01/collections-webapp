@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.validation.Valid;
 
 
@@ -79,10 +81,12 @@ public class CollectionController {
     }
 
     @PostMapping("/saveItem")
-    public String saveItem(@ModelAttribute("item") Item item, @RequestParam(value = "tagsString") String tagsString){
+    public String saveItem(@ModelAttribute("item") Item item, @RequestParam(value = "tagsString") String tagsString, RedirectAttributes redirectAttributes){
 
         itemService.setTagsAndCollectionAndSaveItem(item, tagsString, collection);
-        return "redirect:/user/info";
+        redirectAttributes.addAttribute("collectionId", collection.getId());
+
+        return "redirect:/user/showItems";
     }
 
 
