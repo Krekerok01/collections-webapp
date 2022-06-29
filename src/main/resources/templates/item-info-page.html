@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
 
@@ -45,6 +45,14 @@
              left: 500px;
         }
 
+        .comments {
+            position: absolute;
+            top: 150px;
+            right: 200px;
+            left: 600px;
+            background: #C1C7E0;
+        }
+
 
         .item-info {
             position: absolute;
@@ -70,9 +78,7 @@
             text-decoration: none;
         }
 
-        .item-info>li>a:hover {
-            background: #4F8FC4;
-        }
+
 
     </style>
 
@@ -102,11 +108,33 @@
 
         <li>
             <h4 th:text="${item.name}"/>
-            <a th:href="@{addCommentToTheItem(itemId=${item.id})}" class="btn btn-danger btn-sm">
-                Add comment
-            </a>
+
         </li>
     </ul>
+</div>
+
+<div class="comments">
+
+    <ul>
+        <h1 >Comments:  </h1>
+
+        <li th:each="comment : ${itemComments}">
+            <h4 th:text="${comment.commentText}"/>
+        </li>
+    </ul>
+
+
+    <form sec:authorize="isAuthenticated()" th:action="@{saveComment}" th:object="${comment}" method="POST">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <input type="text"  th:field="*{commentText}"
+               class="form-control mb-4 col-4" placeholder="Type your comment..." />
+
+        <button type="submit" class="btn btn-secondary btn-sm">Send</button>
+
+    </form>
+
 </div>
 
 </body>

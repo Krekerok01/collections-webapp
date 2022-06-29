@@ -13,4 +13,6 @@ public interface CommentService {
     public void saveComment(Comment comment, User user, Item item);
 
     public void deleteComment(int commentId);
+
+    public List<Comment> getCommentsToThisItem(int itemId);
 }

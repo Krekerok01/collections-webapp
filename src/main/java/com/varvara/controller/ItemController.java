@@ -38,23 +38,20 @@ public class ItemController {
     @GetMapping("/showItemInfo")
     public String showItemInfo(@RequestParam(value = "itemId") int itemId, Model model){
 
+        item = itemService.getItemById(itemId);
+
+        model.addAttribute("comment", new Comment());
         model.addAttribute("item", itemService.getItemById(itemId));
+        model.addAttribute("itemComments", commentService.getCommentsToThisItem(itemId));
         return "item-info-page";
     }
 
-    @GetMapping("/addCommentToTheItem")
-    public String addCommentToTheItem(@RequestParam(value = "itemId") int itemId, Model model){
 
-        item = itemService.getItemById(itemId);
-        user = userService.findById(authenticationUserId);
-        //user = item.getCollection().getUsers().get(0);
-        model.addAttribute("comment", new Comment());
-
-        return "comment-add-page";
-    }
 
     @PostMapping("/saveComment")
     public String saveComment(@ModelAttribute("comment") Comment comment,  RedirectAttributes redirectAttributes){
+
+        user = userService.findById(authenticationUserId);
 
         commentService.saveComment(comment, user, item);
         redirectAttributes.addAttribute("itemId", item.getId());

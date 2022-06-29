@@ -5,6 +5,7 @@ import com.varvara.entity.Item;
 import com.varvara.entity.User;
 import com.varvara.repository.CommentRepository;
 import com.varvara.service.interfaces.CommentService;
+import com.varvara.service.interfaces.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,12 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     private CommentRepository commentRepository;
+    private ItemService itemService;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, ItemService itemService) {
         this.commentRepository = commentRepository;
+        this.itemService = itemService;
     }
 
     @Override
@@ -35,5 +38,12 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(int commentId) {
         commentRepository.deleteById(commentId);
+    }
+
+    @Override
+    public List<Comment> getCommentsToThisItem(int itemId) {
+        Item item = itemService.getItemById(itemId);
+        List<Comment> comments = item.getComments();
+        return comments;
     }
 }
