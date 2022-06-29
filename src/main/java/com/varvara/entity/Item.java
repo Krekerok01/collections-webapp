@@ -31,6 +31,10 @@ public class Item {
                cascade = CascadeType.ALL)
     private List<Tag> tags;
 
+    @OneToMany(mappedBy = "item",
+              cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -8,6 +8,8 @@ import java.util.Set;
 
 public interface ItemService {
 
+    public Item getItemById(int id);
+
     public void deleteItemById(int id);
 
     public void saveItem(Item item);

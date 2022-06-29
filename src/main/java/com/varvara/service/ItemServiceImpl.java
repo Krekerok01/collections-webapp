@@ -22,6 +22,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public Item getItemById(int id) {
+
+        Optional<Item> item = itemRepository.findItemById(id);
+
+        if (!item.isPresent()){
+            throw new RuntimeException("Item didn't find");
+        }
+        return item.get();
+    }
+
+    @Override
     public void deleteItemById(int id) {
         itemRepository.deleteById(id);
     }
