@@ -76,9 +76,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection) {
-        List<Tag> tags = getTagsFromTagsString(item, tagsString);
-
-        item.setTags(tags);
+        item.setTags(getTagsFromTagsString(item, tagsString));
         item.setCollection(collection);
         saveItem(item);
     }
@@ -125,7 +123,6 @@ public class ItemServiceImpl implements ItemService {
     private List<Tag> getTagsFromTagsString(Item item, String tagsString){
 
         List<Tag> tags = new ArrayList<>();
-
 
         List<String> stringTagsList = Arrays.asList(tagsString.split("[, ]+"));
         for (String s: stringTagsList){

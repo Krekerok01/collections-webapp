@@ -12,10 +12,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
 
+    private Logger logger = Logger.getLogger(getClass().getName());
     private CollectionRepository collectionRepository;
 
     @Autowired
@@ -89,14 +91,12 @@ public class CollectionServiceImpl implements CollectionService {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File("src/main/resources/static/themes.txt")));
-
-            String s = reader.readLine();
-            while (s != null){
+            String s;
+            while ((s = reader.readLine()) != null){
                 themes.add(s);
-                s = reader.readLine();
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.info(e.getMessage());
         }
 
         return themes;

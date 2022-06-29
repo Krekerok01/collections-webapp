@@ -20,15 +20,11 @@ public class TagServiceImpl implements TagService {
     }
 
 
-
     @Override
     public Set<Tag> getSetOfAllTags() {
 
-        List<Tag> tags = tagRepository.findAll();
         Set<Tag> tagsSet = new HashSet<>();
-
-        fillTagsFromTheListToTheSet(tags, tagsSet);
-
+        fillTagsFromTheListToTheSet(tagRepository.findAll(), tagsSet);
 
         return tagsSet;
     }
@@ -39,7 +35,7 @@ public class TagServiceImpl implements TagService {
         Optional<Tag> tag = tagRepository.findById(id);
 
         if(!tag.isPresent()) {
-            throw new UsernameNotFoundException("User Not Found");
+            throw new UsernameNotFoundException("Tag didn't find");
         }
 
         return tag.get();

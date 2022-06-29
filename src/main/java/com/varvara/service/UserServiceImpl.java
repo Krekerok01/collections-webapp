@@ -87,23 +87,19 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 
 		List<Role> roles = (List<Role>) user.getRoles();
 		if (roles.size() == 1){
-			Role role = findRoleByName("ROLE_ADMIN");
-			roles.add(role);
+			roles.add(findRoleByName("ROLE_ADMIN"));
 		}
 
 		user.setRoles(roles);
-
 		saveUser(user);
 	}
 
 	public void removeUserFromAdmins(String username){
-		User user = findByUsername(username);
 
+		User user = findByUsername(username);
 		List<Role> roles = new ArrayList<>();
 
-		Role role = findRoleByName("ROLE_USER");
-		roles.add(role);
-
+		roles.add(findRoleByName("ROLE_USER"));
 		user.setRoles(roles);
 
 		saveUser(user);
@@ -142,10 +138,11 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 		String rolesString = "";
 
 		for (Role r: roles){
-			rolesString += r.getName() + " ";
+			rolesString += r.getName() + ", ";
 		}
-		return rolesString;
+		return rolesString.substring(0, rolesString.length() - 2);
 	}
+
 
 	public Role findRoleByName(String name) {
 		Optional<Role> role = roleRepository.findRoleByName(name);
@@ -172,21 +169,29 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		Optional<User> optionalUser = userRepository.findByUsername(username);
-
-		if (!optionalUser.isPresent()){
-			throw new UsernameNotFoundException("Invalid username or password.");
-		}
+		isOptionalUserPresent(optionalUser);
 
 		User user = optionalUser.get();
-		if (user == null || user.getStatus().equals("BLOCKED")) {
-			throw new UsernameNotFoundException("Invalid username or password.");
-		}
+		checkUserСondition(user);
+
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				mapRolesToAuthorities(user.getRoles()));
 	}
 
 	private java.util.Collection<? extends GrantedAuthority> mapRolesToAuthorities(java.util.Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
+
+	private void isOptionalUserPresent(Optional<User> optionalUser){
+		if (!optionalUser.isPresent()){
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+	}
+
+	private void checkUserСondition(User user){
+		if (user == null || user.getStatus().equals("BLOCKED")) {
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
 	}
 }
 

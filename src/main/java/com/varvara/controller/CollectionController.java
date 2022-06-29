@@ -61,7 +61,6 @@ public class CollectionController {
 
         Collection collection = collectionService.getCollectionById(collectionId);
         model.addAttribute("collection", collection);
-
         model.addAttribute("items", collection.getItems());
 
         return "items-page";
