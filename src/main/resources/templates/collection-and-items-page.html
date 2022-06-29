@@ -76,7 +76,7 @@
             margin-bottom: 5px;
         }
 
-        .items-list>li>h4 {
+        .items-list>li>a {
             padding: 5px 15px;
             background: #4C87A1;
             color: #3B3E45;
@@ -121,7 +121,7 @@
         <h1 >Items:</h1>
 
         <li th:each="item : ${items}">
-            <h4 th:text="${item.name}"/>
+            <a th:href="@{item/showItemInfo(itemId=${item.id})}" th:text="${item.name}"/>
         </li>
     </ul>
 </div>

@@ -81,6 +81,21 @@
             right: 200px;
             left: 600px;
             background: #C1C7E0;
+            border: 4px double black;
+        }
+
+        .comments-li {
+            list-style-type: none;
+            vertical-align: top;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .comments-li>h4 {
+            padding: 5px 15px;
+            color: #3B3E45;
+            border-radius: 5px;
+            text-decoration: none;
         }
 
 
@@ -118,34 +133,33 @@
     </ul>
 </div>
 
+
 <div class="comments">
 
-    <ul>
-        <h1 >Comments:  </h1>
+        <ul>
+            <h1>Comments:  </h1>
 
-        <li th:each="comment : ${itemComments}">
-            <h4 style="display:inline;" th:text="${comment.user.firstName + ': '}"/>
-            <h4 style="display:inline;" th:text="${comment.commentText}"/>
-        </li>
-    </ul>
-
-
-    <form sec:authorize="isAuthenticated()" th:action="@{saveComment}" th:object="${comment}" method="POST">
-
-        <input type="hidden" th:field="*{id}" />
-
-        <div class="input-group">
-            <input type="text"  th:field="*{commentText}" class="form-control input-sm chat_input" placeholder="Type your comment..." />
-
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-secondary">Send</button>
-            </span>
-        </div>
+            <li th:each="comment : ${itemComments}" class="comments-li">
+                <h4 style="display:inline;" th:text="${comment.user.firstName + ': '}"/>
+                <h4 style="display:inline;" class="fst-italic" th:text="${comment.commentText}"/>
+                <br>
+            </li>
+        </ul>
 
 
+        <form sec:authorize="isAuthenticated()" th:action="@{saveComment}" th:object="${comment}" method="POST">
 
+            <input type="hidden" th:field="*{id}" />
 
-    </form>
+            <div class="input-group">
+                <input type="text"  th:field="*{commentText}" class="form-control input-sm chat_input" placeholder="Type your comment..." />
+
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-secondary">Send</button>
+                </span>
+            </div>
+
+        </form>
 
 </div>
 
