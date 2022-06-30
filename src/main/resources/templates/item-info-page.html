@@ -131,7 +131,11 @@
         </li>
 
         <li th:each="otherField : ${item.otherFields}">
-            <h4 th:text="${otherField.name + ' - ' + otherField.value}"/>
+                <h4 th:text="${otherField.name}"/>
+
+            <p th:each="value : ${otherField.value}">
+                value.text
+            </p>
         </li>
     </ul>
 </div>

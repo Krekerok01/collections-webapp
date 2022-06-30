@@ -31,8 +31,6 @@ public class OtherFieldServiceImpl implements OtherFieldService {
         otherField.setName(name);
         otherField.setCollection(collection);
 
-        System.out.println("OK");
-        System.out.println(collection.getId());
         otherFieldRepository.save(otherField);
     }
 

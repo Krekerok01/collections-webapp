@@ -26,8 +26,9 @@ public class OtherField {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "value")
-    private String value;
+    @OneToMany(mappedBy = "otherField",
+            cascade = CascadeType.REMOVE)
+    private List<OtherFieldValue> value;
 
     @ManyToOne()
     @JoinColumn(name = "collection_id")

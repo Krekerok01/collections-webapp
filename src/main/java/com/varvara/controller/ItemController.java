@@ -1,8 +1,6 @@
 package com.varvara.controller;
 
-import com.varvara.entity.Comment;
-import com.varvara.entity.Item;
-import com.varvara.entity.User;
+import com.varvara.entity.*;
 import com.varvara.service.UserServiceImpl;
 import com.varvara.service.interfaces.CommentService;
 import com.varvara.service.interfaces.ItemService;
@@ -39,6 +37,18 @@ public class ItemController {
     public String showItemInfo(@RequestParam(value = "itemId") int itemId, Model model){
 
         item = itemService.getItemById(itemId);
+
+        List<OtherField> otherFields = item.getOtherFields();
+
+
+        for (OtherField o: otherFields){
+            List<OtherFieldValue> otherFieldValues = o.getValue();
+            System.out.println(">>>>>>>>   otherFieldValues - " + otherFieldValues.size());
+
+            for (OtherFieldValue otfv: otherFieldValues){
+                System.out.println("*** text:  " + otfv.getText());
+            }
+        }
 
         model.addAttribute("comment", new Comment());
         model.addAttribute("item", itemService.getItemById(itemId));

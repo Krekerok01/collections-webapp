@@ -6,6 +6,7 @@ import com.varvara.repository.ItemRepository;
 import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.ItemService;
 import com.varvara.service.interfaces.OtherFieldService;
+import com.varvara.service.interfaces.OtherFieldValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,14 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
     private CollectionService collectionService;
     private OtherFieldService otherFieldService;
+    private OtherFieldValueService otherFieldValueService;
 
     @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository, CollectionService collectionService, OtherFieldService otherFieldService) {
+    public ItemServiceImpl(ItemRepository itemRepository, CollectionService collectionService, OtherFieldService otherFieldService, OtherFieldValueService otherFieldValueService) {
         this.itemRepository = itemRepository;
         this.collectionService = collectionService;
         this.otherFieldService = otherFieldService;
+        this.otherFieldValueService = otherFieldValueService;
     }
 
     @Override
@@ -92,13 +95,27 @@ public class ItemServiceImpl implements ItemService {
 
         List<OtherField> otherFields = collection.getOtherFields();
 
+
         if (otherFields.size() == enterValues.size()) {
             for (int i = 0; i < otherFields.size(); i++) {
 
                 OtherField otherField = otherFields.get(i);
 
-                String value = enterValues.get(i);
-                otherField.setValue(value);
+                List<OtherFieldValue> otherFieldValues = new ArrayList<>();
+
+                OtherFieldValue otherFieldValue = new OtherFieldValue();
+                otherFieldValue.setText(enterValues.get(i));
+                otherFieldValue.setOtherField(otherField);
+
+                otherFieldValueService.saveOtherFieldValue(otherFieldValue);
+
+
+                otherFieldValues.add(otherFieldValue);
+                otherField.setValue(otherFieldValues);
+
+                for (OtherFieldValue o: otherField.getValue()){
+                    System.out.println(o.getText());
+                }
 
                 otherFieldService.updateOtherField(otherField);
 
@@ -107,9 +124,8 @@ public class ItemServiceImpl implements ItemService {
         }
 
 
-
-        collection.setOtherFields(otherFields);
-        collectionService.saveCollection(collection);
+//        collection.setOtherFields(otherFields);
+//        collectionService.saveCollection(collection);
 
 
         item.setCollection(collection);
