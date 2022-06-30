@@ -35,6 +35,12 @@ public class Item {
               cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "other_fields_items",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "other_field_id"))
+    private List<OtherField> otherFields;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

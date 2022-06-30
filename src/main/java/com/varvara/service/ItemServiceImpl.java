@@ -1,11 +1,11 @@
 package com.varvara.service;
 
+import com.varvara.entity.*;
 import com.varvara.entity.Collection;
-import com.varvara.entity.Item;
-import com.varvara.entity.Tag;
-import com.varvara.entity.User;
 import com.varvara.repository.ItemRepository;
+import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.ItemService;
+import com.varvara.service.interfaces.OtherFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +15,14 @@ import java.util.*;
 public class ItemServiceImpl implements ItemService {
 
     private ItemRepository itemRepository;
+    private CollectionService collectionService;
+    private OtherFieldService otherFieldService;
 
     @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, CollectionService collectionService, OtherFieldService otherFieldService) {
         this.itemRepository = itemRepository;
+        this.collectionService = collectionService;
+        this.otherFieldService = otherFieldService;
     }
 
     @Override
@@ -75,9 +79,44 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection) {
+    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection,  LinkedList<String> enterValues) {
         item.setTags(getTagsFromTagsString(item, tagsString));
+
+
+        List<OtherField> otherFields = collection.getOtherFields();
+
+        if (otherFields.size() == enterValues.size()) {
+            for (int i = 0; i < otherFields.size(); i++) {
+
+                OtherField otherField = otherFields.get(i);
+
+                System.out.println(otherField.getName());
+
+                String value = enterValues.get(i);
+                otherField.setValue(value);
+
+                otherFieldService.updateOtherField(otherField);
+
+
+                otherFields.set(i, otherField);
+            }
+        }
+
+        for (OtherField o: otherFields){
+            System.out.println("Name- " + o.getName() + ", type - " + o.getType() + ", value - " + o.getValue());
+        }
+
+        collection.setOtherFields(otherFields);
+        collectionService.saveCollection(collection);
+
+
         item.setCollection(collection);
+
+
+        item.setOtherFields(otherFields);
+
+        System.out.println("OKKKK");
+
         saveItem(item);
     }
 

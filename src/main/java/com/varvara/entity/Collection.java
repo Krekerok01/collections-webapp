@@ -47,4 +47,9 @@ public class Collection {
             joinColumns = @JoinColumn(name = "collection_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
+
+
+    @OneToMany(mappedBy = "collection",
+            cascade = CascadeType.REMOVE)
+    private List<OtherField> otherFields;
 }

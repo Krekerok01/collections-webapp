@@ -3,11 +3,13 @@ package com.varvara.service;
 
 
 import com.varvara.entity.Collection;
+import com.varvara.entity.OtherField;
 import com.varvara.entity.Role;
 import com.varvara.entity.User;
 import com.varvara.repository.RoleRepository;
 import com.varvara.repository.UserRepository;
 import com.varvara.dto.UserDataFromInput;
+import com.varvara.service.interfaces.OtherFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,12 +32,14 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
 	private BCryptPasswordEncoder passwordEncoder;
+	private OtherFieldService otherFieldService;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, OtherFieldService otherFieldService) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.otherFieldService = otherFieldService;
 	}
 
 
@@ -160,8 +164,8 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 
 		userCollections.add(collection);
 		saveUser(user);
-	}
 
+	}
 
 
 	@Override

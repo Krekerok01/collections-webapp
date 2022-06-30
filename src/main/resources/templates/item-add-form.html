@@ -46,6 +46,9 @@
         <input type="text" pattern="[[a-zA-Z]+, ]+" name="tagsString" id="tagsString"  class="form-control mb-4 col-4" placeholder="Tags">
 
 
+        <p th:each="otherField : ${otherFields}">
+            <input type="text" th:placeholder="${otherField.name}" name="enterValues">
+        </p>
 
         <button type="submit" class="btn btn-info col-2">Save</button>
 
