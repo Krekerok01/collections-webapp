@@ -79,9 +79,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection,  LinkedList<String> enterValues) {
+    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection) {
         item.setTags(getTagsFromTagsString(item, tagsString));
+        item.setCollection(collection);
+        saveItem(item);
+    }
 
+    @Override
+    public void setTagsAndCollectionAndOtherFieldsAndSaveItem(Item item, String tagsString, Collection collection, LinkedList<String> enterValues) {
+
+        item.setTags(getTagsFromTagsString(item, tagsString));
 
         List<OtherField> otherFields = collection.getOtherFields();
 
@@ -90,32 +97,24 @@ public class ItemServiceImpl implements ItemService {
 
                 OtherField otherField = otherFields.get(i);
 
-                System.out.println(otherField.getName());
-
                 String value = enterValues.get(i);
                 otherField.setValue(value);
 
                 otherFieldService.updateOtherField(otherField);
 
-
                 otherFields.set(i, otherField);
             }
         }
 
-        for (OtherField o: otherFields){
-            System.out.println("Name- " + o.getName() + ", type - " + o.getType() + ", value - " + o.getValue());
-        }
+
 
         collection.setOtherFields(otherFields);
         collectionService.saveCollection(collection);
 
 
         item.setCollection(collection);
-
-
         item.setOtherFields(otherFields);
 
-        System.out.println("OKKKK");
 
         saveItem(item);
     }

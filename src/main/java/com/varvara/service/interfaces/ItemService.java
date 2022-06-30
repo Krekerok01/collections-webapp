@@ -5,7 +5,6 @@ import com.varvara.entity.Item;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public interface ItemService {
 
@@ -21,5 +20,7 @@ public interface ItemService {
 
     public List<Item> getItemsThatContainsTheSpecificTag(String tagName);
 
-    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection,  LinkedList<String> enterValues);
+    public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection);
+
+    public void setTagsAndCollectionAndOtherFieldsAndSaveItem(Item item, String tagsString, Collection collection, LinkedList<String> enterValues);
 }

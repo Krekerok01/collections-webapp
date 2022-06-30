@@ -2,7 +2,6 @@ package com.varvara.controller;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
-import com.varvara.entity.OtherField;
 import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.ItemService;
 import com.varvara.service.UserServiceImpl;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.LinkedList;
-import java.util.List;
 
 
 @Controller
@@ -92,11 +90,9 @@ public class CollectionController {
 
         userServiceImpl.saveCollectionToTheUser(collection);
 
-        System.out.println("collection.getId() - " + collection.getId() + ", name - " + collection.getName());
 
-       Collection coll = collectionService.getCollectionByName(collection.getName());
 
-        otherFieldService.saveCollection(coll,
+        otherFieldService.saveCollection(collectionService.getCollectionByName(collection.getName()),
                 firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
                 firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
                 firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,
@@ -138,12 +134,16 @@ public class CollectionController {
     @PostMapping("/saveItem")
     public String saveItem(@ModelAttribute("item") Item item,
                            @RequestParam(value = "tagsString") String tagsString,
-                           @RequestParam(value = "enterValues") LinkedList<String> enterValues,
+                           @RequestParam(value = "enterValues", required = false) LinkedList<String> enterValues,
                            RedirectAttributes redirectAttributes){
 
+        if (enterValues != null){
+            itemService.setTagsAndCollectionAndOtherFieldsAndSaveItem(item, tagsString, collection, enterValues);
+        } else {
+            itemService.setTagsAndCollectionAndSaveItem(item, tagsString, collection);
+        }
 
 
-        itemService.setTagsAndCollectionAndSaveItem(item, tagsString, collection, enterValues);
         redirectAttributes.addAttribute("collectionId", collection.getId());
 
         return "redirect:/user/showItems";

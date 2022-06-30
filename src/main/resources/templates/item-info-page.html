@@ -52,7 +52,7 @@
         .item-info {
             position: absolute;
             top: 100px;
-            right: 200px;
+            right: 800px;
             left: 200px;
             padding: 20px;
             margin: 25px 0;
@@ -79,7 +79,7 @@
             position: absolute;
             top: 150px;
             right: 200px;
-            left: 600px;
+            left: 700px;
             background: #C1C7E0;
             border: 4px double black;
         }
@@ -127,8 +127,11 @@
         <h1 >Item:  </h1>
 
         <li>
-            <h4 th:text="${item.name}"/>
+            <h4 th:text="${'Item name - ' + item.name}"/>
+        </li>
 
+        <li th:each="otherField : ${item.otherFields}">
+            <h4 th:text="${otherField.name + ' - ' + otherField.value}"/>
         </li>
     </ul>
 </div>
