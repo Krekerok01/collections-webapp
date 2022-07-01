@@ -65,110 +65,104 @@
         <p th:if="${#fields.hasErrors('imageUrl')}" th:errorclass="error" th:errors="*{imageUrl}" />
 
 
-        <p> If you want to add more fields for the item - select them </p>
+        <p> If you want to add additional fields, then select which ones and enter the name: </p>
 
-        <p>Additionally String fields</p>
+        <p/>
+        <p>Additionally String fields:</p>
 
-        <input type="checkbox" name="firstAdditionalStringType" id="firstAdditionalStringType" style="display:inline;" value="String">
-            <input type="text" name="firstAdditionalStringName" id="firstAdditionalStringName" style="display:inline;" />
-        </input>
-        <br><br>
+        <input type="checkbox" name="firstAdditionalStringType" id="firstAdditionalStringType" value="String"/>
+        <input type="text" name="firstAdditionalStringName" id="firstAdditionalStringName"  />
 
-        <input type="checkbox" name="secondAdditionalStringType" id="secondAdditionalStringType" style="display:inline;" value="String">
-            <input type="text" name="secondAdditionalStringName" id="secondAdditionalStringName" style="display:inline;" />
-        </input>
-        <br><br>
+        <br><br><br><br><br><br>
 
-        <input type="checkbox" name="thirdAdditionalStringType" id="thirdAdditionalStringType" style="display:inline;" value="String">
-            <input type="text" name="thirdAdditionalStringName" id="thirdAdditionalStringName" style="display:inline;" />
-        </input>
+        <input type="checkbox" name="secondAdditionalStringType" id="secondAdditionalStringType"  value="String"/>
+        <input type="text" name="secondAdditionalStringName" id="secondAdditionalStringName" />
 
-        <br><br>
+        <br><br><br><br><br><br>
 
-        <p>Additionally Integer fields</p>
+        <input type="checkbox" name="thirdAdditionalStringType" id="thirdAdditionalStringType" value="String" />
+        <input type="text" name="thirdAdditionalStringName" id="thirdAdditionalStringName" />
 
-        <br><br>
+        <br><br><br><br><br><br>
 
-        <input type="checkbox" name="firstAdditionalIntegerType" id="firstAdditionalIntegerType" style="display:inline;" value="Integer">
-            <input type="text" name="firstAdditionalIntegerName" id="firstAdditionalIntegerName" style="display:inline;" />
-        </input>
-        <br><br>
+        <p/>
+        <p>Additionally Integer fields:</p>
 
-        <input type="checkbox" name="secondAdditionalIntegerType" id="secondAdditionalIntegerType" style="display:inline;" value="Integer">
-            <input type="text" name="secondAdditionalIntegerName" id="secondAdditionalIntegerName" style="display:inline;" />
-        </input>
+        <input type="checkbox" name="firstAdditionalIntegerType" id="firstAdditionalIntegerType" value="Integer" />
+        <input type="text" name="firstAdditionalIntegerName" id="firstAdditionalIntegerName" />
 
-        <br><br>
-        <input type="checkbox" name="thirdAdditionalIntegerType" id="thirdAdditionalIntegerType" style="display:inline;" value="Integer">
-            <input type="text" name="thirdAdditionalIntegerName" id="thirdAdditionalIntegerName" style="display:inline;" />
-        </input>
+        <br><br><br><br><br><br>
+
+        <input type="checkbox" name="secondAdditionalIntegerType" id="secondAdditionalIntegerType" value="Integer" />
+        <input type="text" name="secondAdditionalIntegerName" id="secondAdditionalIntegerName" />
 
 
-        <br><br>
-        <p>Additionally Multiline Text fields</p>
-        <br><br>
+        <br><br><br><br><br><br>
+        <input type="checkbox" name="thirdAdditionalIntegerType" id="thirdAdditionalIntegerType" value="Integer" />
+        <input type="text" name="thirdAdditionalIntegerName" id="thirdAdditionalIntegerName" />
 
-        <input type="checkbox" name="firstAdditionalMultilineTextType" id="firstAdditionalMultilineTextType" style="display:inline;" value="MultilineText">
-            <input type="text" name="firstAdditionalMultilineTextName" id="firstAdditionalMultilineTextName" style="display:inline;" />
-        </input>
+        <br><br><br><br><br><br>
 
-        <br><br>
-        <input type="checkbox" name="secondAdditionalMultilineTextType" id="secondAdditionalMultilineTextType" style="display:inline;" value="MultilineText">
-            <input type="text" name="secondAdditionalMultilineTextName" id="secondAdditionalMultilineTextName" style="display:inline;" />
-        </input>
-        <br><br>
+        <p/>
+        <p>Additionally Multiline Text fields:</p>
 
-        <input type="checkbox" name="thirdAdditionalMultilineTextType" id="thirdAdditionalMultilineTextType" style="display:inline;" value="MultilineText">
-            <input type="text" name="thirdAdditionalMultilineTextName" id="thirdAdditionalMultilineTextName" style="display:inline;" />
-        </input>
+        <input type="checkbox" name="firstAdditionalMultilineTextType" id="firstAdditionalMultilineTextType" value="MultilineText" />
+        <input type="text" name="firstAdditionalMultilineTextName" id="firstAdditionalMultilineTextName" />
 
-        <br><br>
+        <br><br><br><br><br><br>
 
-        <p>Additionally Checkboxes fields</p>
-        <br><br>
+        <input type="checkbox" name="secondAdditionalMultilineTextType" id="secondAdditionalMultilineTextType" value="MultilineText" />
+        <input type="text" name="secondAdditionalMultilineTextName" id="secondAdditionalMultilineTextName" />
 
-        <input type="checkbox" name="firstAdditionalCheckboxType" id="firstAdditionalCheckboxType" style="display:inline;" value="Checkbox">
-            <input type="text" name="firstAdditionalCheckboxName" id="firstAdditionalCheckboxName" style="display:inline;" />
-        </input>
+        <br><br><br><br><br><br>
 
-        <br><br>
-        <input type="checkbox" name="secondAdditionalCheckboxType" id="secondAdditionalCheckboxType" style="display:inline;" value="Checkbox">
-            <input type="text" name="secondAdditionalCheckboxName" id="secondAdditionalCheckboxName" style="display:inline;" />
-        </input>
+        <input type="checkbox" name="thirdAdditionalMultilineTextType" id="thirdAdditionalMultilineTextType" value="MultilineText" />
+        <input type="text" name="thirdAdditionalMultilineTextName" id="thirdAdditionalMultilineTextName" />
 
-        <br><br>
-        <input type="checkbox" name="thirdAdditionalCheckboxType" id="thirdAdditionalCheckboxType" style="display:inline;" value="Checkbox">
-            <input type="text" name="thirdAdditionalCheckboxName" id="thirdAdditionalCheckboxName" style="display:inline;" />
-        </input>
-
-        <br><br>
+        <br><br><br><br><br><br>
 
 
-        <p>Additionally Date fields</p>
+        <p/>
+        <p>Additionally Checkboxes fields:</p>
 
-        <br><br>
-        <input type="checkbox" name="firstAdditionalDateType" id="firstAdditionalDateType" style="display:inline;" value="Date">
-            <input type="text" name="firstAdditionalMultilineTextName" id="firstAdditionalDateName" style="display:inline;" />
-        </input>
+        <input type="checkbox" name="firstAdditionalCheckboxType" id="firstAdditionalCheckboxType" value="Checkbox" />
+        <input type="text" name="firstAdditionalCheckboxName" id="firstAdditionalCheckboxName"  />
 
-        <br><br>
-        <input type="checkbox" name="secondAdditionalDateType" id="secondAdditionalDateType" style="display:inline;" value="Date">
-            <input type="text" name="secondAdditionalMultilineTextName" id="secondAdditionalDateName" style="display:inline;" />
-        </input>
-        <br><br>
+        <br><br><br><br><br><br>
 
-        <input type="checkbox" name="thirdAdditionalDateType" id="thirdAdditionalDateType" style="display:inline;" value="Date">
-            <input type="text" name="thirdAdditionalMultilineTextName" id="thirdAdditionalDateName" style="display:inline;" />
-        </input>
+        <input type="checkbox" name="secondAdditionalCheckboxType" id="secondAdditionalCheckboxType" value="Checkbox" />
+        <input type="text" name="secondAdditionalCheckboxName" id="secondAdditionalCheckboxName" />
+
+        <br><br><br><br><br><br>
+
+        <input type="checkbox" name="thirdAdditionalCheckboxType" id="thirdAdditionalCheckboxType"  value="Checkbox" />
+        <input type="text" name="thirdAdditionalCheckboxName" id="thirdAdditionalCheckboxName"  />
+
+        <br><br><br><br><br><br>
 
 
-        <br><br>
+        <p/>
+        <p>Additionally Date fields:</p>
+
+
+        <input type="checkbox" name="firstAdditionalDateType" id="firstAdditionalDateType" value="Date" />
+        <input type="text" name="firstAdditionalMultilineTextName" id="firstAdditionalDateName"  />
+
+        <br><br><br><br><br><br>
+
+        <input type="checkbox" name="secondAdditionalDateType" id="secondAdditionalDateType" value="Date" />
+        <input type="text" name="secondAdditionalMultilineTextName" id="secondAdditionalDateName" />
+
+        <br><br><br><br><br><br>
+
+        <input type="checkbox" name="thirdAdditionalDateType" id="thirdAdditionalDateType" value="Date" />
+        <input type="text" name="thirdAdditionalMultilineTextName" id="thirdAdditionalDateName" />
+
+        <br><br><br><br><br><br>
 
         <button type="submit" class="btn btn-info col-2">Save</button>
 
     </form>
-
-
 
 
 </div>
