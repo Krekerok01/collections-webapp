@@ -3,6 +3,7 @@ package com.varvara.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -28,4 +29,10 @@ public class OtherFieldValue {
     @ManyToOne()
     @JoinColumn(name = "other_field_id")
     private OtherField otherField;
+
+    @ManyToMany()
+    @JoinTable(name = "other_fields_values_items",
+            joinColumns = @JoinColumn(name = "other_field_value_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<Item> items;
 }

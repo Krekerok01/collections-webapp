@@ -15,6 +15,8 @@ import java.util.*;
 @Service
 public class ItemServiceImpl implements ItemService {
 
+    private List<Integer> valuesIds;
+
     private ItemRepository itemRepository;
     private CollectionService collectionService;
     private OtherFieldService otherFieldService;
@@ -27,6 +29,8 @@ public class ItemServiceImpl implements ItemService {
         this.otherFieldService = otherFieldService;
         this.otherFieldValueService = otherFieldValueService;
     }
+
+
 
     @Override
     public Item getItemById(int id) {
@@ -96,12 +100,14 @@ public class ItemServiceImpl implements ItemService {
         List<OtherField> otherFields = collection.getOtherFields();
 
 
+        valuesIds = new LinkedList<>();
+
+        List<OtherFieldValue> otherFieldValues = new LinkedList<>();
+
         if (otherFields.size() == enterValues.size()) {
             for (int i = 0; i < otherFields.size(); i++) {
 
                 OtherField otherField = otherFields.get(i);
-
-                List<OtherFieldValue> otherFieldValues = new ArrayList<>();
 
                 OtherFieldValue otherFieldValue = new OtherFieldValue();
                 otherFieldValue.setText(enterValues.get(i));
@@ -111,10 +117,11 @@ public class ItemServiceImpl implements ItemService {
 
 
                 otherFieldValues.add(otherFieldValue);
+
                 otherField.setValue(otherFieldValues);
 
                 for (OtherFieldValue o: otherField.getValue()){
-                    System.out.println(o.getText());
+                    valuesIds.add(o.getId());
                 }
 
                 otherFieldService.updateOtherField(otherField);
@@ -124,13 +131,8 @@ public class ItemServiceImpl implements ItemService {
         }
 
 
-//        collection.setOtherFields(otherFields);
-//        collectionService.saveCollection(collection);
-
-
         item.setCollection(collection);
-        item.setOtherFields(otherFields);
-
+        item.setOtherFieldsValues(otherFieldValues);
 
         saveItem(item);
     }

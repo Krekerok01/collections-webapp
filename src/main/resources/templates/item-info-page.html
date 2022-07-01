@@ -52,7 +52,7 @@
         .item-info {
             position: absolute;
             top: 100px;
-            right: 800px;
+            right: 900px;
             left: 200px;
             padding: 20px;
             margin: 25px 0;
@@ -98,8 +98,6 @@
             text-decoration: none;
         }
 
-
-
     </style>
 
 </head>
@@ -130,13 +128,11 @@
             <h4 th:text="${'Item name - ' + item.name}"/>
         </li>
 
-        <li th:each="otherField : ${item.otherFields}">
-                <h4 th:text="${otherField.name}"/>
 
-            <p th:each="value : ${otherField.value}">
-                value.text
-            </p>
+        <li th:each="m : ${map}">
+            <h4  th:text="${m.key + ': ' + m.value}"/>
         </li>
+
     </ul>
 </div>
 
@@ -151,6 +147,7 @@
                 <h4 style="display:inline;" class="fst-italic" th:text="${comment.commentText}"/>
                 <br>
             </li>
+
         </ul>
 
 

@@ -34,9 +34,5 @@ public class OtherField {
     @JoinColumn(name = "collection_id")
     private Collection collection;
 
-    @ManyToMany()
-    @JoinTable(name = "other_fields_items",
-            joinColumns = @JoinColumn(name = "other_field_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private List<Item> items;
+
 }

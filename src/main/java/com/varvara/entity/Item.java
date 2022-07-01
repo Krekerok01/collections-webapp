@@ -36,10 +36,10 @@ public class Item {
     private List<Comment> comments;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "other_fields_items",
+    @JoinTable(name = "other_fields_values_items",
             joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "other_field_id"))
-    private List<OtherField> otherFields;
+            inverseJoinColumns = @JoinColumn(name = "other_field_value_id"))
+    private List<OtherFieldValue> otherFieldsValues;
 
     @Override
     public boolean equals(Object o) {

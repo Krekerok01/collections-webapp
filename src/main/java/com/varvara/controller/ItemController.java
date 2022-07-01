@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserId;
 
@@ -38,20 +40,16 @@ public class ItemController {
 
         item = itemService.getItemById(itemId);
 
-        List<OtherField> otherFields = item.getOtherFields();
+        Map<String, String> map = new HashMap<>();
 
-
-        for (OtherField o: otherFields){
-            List<OtherFieldValue> otherFieldValues = o.getValue();
-            System.out.println(">>>>>>>>   otherFieldValues - " + otherFieldValues.size());
-
-            for (OtherFieldValue otfv: otherFieldValues){
-                System.out.println("*** text:  " + otfv.getText());
-            }
+        for (OtherFieldValue o: item.getOtherFieldsValues()){
+            map.put(o.getOtherField().getName(),  o.getText());
         }
+
 
         model.addAttribute("comment", new Comment());
         model.addAttribute("item", itemService.getItemById(itemId));
+        model.addAttribute("map", map);
         model.addAttribute("itemComments", commentService.getCommentsToThisItem(itemId));
         return "item-info-page";
     }
