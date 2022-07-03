@@ -7,12 +7,14 @@ import com.varvara.service.interfaces.ItemService;
 import com.varvara.service.UserServiceImpl;
 import com.varvara.service.interfaces.OtherFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.NonUniqueResultException;
 import javax.validation.Valid;
 import java.util.LinkedList;
 
@@ -90,16 +92,23 @@ public class CollectionController {
 
         userServiceImpl.saveCollectionToTheUser(collection);
 
+        // проблема при добавлении различного количества полей
+        System.out.println(">>>> " + thirdAdditionalCheckboxName);
+        System.out.println(thirdAdditionalCheckboxName.equals(null));
+        System.out.println(thirdAdditionalCheckboxName.equals(""));
+        System.out.println("Collection name - " + collection.getName());
 
 
-        otherFieldService.saveCollection(collectionService.getCollectionByName(collection.getName()),
-                firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
-                firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
-                firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,
-                firstAdditionalCheckboxType, firstAdditionalCheckboxName, secondAdditionalCheckboxType, secondAdditionalCheckboxName, thirdAdditionalCheckboxType, thirdAdditionalCheckboxName,
-                firstAdditionalDateType, firstAdditionalDateName, secondAdditionalDateType, secondAdditionalDateName, thirdAdditionalDateType, thirdAdditionalDateName);
-
-
+        try {
+            otherFieldService.saveCollection(collectionService.getCollectionByName(collection.getName()),
+                    firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
+                    firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
+                    firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,
+                    firstAdditionalCheckboxType, firstAdditionalCheckboxName, secondAdditionalCheckboxType, secondAdditionalCheckboxName, thirdAdditionalCheckboxType, thirdAdditionalCheckboxName,
+                    firstAdditionalDateType, firstAdditionalDateName, secondAdditionalDateType, secondAdditionalDateName, thirdAdditionalDateType, thirdAdditionalDateName);
+        } catch (NonUniqueResultException | IncorrectResultSizeDataAccessException e){
+            System.out.println(e.getMessage());
+        }
 
         return "redirect:/user/info";
 
