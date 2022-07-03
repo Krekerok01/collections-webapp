@@ -31,23 +31,26 @@
 
     <p class="h4 mb-4">Add New Item: </p>
 
+
     <form action="#" th:action="@{saveItem}"
           th:object="${item}" method="POST">
 
-        <!-- Add a hidden form field to handle update  -->
         <input type="hidden" th:field="*{id}" />
 
 
-        <input type="text" th:field="*{name}"
-               class="form-control mb-4 col-4" placeholder="Collection name" />
+        <input type="text" th:field="*{name}" required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')"
+               class="form-control mb-4 col-4" placeholder="Item name" />
 
 
         <p class="fst-italic">Tags should be separated by a comma with a space.</p>
-        <input type="text" pattern="[[a-zA-Z]+, ]+" name="tagsString" id="tagsString"  class="form-control mb-4 col-4" placeholder="Tags">
+        <input type="text" pattern="[[a-zA-Z]+, ]+" name="tagsString" id="tagsString"
+               required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')"
+                class="form-control mb-4 col-4" placeholder="Tags">
 
 
         <p th:each="otherField : ${otherFields}">
-            <input type="text" th:placeholder="${otherField.name}" name="enterValues">
+            <input type="text" th:placeholder="${otherField.name}" name="enterValues" class="form-control mb-4 col-4"
+                   required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')">
         </p>
 
         <button type="submit" class="btn btn-info col-2">Save</button>
