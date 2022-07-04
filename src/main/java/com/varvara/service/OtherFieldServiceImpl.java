@@ -71,21 +71,25 @@ public class OtherFieldServiceImpl implements OtherFieldService {
         checkStrings(types, names, firstAdditionalStringType, firstAdditionalStringName);
         checkStrings(types, names, secondAdditionalStringType, secondAdditionalStringName);
         checkStrings(types, names, thirdAdditionalStringType, thirdAdditionalStringName);
+
         checkStrings(types, names, firstAdditionalIntegerType,firstAdditionalIntegerName);
         checkStrings(types, names, secondAdditionalIntegerType, secondAdditionalIntegerName);
         checkStrings(types, names, thirdAdditionalIntegerType, thirdAdditionalIntegerName);
+
         checkStrings(types, names, firstAdditionalMultilineTextType, firstAdditionalMultilineTextName);
         checkStrings(types, names, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName);
         checkStrings(types, names, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName);
+
         checkStrings(types, names, firstAdditionalCheckboxType, firstAdditionalCheckboxName);
         checkStrings(types, names, secondAdditionalCheckboxType, secondAdditionalCheckboxName);
         checkStrings(types, names, thirdAdditionalCheckboxType, thirdAdditionalCheckboxName);
+
         checkStrings(types, names, firstAdditionalDateType, firstAdditionalDateName);
         checkStrings(types, names, secondAdditionalDateType, secondAdditionalDateName);
         checkStrings(types, names, thirdAdditionalDateType, thirdAdditionalDateName);
 
         addToTheCollection(collection, types, names);
-        enterTypesAndNames(types, names);
+
     }
 
     private void addToTheCollection(Collection collection, LinkedList<String> types, LinkedList<String> names) {
@@ -96,19 +100,12 @@ public class OtherFieldServiceImpl implements OtherFieldService {
 
     }
 
-    private void enterTypesAndNames(LinkedList<String> types, LinkedList<String> names) {
 
-        for (int i = 0; i < types.size(); i++){
-            System.out.println("Type - " + types.get(i)  + ", name - " + names.get(i));
-        }
-    }
-
-    private void checkStrings(List<String> types, List<String> names, String type, String name) {
+    private void checkStrings(LinkedList<String> types, LinkedList<String> names, String type, String name) {
         if (type != null && !type.isEmpty() && name != null && !name.isEmpty()){
             types.add(type);
             names.add(name);
         }
     }
-
 
 }

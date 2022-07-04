@@ -68,7 +68,6 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public Collection getCollectionByName(String name) {
-        System.out.println("Coll name - " + name);
         Optional<Collection> optionalCollection = collectionRepository.findCollectionByName(name);
 
         if (!optionalCollection.isPresent()){

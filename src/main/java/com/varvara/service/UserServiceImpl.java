@@ -9,9 +9,11 @@ import com.varvara.entity.User;
 import com.varvara.repository.RoleRepository;
 import com.varvara.repository.UserRepository;
 import com.varvara.dto.UserDataFromInput;
+import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.OtherFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.persistence.NonUniqueResultException;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
@@ -29,17 +33,21 @@ import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticati
 @Service
 public class UserServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
 
+	private Logger logger = Logger.getLogger(getClass().getName());
+
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
 	private BCryptPasswordEncoder passwordEncoder;
 	private OtherFieldService otherFieldService;
+	private CollectionService collectionService;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, OtherFieldService otherFieldService) {
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, OtherFieldService otherFieldService, @Lazy CollectionService collectionService) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.otherFieldService = otherFieldService;
+		this.collectionService = collectionService;
 	}
 
 
@@ -158,12 +166,28 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 		return role.get();
 	}
 
-	public void saveCollectionToTheUser(Collection collection){
+	public void saveCollectionToTheUser(Collection collection,
+										String firstAdditionalStringType, String firstAdditionalStringName, String secondAdditionalStringType, String secondAdditionalStringName, String thirdAdditionalStringType, String thirdAdditionalStringName,
+										String firstAdditionalIntegerType, String firstAdditionalIntegerName, String secondAdditionalIntegerType, String secondAdditionalIntegerName, String thirdAdditionalIntegerType, String thirdAdditionalIntegerName,
+										String firstAdditionalMultilineTextType, String firstAdditionalMultilineTextName, String secondAdditionalMultilineTextType, String secondAdditionalMultilineTextName, String thirdAdditionalMultilineTextType, String thirdAdditionalMultilineTextName,
+										String firstAdditionalCheckboxType, String firstAdditionalCheckboxName, String secondAdditionalCheckboxType, String secondAdditionalCheckboxName, String thirdAdditionalCheckboxType, String thirdAdditionalCheckboxName,
+										String firstAdditionalDateType, String firstAdditionalDateName, String secondAdditionalDateType, String secondAdditionalDateName, String thirdAdditionalDateType, String thirdAdditionalDateName){
 		User user = findByUsername(authenticationUserName);
 		List<Collection> userCollections = user.getCollections();
 
 		userCollections.add(collection);
 		saveUser(user);
+
+		try {
+			otherFieldService.saveCollection(collectionService.getCollectionByNameAndUserId(collection.getName(), user.getId()),
+					firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
+					firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
+					firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,
+					firstAdditionalCheckboxType, firstAdditionalCheckboxName, secondAdditionalCheckboxType, secondAdditionalCheckboxName, thirdAdditionalCheckboxType, thirdAdditionalCheckboxName,
+					firstAdditionalDateType, firstAdditionalDateName, secondAdditionalDateType, secondAdditionalDateName, thirdAdditionalDateType, thirdAdditionalDateName);
+		} catch (NonUniqueResultException | IncorrectResultSizeDataAccessException e){
+			logger.warning(e.getMessage());
+		}
 	}
 
 

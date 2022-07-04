@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.persistence.NonUniqueResultException;
 import javax.validation.Valid;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
 
@@ -31,15 +32,14 @@ public class CollectionController {
     private UserServiceImpl userServiceImpl;
     private CollectionService collectionService;
     private ItemService itemService;
-    private OtherFieldService otherFieldService;
+
 
 
     @Autowired
-    public CollectionController(UserServiceImpl userServiceImpl, CollectionService collectionService, ItemService itemService, OtherFieldService otherFieldService) {
+    public CollectionController(UserServiceImpl userServiceImpl, CollectionService collectionService, ItemService itemService) {
         this.userServiceImpl = userServiceImpl;
         this.collectionService = collectionService;
         this.itemService = itemService;
-        this.otherFieldService = otherFieldService;
     }
 
 
@@ -92,20 +92,13 @@ public class CollectionController {
             return "collection-add-form";
         }
 
+        userServiceImpl.saveCollectionToTheUser(collection,
+                firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
+                firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
+                firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,
+                firstAdditionalCheckboxType, firstAdditionalCheckboxName, secondAdditionalCheckboxType, secondAdditionalCheckboxName, thirdAdditionalCheckboxType, thirdAdditionalCheckboxName,
+                firstAdditionalDateType, firstAdditionalDateName, secondAdditionalDateType, secondAdditionalDateName, thirdAdditionalDateType, thirdAdditionalDateName);
 
-        userServiceImpl.saveCollectionToTheUser(collection);
-
-
-        try {
-            otherFieldService.saveCollection(collectionService.getCollectionByNameAndUserId(collection.getName(), userServiceImpl.findByUsername(authenticationUserName).getId()),
-                    firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
-                    firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
-                    firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,
-                    firstAdditionalCheckboxType, firstAdditionalCheckboxName, secondAdditionalCheckboxType, secondAdditionalCheckboxName, thirdAdditionalCheckboxType, thirdAdditionalCheckboxName,
-                    firstAdditionalDateType, firstAdditionalDateName, secondAdditionalDateType, secondAdditionalDateName, thirdAdditionalDateType, thirdAdditionalDateName);
-        } catch (NonUniqueResultException | IncorrectResultSizeDataAccessException e){
-            System.out.println(e.getMessage());
-        }
 
         return "redirect:/user/info";
 
@@ -129,9 +122,8 @@ public class CollectionController {
     public String addItem(@RequestParam("collectionId") int collectionId, Model model){
 
         collection = collectionService.getCollectionById(collectionId);
-        Item item = new Item();
-        model.addAttribute("item", item);
 
+        model.addAttribute("item", new Item());
         model.addAttribute("otherFields", collection.getOtherFields());
 
         return "item-add-form";
