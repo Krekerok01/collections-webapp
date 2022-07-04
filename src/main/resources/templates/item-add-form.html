@@ -49,7 +49,8 @@
 
 
         <p th:each="otherField : ${otherFields}">
-            <input type="text" th:placeholder="${otherField.name}" name="enterValues" class="form-control mb-4 col-4"
+
+            <input th:type="${otherField.type}" th:placeholder="${otherField.name}" name="enterValues" class="form-control mb-4 col-4"
                    required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')">
         </p>
 

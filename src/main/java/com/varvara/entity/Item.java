@@ -35,7 +35,7 @@ public class Item {
               cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "other_fields_values_items",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "other_field_value_id"))
