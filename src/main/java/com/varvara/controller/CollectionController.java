@@ -2,6 +2,7 @@ package com.varvara.controller;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
+import com.varvara.entity.OtherField;
 import com.varvara.entity.User;
 import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.ItemService;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.persistence.NonUniqueResultException;
 import javax.validation.Valid;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
@@ -123,8 +125,25 @@ public class CollectionController {
 
         collection = collectionService.getCollectionById(collectionId);
 
+        List<OtherField> otherFields = collection.getOtherFields();
+
+        List<OtherField> otherFieldsWithoutCheckBox = new LinkedList<>();
+        List<OtherField> checkBoxesFields = new LinkedList<>();
+
+        for (OtherField o: otherFields){
+            if (o.getType().equals("checkbox")){
+                checkBoxesFields.add(o);
+            } else {
+                otherFieldsWithoutCheckBox.add(o);
+            }
+
+        }
+
+
         model.addAttribute("item", new Item());
-        model.addAttribute("otherFields", collection.getOtherFields());
+        //model.addAttribute("otherFields", collection.getOtherFields());
+        model.addAttribute("otherFields", otherFieldsWithoutCheckBox);
+        model.addAttribute("checkBoxesFields", checkBoxesFields);
 
         return "item-add-form";
     }
@@ -133,10 +152,17 @@ public class CollectionController {
     public String saveItem(@ModelAttribute("item") Item item,
                            @RequestParam(value = "tagsString") String tagsString,
                            @RequestParam(value = "enterValues", required = false) LinkedList<String> enterValues,
+                           @RequestParam(value = "checkboxValue", required = false) String checkboxValue,
                            RedirectAttributes redirectAttributes){
 
+        System.out.println(enterValues.size());
+        System.out.println(checkboxValue);
 
         if (enterValues != null){
+            if (checkboxValue != null && checkboxValue != "") {
+                enterValues.add(checkboxValue);
+            }
+
             itemService.setTagsAndCollectionAndOtherFieldsAndSaveItem(item, tagsString, collection, enterValues);
         } else {
             itemService.setTagsAndCollectionAndSaveItem(item, tagsString, collection);

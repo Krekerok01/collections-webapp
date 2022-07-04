@@ -50,10 +50,19 @@
 
         <p th:each="otherField : ${otherFields}">
 
-            <label th:text="${otherField.name}"></label>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <input th:type="${otherField.type}" th:placeholder="${otherField.name}" name="enterValues" 
+            <input th:type="${otherField.type}" th:placeholder="${otherField.name}" name="enterValues"
                    required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')" />
+        </p>
+
+
+
+        <p th:each="checkField : ${checkBoxesFields}">
+
+            <label th:text="${checkField.name}" ></label>
+
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+            <input th:type="${checkField.type}" th:placeholder="${checkField.name}" name="checkboxValue" value="Yes" />
 
         </p>
 

@@ -108,6 +108,32 @@ public class ItemServiceImpl implements ItemService {
             for (int i = 0; i < otherFields.size(); i++) {
 
                 OtherField otherField = otherFields.get(i);
+                System.out.println(">>> " + otherField.getName());
+
+                OtherFieldValue otherFieldValue = new OtherFieldValue();
+                otherFieldValue.setText(enterValues.get(i));
+                otherFieldValue.setOtherField(otherField);
+
+                otherFieldValueService.saveOtherFieldValue(otherFieldValue);
+
+
+                otherFieldValues.add(otherFieldValue);
+
+                otherField.setValue(otherFieldValues);
+
+                for (OtherFieldValue o: otherField.getValue()){
+                    valuesIds.add(o.getId());
+                }
+
+                otherFieldService.updateOtherField(otherField);
+
+                otherFields.set(i, otherField);
+            }
+        } else if ((otherFields.size() - 1) == enterValues.size()) {
+            for (int i = 0; i < otherFields.size() - 1; i++) {
+
+                OtherField otherField = otherFields.get(i);
+                System.out.println(">>> " + otherField.getName());
 
                 OtherFieldValue otherFieldValue = new OtherFieldValue();
                 otherFieldValue.setText(enterValues.get(i));
