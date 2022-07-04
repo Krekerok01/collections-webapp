@@ -45,13 +45,16 @@
         <p class="fst-italic">Tags should be separated by a comma with a space.</p>
         <input type="text" pattern="[[a-zA-Z]+, ]+" name="tagsString" id="tagsString"
                required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')"
-                class="form-control mb-4 col-4" placeholder="Tags">
+                class="form-control mb-4 col-4" placeholder="Tags" />
 
 
         <p th:each="otherField : ${otherFields}">
 
-            <input th:type="${otherField.type}" th:placeholder="${otherField.name}" name="enterValues" class="form-control mb-4 col-4"
-                   required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')">
+            <label th:text="${otherField.name}"></label>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <input th:type="${otherField.type}" th:placeholder="${otherField.name}" name="enterValues" 
+                   required oninvalid="this.setCustomValidity('It is required field.')" oninput="setCustomValidity('')" />
+
         </p>
 
         <button type="submit" class="btn btn-info col-2">Save</button>

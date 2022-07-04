@@ -135,6 +135,7 @@ public class CollectionController {
                            @RequestParam(value = "enterValues", required = false) LinkedList<String> enterValues,
                            RedirectAttributes redirectAttributes){
 
+
         if (enterValues != null){
             itemService.setTagsAndCollectionAndOtherFieldsAndSaveItem(item, tagsString, collection, enterValues);
         } else {
