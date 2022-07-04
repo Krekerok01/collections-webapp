@@ -2,6 +2,7 @@ package com.varvara.service;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
+import com.varvara.entity.User;
 import com.varvara.repository.CollectionRepository;
 import com.varvara.service.interfaces.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,12 @@ public class CollectionServiceImpl implements CollectionService {
 
     private Logger logger = Logger.getLogger(getClass().getName());
     private CollectionRepository collectionRepository;
+    private UserServiceImpl userService;
 
     @Autowired
-    public CollectionServiceImpl(CollectionRepository collectionRepository) {
+    public CollectionServiceImpl(CollectionRepository collectionRepository, UserServiceImpl userService) {
         this.collectionRepository = collectionRepository;
+        this.userService = userService;
     }
 
 
@@ -59,8 +62,13 @@ public class CollectionServiceImpl implements CollectionService {
         collectionRepository.deleteById(id);
     }
 
+
+
+
+
     @Override
     public Collection getCollectionByName(String name) {
+        System.out.println("Coll name - " + name);
         Optional<Collection> optionalCollection = collectionRepository.findCollectionByName(name);
 
         if (!optionalCollection.isPresent()){
@@ -100,6 +108,22 @@ public class CollectionServiceImpl implements CollectionService {
         }
 
         return themes;
+    }
+
+    @Override
+    public Collection getCollectionByNameAndUserId(String collectionName, int userId) {
+        User user = userService.findById(userId);
+        List<Collection> collections = user.getCollections();
+
+        Collection collection = null;
+
+        for (Collection c: collections){
+            if (c.getName().equals(collectionName)){
+                collection = c;
+            }
+        }
+
+        return collection;
     }
 
 

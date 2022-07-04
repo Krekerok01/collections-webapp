@@ -19,4 +19,6 @@ public interface CollectionService {
     public List<Collection> getLargestCollections();
 
     public List<String> getThemesNamesList();
+
+    public Collection getCollectionByNameAndUserId(String collectionName, int userId);
 }

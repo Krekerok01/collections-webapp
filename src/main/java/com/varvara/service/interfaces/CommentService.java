@@ -15,4 +15,6 @@ public interface CommentService {
     public void deleteComment(int commentId);
 
     public List<Comment> getCommentsToThisItem(int itemId);
+
+
 }

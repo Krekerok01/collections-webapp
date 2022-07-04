@@ -2,6 +2,7 @@ package com.varvara.controller;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
+import com.varvara.entity.User;
 import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.ItemService;
 import com.varvara.service.UserServiceImpl;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.persistence.NonUniqueResultException;
 import javax.validation.Valid;
 import java.util.LinkedList;
+
+import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
 
 
 @Controller
@@ -92,15 +95,9 @@ public class CollectionController {
 
         userServiceImpl.saveCollectionToTheUser(collection);
 
-        // проблема при добавлении различного количества полей
-        System.out.println(">>>> " + thirdAdditionalCheckboxName);
-        System.out.println(thirdAdditionalCheckboxName.equals(null));
-        System.out.println(thirdAdditionalCheckboxName.equals(""));
-        System.out.println("Collection name - " + collection.getName());
-
 
         try {
-            otherFieldService.saveCollection(collectionService.getCollectionByName(collection.getName()),
+            otherFieldService.saveCollection(collectionService.getCollectionByNameAndUserId(collection.getName(), userServiceImpl.findByUsername(authenticationUserName).getId()),
                     firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
                     firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
                     firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,

@@ -164,7 +164,6 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 
 		userCollections.add(collection);
 		saveUser(user);
-
 	}
 
 
