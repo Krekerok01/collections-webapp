@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ItemService {
 
-
     public Item getItemById(int id);
 
     public void deleteItemById(int id);
@@ -20,6 +19,8 @@ public interface ItemService {
     public List<String> getLastAddedItems();
 
     public List<Item> getItemsThatContainsTheSpecificTag(String tagName);
+
+    public void checkingTheRequestParametersForNullAndCallingTheDesiredMethod(Item item, String tagsString, Collection collection, LinkedList<String> enterValues, String checkboxValue);
 
     public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection);
 

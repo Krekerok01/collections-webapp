@@ -86,74 +86,40 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public void checkingTheRequestParametersForNullAndCallingTheDesiredMethod(Item item, String tagsString, Collection collection, LinkedList<String> enterValues, String checkboxValue) {
+        if (enterValues != null){
+            if (checkboxValue != null && checkboxValue != "") enterValues.add(checkboxValue);
+            setTagsAndCollectionAndOtherFieldsAndSaveItem(item, tagsString, collection, enterValues);
+        } else {
+            setTagsAndCollectionAndSaveItem(item, tagsString, collection);
+        }
+    }
+
+    @Override
     public void setTagsAndCollectionAndSaveItem(Item item, String tagsString, Collection collection) {
         item.setTags(getTagsFromTagsString(item, tagsString));
         item.setCollection(collection);
         saveItem(item);
     }
 
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     @Override
     public void setTagsAndCollectionAndOtherFieldsAndSaveItem(Item item, String tagsString, Collection collection, LinkedList<String> enterValues) {
 
-        item.setTags(getTagsFromTagsString(item, tagsString));
-
-        List<OtherField> otherFields = collection.getOtherFields();
-
-
         valuesIds = new LinkedList<>();
 
+        item.setTags(getTagsFromTagsString(item, tagsString));
+        List<OtherField> otherFields = collection.getOtherFields();
         List<OtherFieldValue> otherFieldValues = new LinkedList<>();
 
         if (otherFields.size() == enterValues.size()) {
-            for (int i = 0; i < otherFields.size(); i++) {
-
-                OtherField otherField = otherFields.get(i);
-                System.out.println(">>> " + otherField.getName());
-
-                OtherFieldValue otherFieldValue = new OtherFieldValue();
-                otherFieldValue.setText(enterValues.get(i));
-                otherFieldValue.setOtherField(otherField);
-
-                otherFieldValueService.saveOtherFieldValue(otherFieldValue);
-
-
-                otherFieldValues.add(otherFieldValue);
-
-                otherField.setValue(otherFieldValues);
-
-                for (OtherFieldValue o: otherField.getValue()){
-                    valuesIds.add(o.getId());
-                }
-
-                otherFieldService.updateOtherField(otherField);
-
-                otherFields.set(i, otherField);
-            }
+            method(enterValues, otherFields, otherFieldValues, otherFields.size());
         } else if ((otherFields.size() - 1) == enterValues.size()) {
-            for (int i = 0; i < otherFields.size() - 1; i++) {
-
-                OtherField otherField = otherFields.get(i);
-                System.out.println(">>> " + otherField.getName());
-
-                OtherFieldValue otherFieldValue = new OtherFieldValue();
-                otherFieldValue.setText(enterValues.get(i));
-                otherFieldValue.setOtherField(otherField);
-
-                otherFieldValueService.saveOtherFieldValue(otherFieldValue);
-
-
-                otherFieldValues.add(otherFieldValue);
-
-                otherField.setValue(otherFieldValues);
-
-                for (OtherFieldValue o: otherField.getValue()){
-                    valuesIds.add(o.getId());
-                }
-
-                otherFieldService.updateOtherField(otherField);
-
-                otherFields.set(i, otherField);
-            }
+            method(enterValues, otherFields, otherFieldValues, (otherFields.size() - 1));
         }
 
 
@@ -162,6 +128,44 @@ public class ItemServiceImpl implements ItemService {
 
         saveItem(item);
     }
+
+    private void method( LinkedList<String> enterValues, List<OtherField> otherFields, List<OtherFieldValue> otherFieldValues, int size){
+        for (int i = 0; i < size; i++) {
+
+            OtherField otherField = otherFields.get(i);
+
+
+            OtherFieldValue otherFieldValue = setTextAndOtherField(enterValues.get(i), otherField);
+            otherFieldValueService.saveOtherFieldValue(otherFieldValue);
+
+            otherFieldValues.add(otherFieldValue);
+            otherField.setValue(otherFieldValues);
+
+            fillValuesIdsList(otherField.getValue());
+
+            otherFieldService.updateOtherField(otherField);
+            otherFields.set(i, otherField);
+        }
+    }
+
+    private OtherFieldValue setTextAndOtherField(String text, OtherField otherField){
+        OtherFieldValue otherFieldValue = new OtherFieldValue();
+        otherFieldValue.setText(text);
+        otherFieldValue.setOtherField(otherField);
+        return otherFieldValue;
+    }
+
+    private void fillValuesIdsList(List<OtherFieldValue> otherFieldValues){
+        for (OtherFieldValue o: otherFieldValues){
+            valuesIds.add(o.getId());
+        }
+    }
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     public LinkedList<Item> getLinkedListOfItems(){

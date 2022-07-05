@@ -1,7 +1,9 @@
 package com.varvara.service.interfaces;
 
 import com.varvara.entity.Collection;
+import com.varvara.entity.OtherField;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public interface CollectionService {
@@ -21,4 +23,8 @@ public interface CollectionService {
     public List<String> getThemesNamesList();
 
     public Collection getCollectionByNameAndUserId(String collectionName, int userId);
+
+    public LinkedList<OtherField> getFieldsWithoutCheckBox(Collection collection);
+
+    public LinkedList<OtherField> getCheckBoxesFields(Collection collection);
 }

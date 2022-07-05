@@ -2,27 +2,18 @@ package com.varvara.controller;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
-import com.varvara.entity.OtherField;
-import com.varvara.entity.User;
 import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.ItemService;
 import com.varvara.service.UserServiceImpl;
-import com.varvara.service.interfaces.OtherFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.persistence.NonUniqueResultException;
 import javax.validation.Valid;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Logger;
 
-import static com.varvara.config.CustomAuthenticationSuccessHandler.authenticationUserName;
 
 
 @Controller
@@ -125,25 +116,9 @@ public class CollectionController {
 
         collection = collectionService.getCollectionById(collectionId);
 
-        List<OtherField> otherFields = collection.getOtherFields();
-
-        List<OtherField> otherFieldsWithoutCheckBox = new LinkedList<>();
-        List<OtherField> checkBoxesFields = new LinkedList<>();
-
-        for (OtherField o: otherFields){
-            if (o.getType().equals("checkbox")){
-                checkBoxesFields.add(o);
-            } else {
-                otherFieldsWithoutCheckBox.add(o);
-            }
-
-        }
-
-
         model.addAttribute("item", new Item());
-        //model.addAttribute("otherFields", collection.getOtherFields());
-        model.addAttribute("otherFields", otherFieldsWithoutCheckBox);
-        model.addAttribute("checkBoxesFields", checkBoxesFields);
+        model.addAttribute("otherFields", collectionService.getFieldsWithoutCheckBox(collection));
+        model.addAttribute("checkBoxesFields", collectionService.getCheckBoxesFields(collection));
 
         return "item-add-form";
     }
@@ -155,22 +130,9 @@ public class CollectionController {
                            @RequestParam(value = "checkboxValue", required = false) String checkboxValue,
                            RedirectAttributes redirectAttributes){
 
-        System.out.println(enterValues.size());
-        System.out.println(checkboxValue);
 
-        if (enterValues != null){
-            if (checkboxValue != null && checkboxValue != "") {
-                enterValues.add(checkboxValue);
-            }
-
-            itemService.setTagsAndCollectionAndOtherFieldsAndSaveItem(item, tagsString, collection, enterValues);
-        } else {
-            itemService.setTagsAndCollectionAndSaveItem(item, tagsString, collection);
-        }
-
-
+        itemService.checkingTheRequestParametersForNullAndCallingTheDesiredMethod(item, tagsString,collection, enterValues, checkboxValue);
         redirectAttributes.addAttribute("collectionId", collection.getId());
-
         return "redirect:/user/showItems";
     }
 

@@ -2,6 +2,7 @@ package com.varvara.service;
 
 import com.varvara.entity.Collection;
 import com.varvara.entity.Item;
+import com.varvara.entity.OtherField;
 import com.varvara.entity.User;
 import com.varvara.repository.CollectionRepository;
 import com.varvara.service.interfaces.CollectionService;
@@ -50,8 +51,6 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public void saveCollection(Collection collection) {
-
-        List<Item> items = collection.getItems();
         collectionRepository.save(collection);
     }
 
@@ -61,8 +60,6 @@ public class CollectionServiceImpl implements CollectionService {
     public void deleteCollectionById(int id) {
         collectionRepository.deleteById(id);
     }
-
-
 
 
 
@@ -109,6 +106,7 @@ public class CollectionServiceImpl implements CollectionService {
         return themes;
     }
 
+
     @Override
     public Collection getCollectionByNameAndUserId(String collectionName, int userId) {
         User user = userService.findById(userId);
@@ -123,6 +121,34 @@ public class CollectionServiceImpl implements CollectionService {
         }
 
         return collection;
+    }
+
+
+    @Override
+    public LinkedList<OtherField> getFieldsWithoutCheckBox(Collection collection) {
+        LinkedList<OtherField> fieldsWithoutCheckBox = new LinkedList<>();
+
+
+        for (OtherField otherField: collection.getOtherFields()){
+            if (!(otherField.getType().equals("checkbox"))) {
+                fieldsWithoutCheckBox.add(otherField);
+            }
+        }
+
+        return fieldsWithoutCheckBox;
+    }
+
+    @Override
+    public LinkedList<OtherField> getCheckBoxesFields(Collection collection) {
+        LinkedList<OtherField> checkBoxesFields = new LinkedList<>();
+
+        for (OtherField otherField: collection.getOtherFields()) {
+            if (otherField.getType().equals("checkbox")) {
+                checkBoxesFields.add(otherField);
+            }
+        }
+
+        return checkBoxesFields;
     }
 
 
