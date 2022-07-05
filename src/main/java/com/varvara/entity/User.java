@@ -64,6 +64,7 @@ public class User implements UserDetails {
 			cascade = CascadeType.REMOVE)
 	private List<Comment> comments;
 
+
 	public String getStatus() {
 		if (isAccountNonLocked){
 			return "ACTIVE";

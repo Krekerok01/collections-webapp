@@ -98,6 +98,113 @@
             text-decoration: none;
         }
 
+
+
+
+        a {
+	        text-decoration: none;
+        }
+
+        .share {
+	        display: inline-block;
+	        margin-right: 20px;
+        }
+
+        .share_size_large {
+	        width: 60px;
+        }
+
+        .share__count {
+	        background-color: #fff;
+	        border: solid 1px #a5b1bd;
+	        border-radius: 3px;
+	        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+	        color: #424a4d;
+	        float: left;
+	        font-weight: bold;
+	        margin-right: 10px;
+	        padding: 4px 10px;
+	        position: relative;
+	        text-align: center;
+        }
+
+        .share_size_large > .share__count {
+	        display: block;
+	        float: none;
+	        font-size: 18px;
+	        margin-right: 0;
+	        margin-bottom: 12px;
+	        padding: 10px 0;
+        }
+
+        .share__count:before, .share__count:after {
+            content: '';
+            display: block;
+	        height: 0;
+	        top: 50%;
+            position: absolute;
+	        right: -14px;
+            width: 0;
+	        margin-top: -6px;
+        }
+
+        .share_size_large > .share__count:before, .share_size_large > .share__count:after {
+            content: '';
+            display: block;
+	        height: 0;
+	        left: 50%;
+            position: absolute;
+	        top: auto;
+            width: 0;
+        }
+
+        .share__count:before {
+	        border: solid 7px transparent;
+	        border-color: transparent transparent transparent #a5b1bd;
+        }
+
+        .share_size_large > .share__count:before {
+            border-color: #a5b1bd transparent transparent transparent;
+	        bottom: -14px;
+            margin-left: -7px;
+        }
+
+        .share__count:after {
+	        border: solid 6px transparent;
+	        border-color: transparent transparent transparent #fff;
+	        right: -12px;
+	        margin-top: -5px;
+        }
+
+        .share_size_large > .share__count:after {
+            margin-left: -6px;
+            bottom: -12px;
+            border-color: #fff transparent transparent transparent;
+        }
+
+        .share__btn {
+	        border: solid 1px rgba(0, 0, 0, 0.2);
+	        border-radius: 3px;
+	        box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
+	        color: #fff;
+	        display: inline-block;
+	        font-size: 13px;
+	        font-weight: bold;
+	        padding: 5px 10px;
+	        text-align: center;
+	        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+        }
+
+        .share_size_large > .share__btn {
+	        padding: 5px 0;
+	        width: 100%;
+        }
+
+
+        .share_type_facebook > .share__btn {
+	        background-color: #3B5999;
+        }
+
     </style>
 
 </head>
@@ -129,12 +236,23 @@
         </li>
 
 
-        <li th:each="m : ${map}">
-            <h4  th:text="${m.key + ': ' + m.value}"/>
+        <li th:each="otherField : ${otherFieldsValuesMap}">
+            <h4  th:text="${otherField.key + ': ' + otherField.value}"/>
         </li>
 
     </ul>
 </div>
+
+<div class="likes">
+    Likes
+
+    <div class="share share_size_large share_type_facebook">
+        <a class="share__btn" th:href="@{addLikeForTheItem}">Like</a>
+    </div>
+
+</div>
+
+
 
 
 <div class="comments">
