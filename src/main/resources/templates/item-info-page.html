@@ -52,8 +52,8 @@
         .item-info {
             position: absolute;
             top: 100px;
-            right: 900px;
-            left: 200px;
+            right: 1000px;
+            left: 160px;
             padding: 20px;
             margin: 25px 0;
         }
@@ -79,7 +79,7 @@
             position: absolute;
             top: 150px;
             right: 200px;
-            left: 700px;
+            left: 650px;
             background: #C1C7E0;
             border: 4px double black;
         }
@@ -99,6 +99,12 @@
         }
 
 
+        .likes {
+            position: absolute;
+            top: 120px;
+            right: 100px;
+            left: 1380px;
+        }
 
 
         a {
@@ -131,7 +137,7 @@
         .share_size_large > .share__count {
 	        display: block;
 	        float: none;
-	        font-size: 18px;
+	        font-size: 15px;
 	        margin-right: 0;
 	        margin-bottom: 12px;
 	        padding: 10px 0;
@@ -202,7 +208,7 @@
 
 
         .share_type_facebook > .share__btn {
-	        background-color: #3B5999;
+	        background-color: #00406E;
         }
 
     </style>
@@ -244,12 +250,10 @@
 </div>
 
 <div class="likes">
-    Likes
-
     <div class="share share_size_large share_type_facebook">
+        <span class="share__count"  th:text="${likesCount}"></span>
         <a class="share__btn" th:href="@{addLikeForTheItem}">Like</a>
     </div>
-
 </div>
 
 

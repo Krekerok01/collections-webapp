@@ -50,6 +50,7 @@ public class ItemController {
         model.addAttribute("item", itemService.getItemById(itemId));
         model.addAttribute("otherFieldsValuesMap", otherFieldValueService.getOtherFieldsValuesMap(item));
         model.addAttribute("itemComments", commentService.getCommentsToThisItem(itemId));
+        model.addAttribute("likesCount", item.getLikes().size());
 
 
         return "item-info-page";
