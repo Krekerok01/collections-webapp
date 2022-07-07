@@ -73,7 +73,7 @@ public class CollectionController {
 
     @PostMapping("/saveCollection")
     public String saveCollection(@ModelAttribute("collection") @Valid Collection collection, BindingResult result,
-
+                                 @RequestPart(value = "userImg") MultipartFile userImg,
                                  @RequestParam(value = "firstAdditionalStringType", required = false) String firstAdditionalStringType,
                                  @RequestParam(value = "firstAdditionalStringName", required = false) String firstAdditionalStringName,
                                  @RequestParam(value = "secondAdditionalStringType", required = false) String secondAdditionalStringType,
@@ -104,8 +104,6 @@ public class CollectionController {
                                  @RequestParam(value = "secondAdditionalDateName", required = false) String secondAdditionalDateName,
                                  @RequestParam(value = "thirdAdditionalDateType", required = false) String thirdAdditionalDateType,
                                  @RequestParam(value = "thirdAdditionalDateName", required = false) String thirdAdditionalDateName,
-
-                                 @RequestPart(value = "userImg") MultipartFile userImg,
                                  Model model){
 
         if (result.hasErrors()){
@@ -162,18 +160,18 @@ public class CollectionController {
     public String deleteCollection(@RequestParam("collectionId") int collectionId){
 
         Collection collection = collectionService.getCollectionById(collectionId);
-//        Imagen imagen = imagenService.getByImagenUrl(collection.getImageUrl());
-//
-//        if(imagen == null)
-//            throw  new RuntimeException("Img not found");
-//
-//
-//        try {
-//            Map result = cloudinaryService.delete(imagen.getImagenId());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        imagenService.delete(imagen.getId());
+        Imagen imagen = imagenService.getByImagenUrl(collection.getImageUrl());
+
+        if(imagen == null)
+            throw  new RuntimeException("Img not found");
+
+
+        try {
+            Map result = cloudinaryService.delete(imagen.getImagenId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        imagenService.delete(imagen.getId());
 
 
 

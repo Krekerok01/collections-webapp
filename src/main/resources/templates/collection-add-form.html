@@ -59,13 +59,9 @@
         <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}" />
 
 
-        <!--
-        <input type="url" th:field="*{imageUrl}"
-               class="form-control mb-4 col-4" placeholder="Image URL" />
-        <p th:if="${#fields.hasErrors('imageUrl')}" th:errorclass="error" th:errors="*{imageUrl}" /> -->
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <br><br><br><br><br><br><br><br><br><br><br><br>
-        <input type="file" name="userImg" id="userImg" accept="image/*,image/jpeg" class="form-control">
+        <input type="file" name="userImg" id="userImg" accept="image/*,image/jpeg" class="form-control" required>
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <br><br><br><br><br><br><br><br><br><br><br><br>
