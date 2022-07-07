@@ -19,16 +19,16 @@ import java.util.logging.Logger;
 @RequestMapping("/register")
 public class RegistrationController {
 
+	private Logger logger;
     private UserServiceImpl userServiceImpl;
 
 	@Autowired
 	public RegistrationController(UserServiceImpl userServiceImpl) {
+		logger = Logger.getLogger(getClass().getName());
 		this.userServiceImpl = userServiceImpl;
 	}
 
-	private Logger logger = Logger.getLogger(getClass().getName());
 
-	
 	@GetMapping("/registration")
 	public String showRegistrationPage(Model theModel) {
 		theModel.addAttribute("userDataFromInput", new UserDataFromInput());
@@ -38,13 +38,10 @@ public class RegistrationController {
 	@PostMapping("/processRegistrationForm")
 	public String processRegistrationForm(@ModelAttribute("userDataFromInput") @Valid UserDataFromInput userDataFromInput, BindingResult result, Model theModel) {
 
-		if (result.hasErrors()){
-			return "registration";
-		}
+		if (result.hasErrors()) return "registration";
 
         userServiceImpl.saveUserDataFromInput(userDataFromInput);
         logger.info("Successfully created user: " + userDataFromInput.getUsername());
-        
         return "registration-confirmation";		
 	}
 }

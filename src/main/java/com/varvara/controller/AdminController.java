@@ -25,14 +25,12 @@ public class AdminController {
 
     @GetMapping("/list")
     public String showListPage(Model model){
-
         model.addAttribute("users", userServiceImpl.getAllUsers());
         return "users_list.html";
     }
 
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("userId") int id){
-
         userServiceImpl.delete(id);
         return (id == authenticationUserId) ? "redirect:/login" : "redirect:/users/list";
     }
@@ -40,21 +38,18 @@ public class AdminController {
 
     @GetMapping("/blockUser")
     public String blockUser(@RequestParam("username") String username){
-
         userServiceImpl.blockUser(username);
-        return username.equals(authenticationUserName) ? "redirect:/login": "redirect:/users/list";
+        return username.equals(authenticationUserName) ? "redirect:/login" : "redirect:/users/list";
     }
 
     @GetMapping("/unblockUser")
     public String unblockUser(@RequestParam("username") String username){
-
         userServiceImpl.unblockUser(username);
         return "redirect:/users/list";
     }
 
     @GetMapping("/addToAdmins")
     public String addToAdmins(@RequestParam("username") String username){
-
         userServiceImpl.addUserToAdmins(username);
         return "redirect:/users/list";
     }
@@ -62,7 +57,6 @@ public class AdminController {
 
     @GetMapping("/removeFromAdmins")
     public String removeFromAdmins(@RequestParam("username") String username){
-
         userServiceImpl.removeUserFromAdmins(username);
         return "redirect:/users/list";
     }

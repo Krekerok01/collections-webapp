@@ -28,7 +28,6 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("stringOfUserRoles", userServiceImpl.getStringOfUserRoles(user));
         model.addAttribute("collections", user.getCollections());
-
         return "user-info-page";
     }
 }

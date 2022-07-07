@@ -43,16 +43,11 @@ public class ItemController {
 
         item = itemService.getItemById(itemId);
 
-
         model.addAttribute("comment", new Comment());
-
-
-        model.addAttribute("item", itemService.getItemById(itemId));
+        model.addAttribute("item", item);
         model.addAttribute("otherFieldsValuesMap", otherFieldValueService.getOtherFieldsValuesMap(item));
         model.addAttribute("itemComments", commentService.getCommentsToThisItem(itemId));
         model.addAttribute("likesCount", item.getLikes().size());
-
-
         return "item-info-page";
     }
 
@@ -74,7 +69,6 @@ public class ItemController {
 
         commentService.saveComment(comment, user, item);
         redirectAttributes.addAttribute("itemId", item.getId());
-
         return "redirect:showItemInfo" ;
     }
 }

@@ -39,10 +39,8 @@ public class CollectionController {
 
     @GetMapping("/showFormForAddCollection")
     public String showFormForAddCollection(Model model){
-
         model.addAttribute("collection", new Collection());
         model.addAttribute("themeslist", collectionService.getThemesNamesList());
-
         return "collection-add-form";
     }
 
@@ -97,15 +95,21 @@ public class CollectionController {
 
     }
 
+    @GetMapping("/deleteCollection")
+    public String deleteCollection(@RequestParam("collectionId") int collectionId){
+        collectionService.deleteCollectionById(collectionId);
+        return "redirect:/user/info";
+    }
+
 
 
     @GetMapping("/showItems")
     public String showItems(@RequestParam("collectionId") int collectionId, Model model){
 
         Collection collection = collectionService.getCollectionById(collectionId);
+
         model.addAttribute("collection", collection);
         model.addAttribute("items", collection.getItems());
-
         return "items-page";
     }
 
@@ -119,7 +123,6 @@ public class CollectionController {
         model.addAttribute("item", new Item());
         model.addAttribute("otherFields", collectionService.getFieldsWithoutCheckBox(collection));
         model.addAttribute("checkBoxesFields", collectionService.getCheckBoxesFields(collection));
-
         return "item-add-form";
     }
 
@@ -130,7 +133,6 @@ public class CollectionController {
                            @RequestParam(value = "checkboxValue", required = false) String checkboxValue,
                            RedirectAttributes redirectAttributes){
 
-
         itemService.checkingTheRequestParametersForNullAndCallingTheDesiredMethod(item, tagsString,collection, enterValues, checkboxValue);
         redirectAttributes.addAttribute("collectionId", collection.getId());
         return "redirect:/user/showItems";
@@ -139,16 +141,8 @@ public class CollectionController {
 
     @GetMapping("/deleteItem")
     public String deleteItem(@RequestParam("itemId") int itemId){
-
         itemService.deleteItemById(itemId);
         return "redirect:/user/info";
     }
 
-
-    @GetMapping("/deleteCollection")
-    public String deleteCollection(@RequestParam("collectionId") int collectionId){
-
-        collectionService.deleteCollectionById(collectionId);
-        return "redirect:/user/info";
-    }
 }

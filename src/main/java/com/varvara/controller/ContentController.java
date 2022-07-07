@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-
-
 @Controller
 public class ContentController {
-
 
     private TagService tagService;
     private CollectionService collectionService;
@@ -30,15 +27,12 @@ public class ContentController {
     }
 
 
-
     @GetMapping("/")
     public String showMainPage(Model model){
 
         model.addAttribute("largestCollectionsList", collectionService.getLargestCollections());
         model.addAttribute("lastAddedItemsList", itemService.getLastAddedItems());
         model.addAttribute("tagsSet", tagService.getSetOfAllTags());
-
-
         return "first-content-page";
     }
 
@@ -51,7 +45,6 @@ public class ContentController {
         model.addAttribute("collection", collection);
         model.addAttribute("items", collection.getItems());
         model.addAttribute("owner", collection.getUsers().get(0));
-
         return "collection-and-items-page";
     }
 
@@ -64,8 +57,6 @@ public class ContentController {
 
         model.addAttribute("tagName", tagName);
         model.addAttribute("itemsThatContainsSpecificTagList", itemService.getItemsThatContainsTheSpecificTag(tagName));
-
         return "items-that-contains-a-specific-tag-page";
     }
-
 }
