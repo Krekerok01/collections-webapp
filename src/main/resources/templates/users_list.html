@@ -14,86 +14,122 @@
         body {
              background: #B9D6ED;
         }
+
+        .info-about-users {
+            position: absolute;
+            top: 150px;
+            left: 20px;
+            right: 20px;
+        }
+
+        .hr-double {
+	       margin: 100px 0;
+	       padding: 0;
+	       height: 0;
+	       border: none;
+	       border-top: 2px solid #C4D9F5;
+	       border-bottom: 2px solid #330D64;
+        }
+
+        .header-text {
+             position: absolute;
+             top: 20px;
+             left: 500px;
+        }
+
+        .links {
+            position: absolute;
+            top: 15px;
+            right: 50px;
+            line-height: 1px;
+        }
+
+        .logout {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            line-height: 1px;
+        }
     </style>
 
 </head>
 <body>
 
-<div class="links">
-    <a th:href="@{/}" class="btn btn-outline-primary btn-sm mb-3">
-        Back to the main page
-    </a>
+
+<div class="header">
+
+    <div class="links">
+        <a th:href="@{/}" class="btn btn-outline-primary btn-sm mb-3">
+            Back to the main page
+        </a>
+    </div>
+
+
+    <div sec:authorize="isAuthenticated()" class="logout">
+        <form action="#" th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+        </form>
+    </div>
+
+
+    <h1 class="header-text">The world of collections</h1>
 </div>
 
-<form action="#" th:action="@{/logout}"
-      method="POST">
-
-    <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
-
-</form>
-
-<h3>User Directory</h3>
 
 
-  <table class="table table-bordered table-striped" >
-    <thead class="thead-dark">
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Status</th>
-        <th>Roles</th>
-        <th />
-    </tr>
-  </thead>
+<hr class="hr-double">
 
-  <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.firstName}" />
-        <td th:text="${user.lastName}" />
-        <td th:text="${user.email}" />
-        <td th:text="${user.status}" />
-        <td th:text="${user.roles}" />
+<div class="info-about-users">
 
-        <td>
+    <h3>User Directory</h3>
 
-            <a th:href="@{deleteUser(userId=${user.id})}"
-               class="btn btn-danger btn-sm"
-               onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false" >
-                Delete
-            </a>
+    <table class="table table-bordered table-striped" >
+        <thead class="thead-dark">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Roles</th>
+                 <th />
+            </tr>
+        </thead>
 
-            <a th:href="@{blockUser(username=${user.username})}"
-               class="btn btn-secondary btn-sm"
-            >
-                Block
-            </a>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.firstName}" />
+                <td th:text="${user.lastName}" />
+                <td th:text="${user.email}" />
+                <td th:text="${user.status}" />
+                <td th:text="${user.roles}" />
+                <td>
+                    <a th:href="@{deleteUser(userId=${user.id})}" class="btn btn-danger btn-sm"
+                        onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false" >
+                        Delete
+                    </a>
 
-            <a th:href="@{unblockUser(username=${user.username})}"
-               class="btn btn-success btn-sm"
-            >
-                Unblock
-            </a>
+                    <a th:href="@{blockUser(username=${user.username})}" class="btn btn-secondary btn-sm">
+                        Block
+                    </a>
 
-            <a th:href="@{addToAdmins(username=${user.username})}"
-               class="btn btn-success btn-sm"
-            >
-                Add to admins
-            </a>
+                    <a th:href="@{unblockUser(username=${user.username})}" class="btn btn-success btn-sm">
+                        Unblock
+                    </a>
 
-            <a th:href="@{removeFromAdmins(username=${user.username})}"
-               class="btn btn-success btn-sm"
-            >
-                Remove from admins
-            </a>
+                    <a th:href="@{addToAdmins(username=${user.username})}" class="btn btn-success btn-sm">
+                        Add to admins
+                    </a>
 
+                    <a th:href="@{removeFromAdmins(username=${user.username})}" class="btn btn-success btn-sm">
+                        Remove from admins
+                    </a>
+                </td>
+            </tr>
+        </tbody>
 
-        </td>
+    </table>
 
-    </tr>
-  </tbody>
-
-</table>
+</div>
 
 </body>
 </html>
