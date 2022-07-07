@@ -57,7 +57,6 @@ public class ItemController {
 
         likeService.likeOrDislikeItem(authenticationUserId, item.getId());
         redirectAttributes.addAttribute("itemId", item.getId());
-
         return "redirect:showItemInfo" ;
     }
 

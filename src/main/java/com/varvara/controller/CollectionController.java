@@ -1,19 +1,35 @@
 package com.varvara.controller;
 
 import com.varvara.entity.Collection;
+import com.varvara.entity.Imagen;
 import com.varvara.entity.Item;
+import com.varvara.service.CloudinaryService;
+import com.varvara.service.ImagenService;
 import com.varvara.service.interfaces.CollectionService;
 import com.varvara.service.interfaces.ItemService;
 import com.varvara.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.validation.Valid;
-import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
+import javax.validation.Valid;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.LinkedList;
+import java.util.Map;
 
 
 @Controller
@@ -26,13 +42,20 @@ public class CollectionController {
     private CollectionService collectionService;
     private ItemService itemService;
 
+    private CloudinaryService cloudinaryService;
+    private ImagenService imagenService;
+
 
 
     @Autowired
-    public CollectionController(UserServiceImpl userServiceImpl, CollectionService collectionService, ItemService itemService) {
+    public CollectionController(UserServiceImpl userServiceImpl, CollectionService collectionService, ItemService itemService
+            , CloudinaryService cloudinaryService, ImagenService imagenService) {
         this.userServiceImpl = userServiceImpl;
         this.collectionService = collectionService;
         this.itemService = itemService;
+
+        this.cloudinaryService = cloudinaryService;
+        this.imagenService = imagenService;
     }
 
 
@@ -44,8 +67,11 @@ public class CollectionController {
         return "collection-add-form";
     }
 
+
+
     @PostMapping("/saveCollection")
     public String saveCollection(@ModelAttribute("collection") @Valid Collection collection, BindingResult result,
+                                 @RequestParam(value = "userImg") MultipartFile userImg,
                                  @RequestParam(value = "firstAdditionalStringType", required = false) String firstAdditionalStringType,
                                  @RequestParam(value = "firstAdditionalStringName", required = false) String firstAdditionalStringName,
                                  @RequestParam(value = "secondAdditionalStringType", required = false) String secondAdditionalStringType,
@@ -83,6 +109,26 @@ public class CollectionController {
             return "collection-add-form";
         }
 
+
+
+
+        Map resultMap = null;
+        try {
+            resultMap = cloudinaryService.upload(userImg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String url = (String)resultMap.get("url");
+
+        Imagen imagen = new Imagen((String)resultMap.get("original_filename"), (String)resultMap.get("url"), (String)resultMap.get("public_id"));
+        imagenService.save(imagen);
+
+
+        collection.setImageUrl(url);
+
+
+
+
         userServiceImpl.saveCollectionToTheUser(collection,
                 firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
                 firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
@@ -97,6 +143,23 @@ public class CollectionController {
 
     @GetMapping("/deleteCollection")
     public String deleteCollection(@RequestParam("collectionId") int collectionId){
+
+        Collection collection = collectionService.getCollectionById(collectionId);
+//        Imagen imagen = imagenService.getByImagenUrl(collection.getImageUrl());
+//
+//        if(imagen == null)
+//            throw  new RuntimeException("Img not found");
+//
+//
+//        try {
+//            Map result = cloudinaryService.delete(imagen.getImagenId());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        imagenService.delete(imagen.getId());
+
+
+
         collectionService.deleteCollectionById(collectionId);
         return "redirect:/user/info";
     }

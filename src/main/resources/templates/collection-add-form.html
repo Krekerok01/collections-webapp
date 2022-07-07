@@ -33,10 +33,11 @@
 
     <p class="h4 mb-4">Add New Collection: </p>
 
-    <form action="#" th:action="@{saveCollection}"
-          th:object="${collection}" method="POST">
 
-        <!-- Add a hidden form field to handle update  -->
+
+    <form action="#" th:action="@{saveCollection}" th:object="${collection}" method="POST" enctype="multipart/form-data">
+
+
         <input type="hidden" th:field="*{id}" />
 
 
@@ -48,9 +49,7 @@
         <p>
 
         <select name="themes" th:field="*{theme}"  class="form-select form-select-lg mb-3">
-           <!-- <option value="books">Books</option> -->
             <option  th:each="t : ${themeslist}" th:value="${t}" th:text="${t}" />
-
         </select>
         </p>
 
@@ -60,9 +59,17 @@
         <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}" />
 
 
+        <!--
         <input type="url" th:field="*{imageUrl}"
                class="form-control mb-4 col-4" placeholder="Image URL" />
-        <p th:if="${#fields.hasErrors('imageUrl')}" th:errorclass="error" th:errors="*{imageUrl}" />
+        <p th:if="${#fields.hasErrors('imageUrl')}" th:errorclass="error" th:errors="*{imageUrl}" /> -->
+
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <input type="file" name="userImg" id="userImg" accept="image/*,image/jpeg">
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
 
 
         <p> If you want to add additional fields, then select which ones and enter the name: </p>
