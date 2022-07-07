@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -67,11 +69,11 @@ public class CollectionController {
         return "collection-add-form";
     }
 
-
+    private final Path root = Paths.get("src/main/resources/static/images");
 
     @PostMapping("/saveCollection")
     public String saveCollection(@ModelAttribute("collection") @Valid Collection collection, BindingResult result,
-                                 @RequestParam(value = "userImg") MultipartFile userImg,
+
                                  @RequestParam(value = "firstAdditionalStringType", required = false) String firstAdditionalStringType,
                                  @RequestParam(value = "firstAdditionalStringName", required = false) String firstAdditionalStringName,
                                  @RequestParam(value = "secondAdditionalStringType", required = false) String secondAdditionalStringType,
@@ -102,10 +104,25 @@ public class CollectionController {
                                  @RequestParam(value = "secondAdditionalDateName", required = false) String secondAdditionalDateName,
                                  @RequestParam(value = "thirdAdditionalDateType", required = false) String thirdAdditionalDateType,
                                  @RequestParam(value = "thirdAdditionalDateName", required = false) String thirdAdditionalDateName,
+
+                                 @RequestPart(value = "userImg") MultipartFile userImg,
                                  Model model){
 
         if (result.hasErrors()){
             model.addAttribute("themeslist",  collectionService.getThemesNamesList());
+            for (Object object : result.getAllErrors()) {
+                if(object instanceof FieldError) {
+                    FieldError fieldError = (FieldError) object;
+
+                    System.out.println(fieldError.getCode());
+                }
+
+                if(object instanceof ObjectError) {
+                    ObjectError objectError = (ObjectError) object;
+
+                    System.out.println(objectError.getCode());
+                }
+            }
             return "collection-add-form";
         }
 

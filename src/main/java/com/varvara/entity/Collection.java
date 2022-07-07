@@ -34,7 +34,7 @@ public class Collection {
     private String description;
 
     @Column(name = "image_url")
-    @NotBlank(message = "The field image URL is required")
+   // @NotBlank(message = "The field image URL is required")
     private String imageUrl;
 
 
