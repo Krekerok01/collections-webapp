@@ -1,11 +1,11 @@
 package com.varvara.service;
 
+import com.varvara.entity.*;
 import com.varvara.entity.Collection;
-import com.varvara.entity.Item;
-import com.varvara.entity.OtherField;
-import com.varvara.entity.User;
 import com.varvara.repository.CollectionRepository;
+import com.varvara.service.interfaces.CloudinaryService;
 import com.varvara.service.interfaces.CollectionService;
+import com.varvara.service.interfaces.ImagenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +22,16 @@ public class CollectionServiceImpl implements CollectionService {
     private Logger logger = Logger.getLogger(getClass().getName());
     private CollectionRepository collectionRepository;
     private UserServiceImpl userService;
+    private CloudinaryService cloudinaryService;
+    private ImagenService imagenService;
 
     @Autowired
-    public CollectionServiceImpl(CollectionRepository collectionRepository, UserServiceImpl userService) {
+    public CollectionServiceImpl(CollectionRepository collectionRepository, UserServiceImpl userService
+            , CloudinaryService cloudinaryService, ImagenService imagenService) {
         this.collectionRepository = collectionRepository;
         this.userService = userService;
+        this.cloudinaryService = cloudinaryService;
+        this.imagenService = imagenService;
     }
 
 
@@ -58,6 +63,21 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public void deleteCollectionById(int id) {
+
+        Collection collection = getCollectionById(id);
+        Imagen imagen = imagenService.getByImagenUrl(collection.getImageUrl());
+
+        if(imagen == null)
+            throw  new RuntimeException("Img not found");
+
+
+        try {
+            Map result = cloudinaryService.delete(imagen.getImagenId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        imagenService.delete(imagen.getId());
+
         collectionRepository.deleteById(id);
     }
 

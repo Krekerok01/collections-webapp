@@ -3,34 +3,53 @@ package com.varvara.service;
 
 import com.varvara.entity.Imagen;
 import com.varvara.repository.ImagenRepository;
+import com.varvara.service.interfaces.ImagenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+
 
 @Service
 @Transactional
-public class ImagenService {
+public class ImagenServiceImpl implements ImagenService {
+
+    private ImagenRepository imagenRepository;
 
     @Autowired
-    ImagenRepository imagenRepository;
+    public ImagenServiceImpl(ImagenRepository imagenRepository) {
+        this.imagenRepository = imagenRepository;
+    }
 
+    @Override
+    public String getUrlAndSaveImage(Map resultMap){
+        Imagen imagen = new Imagen((String)resultMap.get("original_filename"), (String)resultMap.get("url"), (String)resultMap.get("public_id"));
+        save(imagen);
+
+        return (String)resultMap.get("url");
+    }
+
+    @Override
     public List<Imagen> list(){
         return imagenRepository.findByOrderById();
     }
 
 
+    @Override
     public void save(Imagen imagen){
         imagenRepository.save(imagen);
     }
 
+
+    @Override
     public void delete(int id){
         imagenRepository.deleteById(id);
     }
 
 
+    @Override
     public Imagen getByImagenUrl(String imagenUrl){
         return imagenRepository.findByImagenUrl(imagenUrl).get();
     }

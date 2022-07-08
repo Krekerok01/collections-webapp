@@ -2,14 +2,14 @@ package com.varvara.service;
 
 
 
+import com.varvara.entity.*;
 import com.varvara.entity.Collection;
-import com.varvara.entity.OtherField;
-import com.varvara.entity.Role;
-import com.varvara.entity.User;
 import com.varvara.repository.RoleRepository;
 import com.varvara.repository.UserRepository;
 import com.varvara.dto.UserDataFromInput;
+import com.varvara.service.interfaces.CloudinaryService;
 import com.varvara.service.interfaces.CollectionService;
+import com.varvara.service.interfaces.ImagenService;
 import com.varvara.service.interfaces.OtherFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -21,10 +21,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.persistence.NonUniqueResultException;
 import java.util.*;
+
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -41,13 +43,20 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	private OtherFieldService otherFieldService;
 	private CollectionService collectionService;
 
+	private CloudinaryService cloudinaryService;
+	private ImagenService imagenService;
+
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, OtherFieldService otherFieldService, @Lazy CollectionService collectionService) {
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, OtherFieldService otherFieldService, @Lazy CollectionService collectionService
+							, CloudinaryService cloudinaryService, ImagenService imagenService) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.otherFieldService = otherFieldService;
 		this.collectionService = collectionService;
+
+		this.cloudinaryService = cloudinaryService;
+		this.imagenService = imagenService;
 	}
 
 
@@ -166,12 +175,18 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 		return role.get();
 	}
 
-	public void saveCollectionToTheUser(Collection collection,
+	public void saveCollectionToTheUser(Collection collection, MultipartFile userImg,
 										String firstAdditionalStringType, String firstAdditionalStringName, String secondAdditionalStringType, String secondAdditionalStringName, String thirdAdditionalStringType, String thirdAdditionalStringName,
 										String firstAdditionalIntegerType, String firstAdditionalIntegerName, String secondAdditionalIntegerType, String secondAdditionalIntegerName, String thirdAdditionalIntegerType, String thirdAdditionalIntegerName,
 										String firstAdditionalMultilineTextType, String firstAdditionalMultilineTextName, String secondAdditionalMultilineTextType, String secondAdditionalMultilineTextName, String thirdAdditionalMultilineTextType, String thirdAdditionalMultilineTextName,
 										String firstAdditionalCheckboxType, String firstAdditionalCheckboxName, String secondAdditionalCheckboxType, String secondAdditionalCheckboxName, String thirdAdditionalCheckboxType, String thirdAdditionalCheckboxName,
 										String firstAdditionalDateType, String firstAdditionalDateName, String secondAdditionalDateType, String secondAdditionalDateName, String thirdAdditionalDateType, String thirdAdditionalDateName){
+
+		Map resultMap = cloudinaryService.getCloudinaryMap(userImg);
+		String imageUrl = imagenService.getUrlAndSaveImage(resultMap);
+		collection.setImageUrl(imageUrl);
+
+
 		User user = findByUsername(authenticationUserName);
 		List<Collection> userCollections = user.getCollections();
 
