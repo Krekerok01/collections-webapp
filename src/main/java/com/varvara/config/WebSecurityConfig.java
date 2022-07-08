@@ -39,6 +39,7 @@ public class WebSecurityConfig extends  WebSecurityConfigurerAdapter{
                 .antMatchers("/showItemsByTag/**").permitAll()
                 .antMatchers("/showTheSelectedCollection/**").permitAll()
                 .antMatchers("/item/showItemInfo").permitAll()
+                .antMatchers("/css/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
