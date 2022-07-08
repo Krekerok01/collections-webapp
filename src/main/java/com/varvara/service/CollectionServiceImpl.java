@@ -65,7 +65,7 @@ public class CollectionServiceImpl implements CollectionService {
     public void deleteCollectionById(int id) {
 
         Collection collection = getCollectionById(id);
-        Imagen imagen = imagenService.getByImagenUrl(collection.getImageUrl());
+        Imagen imagen = imagenService.getByImageUrl(collection.getImageUrl());
 
         if(imagen == null)
             throw  new RuntimeException("Img not found");
@@ -76,7 +76,7 @@ public class CollectionServiceImpl implements CollectionService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        imagenService.delete(imagen.getId());
+        imagenService.deleteImageById(imagen.getId());
 
         collectionRepository.deleteById(id);
     }

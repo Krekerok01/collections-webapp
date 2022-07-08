@@ -65,6 +65,17 @@ public class User implements UserDetails {
 	private List<Comment> comments;
 
 
+	public User(String username, String password, String firstName, String lastName, String email, boolean isEnabled, boolean isAccountNonLocked, String status) {
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.isEnabled = isEnabled;
+		this.isAccountNonLocked = isAccountNonLocked;
+		this.status = status;
+	}
+
 	public String getStatus() {
 		if (isAccountNonLocked){
 			return "ACTIVE";

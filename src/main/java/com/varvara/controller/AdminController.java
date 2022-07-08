@@ -58,6 +58,6 @@ public class AdminController {
     @GetMapping("/removeFromAdmins")
     public String removeFromAdmins(@RequestParam("username") String username){
         userServiceImpl.removeUserFromAdmins(username);
-        return "redirect:/users/list";
+        return username.equals(authenticationUserName) ? "redirect:/login" : "redirect:/users/list";
     }
 }

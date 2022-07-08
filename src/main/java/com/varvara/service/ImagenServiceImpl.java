@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -26,31 +25,24 @@ public class ImagenServiceImpl implements ImagenService {
     @Override
     public String getUrlAndSaveImage(Map resultMap){
         Imagen imagen = new Imagen((String)resultMap.get("original_filename"), (String)resultMap.get("url"), (String)resultMap.get("public_id"));
-        save(imagen);
-
+        saveImage(imagen);
         return (String)resultMap.get("url");
     }
 
     @Override
-    public List<Imagen> list(){
-        return imagenRepository.findByOrderById();
-    }
-
-
-    @Override
-    public void save(Imagen imagen){
+    public void saveImage(Imagen imagen){
         imagenRepository.save(imagen);
     }
 
 
     @Override
-    public void delete(int id){
+    public void deleteImageById(int id){
         imagenRepository.deleteById(id);
     }
 
 
     @Override
-    public Imagen getByImagenUrl(String imagenUrl){
+    public Imagen getByImageUrl(String imagenUrl){
         return imagenRepository.findByImagenUrl(imagenUrl).get();
     }
 }

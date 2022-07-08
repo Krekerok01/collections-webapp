@@ -90,7 +90,7 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Status</th>
-                <th>Roles</th>
+                <th width="300">Roles</th>
                  <th />
             </tr>
         </thead>
@@ -101,28 +101,31 @@
                 <td th:text="${user.lastName}" />
                 <td th:text="${user.email}" />
                 <td th:text="${user.status}" />
-                <td th:text="${user.roles}" />
+                <td th:text="${user.roles}" width="300"/>
                 <td>
                     <a th:href="@{deleteUser(userId=${user.id})}" class="btn btn-danger btn-sm"
                         onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false" >
-                        Delete
+                        Delete User
                     </a>
 
                     <a th:href="@{blockUser(username=${user.username})}" class="btn btn-secondary btn-sm">
-                        Block
+                        Block User
                     </a>
 
                     <a th:href="@{unblockUser(username=${user.username})}" class="btn btn-success btn-sm">
-                        Unblock
+                        Unblock User
                     </a>
 
-                    <a th:href="@{addToAdmins(username=${user.username})}" class="btn btn-success btn-sm">
-                        Add to admins
+
+                    <a th:href="@{addToAdmins(username=${user.username})}" class="btn btn-primary btn-sm">
+                        Add User to admins
                     </a>
 
-                    <a th:href="@{removeFromAdmins(username=${user.username})}" class="btn btn-success btn-sm">
-                        Remove from admins
+                    <a th:href="@{removeFromAdmins(username=${user.username})}" class="btn btn-secondary btn-sm">
+                        Remove User from admins
                     </a>
+
+                    <br>
                 </td>
             </tr>
         </tbody>

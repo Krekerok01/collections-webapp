@@ -47,14 +47,14 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	private ImagenService imagenService;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder, OtherFieldService otherFieldService, @Lazy CollectionService collectionService
-							, CloudinaryService cloudinaryService, ImagenService imagenService) {
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder passwordEncoder,
+						   OtherFieldService otherFieldService, @Lazy CollectionService collectionService,
+						   CloudinaryService cloudinaryService, ImagenService imagenService) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.otherFieldService = otherFieldService;
 		this.collectionService = collectionService;
-
 		this.cloudinaryService = cloudinaryService;
 		this.imagenService = imagenService;
 	}
@@ -63,10 +63,7 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	public User findById(int id){
 		Optional<User> user = userRepository.findById(id);
 
-		if(!user.isPresent()) {
-			throw new UsernameNotFoundException("User Not Found");
-		}
-
+		if(!user.isPresent()) { throw new UsernameNotFoundException("User Not Found"); }
 		return user.get();
 	}
 
@@ -74,31 +71,18 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	public User findByUsername(String username) {
 		Optional<User> user = userRepository.findByUsername(username);
 
-		if(!user.isPresent()) {
-			throw new UsernameNotFoundException("User Not Found");
-		}
-
+		if(!user.isPresent()) { throw new UsernameNotFoundException("User Not Found"); }
 		return user.get();
 	}
 
 
 	public void saveUserDataFromInput(UserDataFromInput userDataFromInput) {
 
-		User user = new User();
-
-		user.setUsername(userDataFromInput.getUsername());
-		user.setPassword(passwordEncoder.encode(userDataFromInput.getPassword()));
-		user.setFirstName(userDataFromInput.getFirstName());
-		user.setLastName(userDataFromInput.getLastName());
-		user.setEmail(userDataFromInput.getEmail());
-
+		User user = new User(userDataFromInput.getUsername(), passwordEncoder.encode(userDataFromInput.getPassword()),
+				userDataFromInput.getFirstName(), userDataFromInput.getLastName(), userDataFromInput.getEmail(),
+				true, true, "ACTIVE");
 		Role role = roleRepository.findRoleByName("ROLE_USER").get();
 		user.setRoles(Arrays.asList(role));
-
-		user.setEnabled(true);
-		user.setAccountNonLocked(true);
-		user.setStatus("ACTIVE");
-
 
 		userRepository.save(user);
 	}
