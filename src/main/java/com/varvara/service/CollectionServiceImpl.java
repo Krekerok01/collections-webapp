@@ -205,6 +205,7 @@ public class CollectionServiceImpl implements CollectionService {
 
         for (Integer number: fiveNumbersWithTheMaximumSizesOfItemsInTheCollections){
             for (Map.Entry<Collection, Integer> entry: collectionsAndItemsSizeMap.entrySet()){
+                if (theNamesOfTheFiveLargestCollections.size() == 5) break;
                 if (entry.getValue() == number) theNamesOfTheFiveLargestCollections.add(entry.getKey().getName());
             }
         }
