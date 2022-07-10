@@ -22,7 +22,8 @@
 
         .error {
 			    color:red
-			}
+		}
+
     </style>
 
 </head>
@@ -39,7 +40,6 @@
 
     <form action="#" th:action="@{saveCollection}" th:object="${collection}" method="POST" enctype="multipart/form-data">
 
-        <!-- Add a hidden form field to handle update  -->
         <input type="hidden" th:field="*{id}" />
 
 
@@ -63,10 +63,13 @@
 
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <br><br><br><br><br><br><br><br><br><br><br><br>
-        <input type="file" name="userImg" id="userImg" accept="image/*,image/jpeg" class="form-control" required>
+        <input type="file" name="userImg" id="userImg" accept="image/*,image/jpeg" class="form-control"
+             required oninvalid="this.setCustomValidity('Select a file.')" oninput="setCustomValidity('')" />
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
 
 
 
