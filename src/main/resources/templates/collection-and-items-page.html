@@ -9,11 +9,10 @@
 
     <title th:text="${collection.name + ' collection'}" />
 
-    <style>
-        body {
-             background: #B9D6ED;
-        }
+    <link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
 
+
+    <style>
 
 
         .back-home {
@@ -100,6 +99,8 @@
     <h1 class="header-text">The world of collections</h1>
 </div>
 
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
 
 <hr class="hr-double">
 

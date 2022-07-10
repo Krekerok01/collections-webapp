@@ -8,10 +8,9 @@
           rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
 
+    <link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
+
     <style>
-        body {
-             background: #B9D6ED;
-        }
 
         .container {
            position: absolute;
@@ -28,6 +27,9 @@
 
 </head>
 <body>
+
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
 
 <div class="container">
 

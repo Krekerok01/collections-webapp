@@ -1,6 +1,11 @@
 body {
     background: #B9D6ED;
-
 }
 
-
+.btn-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #003C70;
+    color: #fff;
+}

@@ -16,19 +16,21 @@
 
     <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
+
+
     <style>
 	    .error {
 	        color:red
 	    }
-
-	    body {
-             background: #B9D6ED;
-        }
 	</style>
 
 </head>
 
 <body>
+
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
 
 <div>
 

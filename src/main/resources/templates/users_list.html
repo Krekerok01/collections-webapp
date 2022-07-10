@@ -8,12 +8,12 @@
         rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
         crossorigin="anonymous">
 
+    <link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
+
+
     <title>Users List</title>
 
     <style>
-        body {
-             background: #B9D6ED;
-        }
 
         .info-about-users {
             position: absolute;
@@ -55,6 +55,9 @@
 </head>
 <body>
 
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
+
 
 <div class="header">
 
@@ -83,7 +86,7 @@
 
     <h3>User Directory</h3>
 
-    <table class="table table-bordered table-striped" >
+    <table class="table table-bordered table-striped darktable" >
         <thead class="thead-dark">
             <tr>
                 <th>First Name</th>

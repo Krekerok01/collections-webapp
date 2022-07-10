@@ -2,3 +2,19 @@ body {
     background: #0C1E4D;
     color: #7195A3;
 }
+
+
+.btn-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #5386A6;
+    color: #003F75;
+}
+
+.darktable {
+    background: #003F75;
+}
+
+
+

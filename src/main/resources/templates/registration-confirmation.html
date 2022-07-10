@@ -4,16 +4,24 @@
 <head>
 	<title>Registration Confirmation</title>
 
+	<link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
+
 
 	<style>
-	    body {
-             background: #B9D6ED;
-        }
+		.btn-toggle {
+    		position: absolute;
+    		left: 1400px;
+    		right: 15px;
+
+		}
 	</style>
 
 </head>
 
 <body>
+
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
 
 	<h2>User registered successfully!</h2>
 

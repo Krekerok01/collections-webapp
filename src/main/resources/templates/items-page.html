@@ -8,12 +8,11 @@
           crossorigin="anonymous">
     <title>Items info</title>
 
+    <link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
+
+
 
     <style>
-        body {
-             background: #B9D6ED;
-        }
-
 
          .links {
             position: absolute;
@@ -71,6 +70,9 @@
 </head>
 <body>
 
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
+
 <div class="header">
 
 
@@ -99,7 +101,7 @@
     <form action="#" th:object="${collection}" method="get">
 
 
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped darktable">
             <thead class="thead-dark">
             <tr>
                 <th>Name</th>
@@ -133,7 +135,7 @@
             <h1 style="display:inline;">Items: </h1>
         </p>
 
-        <table class="table table-bordered table-striped" >
+        <table class="table table-bordered table-striped darktable" >
             <thead class="thead-dark">
                 <tr>
                     <th>Item name</th>

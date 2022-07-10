@@ -19,27 +19,24 @@
 	
 	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+	<link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
+
 	<style>
 
-		body {
-             background: #B9D6ED;
-        }
-
-
-	    .back-home {
-            position: absolute;
-            top: 15px;
-            right: 920px;
-            line-height: 1px;
-        }
-
-
-
+		.back-home {
+    		position: absolute;
+        	top: 15px;
+        	right: 920px;
+        	line-height: 1px;
+    	}
 	</style>
 
 </head>
 
 <body>
+
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
 
 	<div>
 

@@ -12,7 +12,9 @@
 
 
 
-    <link th:href="@{/css/light.css}" rel="stylesheet" />
+   <link th:href="@{/css/light.css}" rel="stylesheet" id="theme-link" />
+
+
 
 
    <style>
@@ -208,6 +210,13 @@
 
 <hr class="hr-double">
 
+
+
+<button class="btn-toggle rounded">Change theme</button>
+<script type="text/javascript" th:src="@{/js/theme.js}"></script>
+
+
+
 <div>
     <ul class="collections-list">
         <h3>Largest collections: </h3>
@@ -245,6 +254,9 @@
     </ul>
 
 </div>
+
+
+
 
 </body>
 </html>
