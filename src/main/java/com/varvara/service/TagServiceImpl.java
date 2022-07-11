@@ -35,7 +35,7 @@ public class TagServiceImpl implements TagService {
         Optional<Tag> tag = tagRepository.findById(id);
 
         if(!tag.isPresent()) {
-            throw new UsernameNotFoundException("Tag didn't find");
+            throw new RuntimeException("Tag not found");
         }
 
         return tag.get();

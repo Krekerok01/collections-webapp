@@ -79,8 +79,7 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 	public void saveUserDataFromInput(UserDataFromInput userDataFromInput) {
 
 		User user = new User(userDataFromInput.getUsername(), passwordEncoder.encode(userDataFromInput.getPassword()),
-				userDataFromInput.getFirstName(), userDataFromInput.getLastName(), userDataFromInput.getEmail(),
-				true, true, "ACTIVE");
+				userDataFromInput.getFirstName(), userDataFromInput.getLastName(), userDataFromInput.getEmail(), true, true, "ACTIVE");
 		Role role = roleRepository.findRoleByName("ROLE_USER").get();
 		user.setRoles(Arrays.asList(role));
 
@@ -91,9 +90,7 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 		User user = findByUsername(username);
 
 		List<Role> roles = (List<Role>) user.getRoles();
-		if (roles.size() == 1){
-			roles.add(findRoleByName("ROLE_ADMIN"));
-		}
+		if (roles.size() == 1) roles.add(findRoleByName("ROLE_ADMIN"));
 
 		user.setRoles(roles);
 		saveUser(user);
@@ -153,7 +150,7 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 		Optional<Role> role = roleRepository.findRoleByName(name);
 
 		if(!role.isPresent()) {
-			throw new UsernameNotFoundException("Role Not Found");
+			throw new RuntimeException("Role not found");
 		}
 
 		return role.get();
@@ -167,8 +164,7 @@ public class UserServiceImpl implements org.springframework.security.core.userde
 										String firstAdditionalDateType, String firstAdditionalDateName, String secondAdditionalDateType, String secondAdditionalDateName, String thirdAdditionalDateType, String thirdAdditionalDateName){
 
 		Map resultMap = cloudinaryService.getCloudinaryMap(userImg);
-		String imageUrl = imagenService.getUrlAndSaveImage(resultMap);
-		collection.setImageUrl(imageUrl);
+		collection.setImageUrl(imagenService.getUrlAndSaveImage(resultMap));
 
 
 		User user = findByUsername(authenticationUserName);

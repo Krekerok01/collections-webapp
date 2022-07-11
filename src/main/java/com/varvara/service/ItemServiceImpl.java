@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService {
         Optional<Item> item = itemRepository.findItemById(id);
 
         if (!item.isPresent()){
-            throw new RuntimeException("Item didn't find");
+            throw new RuntimeException("Item not found");
         }
         return item.get();
     }
@@ -104,32 +104,34 @@ public class ItemServiceImpl implements ItemService {
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     @Override
     public void setTagsAndCollectionAndOtherFieldsAndSaveItem(Item item, String tagsString, Collection collection, LinkedList<String> enterValues) {
 
         valuesIds = new LinkedList<>();
 
         item.setTags(getTagsFromTagsString(item, tagsString));
-        List<OtherField> otherFields = collection.getOtherFields();
-        List<OtherFieldValue> otherFieldValues = new LinkedList<>();
-
-        if (otherFields.size() == enterValues.size()) {
-            method(enterValues, otherFields, otherFieldValues, otherFields.size());
-        } else if ((otherFields.size() - 1) == enterValues.size()) {
-            method(enterValues, otherFields, otherFieldValues, (otherFields.size() - 1));
-        }
-
-
         item.setCollection(collection);
+
+
+        List<OtherFieldValue> otherFieldValues = getOtherFieldValuesResultList(collection.getOtherFields(), enterValues);
         item.setOtherFieldsValues(otherFieldValues);
 
         saveItem(item);
     }
 
-    private void method( LinkedList<String> enterValues, List<OtherField> otherFields, List<OtherFieldValue> otherFieldValues, int size){
+    private  List<OtherFieldValue> getOtherFieldValuesResultList(List<OtherField> otherFields, LinkedList<String> enterValues){
+        List<OtherFieldValue> otherFieldValues = new LinkedList<>();
+
+        if (otherFields.size() == enterValues.size()) {
+            fillOtherFieldsValuesListAndUpdateOtherFieldsList(enterValues, otherFields, otherFieldValues, otherFields.size());
+        } else if ((otherFields.size() - 1) == enterValues.size()) {
+            fillOtherFieldsValuesListAndUpdateOtherFieldsList(enterValues, otherFields, otherFieldValues, (otherFields.size() - 1));
+        }
+        return otherFieldValues;
+    }
+
+
+    private void fillOtherFieldsValuesListAndUpdateOtherFieldsList(LinkedList<String> enterValues, List<OtherField> otherFields, List<OtherFieldValue> otherFieldValues, int size){
         for (int i = 0; i < size; i++) {
 
             OtherField otherField = otherFields.get(i);
@@ -161,11 +163,6 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
-
-
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     public LinkedList<Item> getLinkedListOfItems(){

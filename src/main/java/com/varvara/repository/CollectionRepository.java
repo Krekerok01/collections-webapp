@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface CollectionRepository extends JpaRepository<Collection, Integer> {
 
     Optional<Collection> findCollectionByName(String name);
-
 }

@@ -35,35 +35,12 @@ public class OtherFieldServiceImpl implements OtherFieldService {
     }
 
     @Override
-    public void saveCollection(Collection collection, String firstAdditionalStringType, String firstAdditionalStringName, String secondAdditionalStringType, String secondAdditionalStringName, String thirdAdditionalStringType, String thirdAdditionalStringName, String firstAdditionalIntegerType, String firstAdditionalIntegerName, String secondAdditionalIntegerType, String secondAdditionalIntegerName, String thirdAdditionalIntegerType, String thirdAdditionalIntegerName, String firstAdditionalMultilineTextType, String firstAdditionalMultilineTextName, String secondAdditionalMultilineTextType, String secondAdditionalMultilineTextName, String thirdAdditionalMultilineTextType, String thirdAdditionalMultilineTextName, String firstAdditionalCheckboxType, String firstAdditionalCheckboxName, String secondAdditionalCheckboxType, String secondAdditionalCheckboxName, String thirdAdditionalCheckboxType, String thirdAdditionalCheckboxName, String firstAdditionalDateType, String firstAdditionalDateName, String secondAdditionalDateType, String secondAdditionalDateName, String thirdAdditionalDateType, String thirdAdditionalDateName) {
-        tryToDoSomething
-                (collection,
-                        firstAdditionalStringType, firstAdditionalStringName, secondAdditionalStringType, secondAdditionalStringName, thirdAdditionalStringType, thirdAdditionalStringName,
-                        firstAdditionalIntegerType, firstAdditionalIntegerName, secondAdditionalIntegerType, secondAdditionalIntegerName, thirdAdditionalIntegerType, thirdAdditionalIntegerName,
-                        firstAdditionalMultilineTextType, firstAdditionalMultilineTextName, secondAdditionalMultilineTextType, secondAdditionalMultilineTextName, thirdAdditionalMultilineTextType, thirdAdditionalMultilineTextName,
-                        firstAdditionalCheckboxType, firstAdditionalCheckboxName, secondAdditionalCheckboxType, secondAdditionalCheckboxName, thirdAdditionalCheckboxType, thirdAdditionalCheckboxName,
-                        firstAdditionalDateType, firstAdditionalDateName, secondAdditionalDateType, secondAdditionalDateName, thirdAdditionalDateType, thirdAdditionalDateName);
-
-
-
-    }
-
-    private void tryToDoSomething(Collection collection,
-                                  String firstAdditionalStringType, String firstAdditionalStringName,
-                                  String secondAdditionalStringType, String secondAdditionalStringName,
-                                  String thirdAdditionalStringType, String thirdAdditionalStringName,
-                                  String firstAdditionalIntegerType, String firstAdditionalIntegerName,
-                                  String secondAdditionalIntegerType, String secondAdditionalIntegerName,
-                                  String thirdAdditionalIntegerType, String thirdAdditionalIntegerName,
-                                  String firstAdditionalMultilineTextType, String firstAdditionalMultilineTextName,
-                                  String secondAdditionalMultilineTextType, String secondAdditionalMultilineTextName,
-                                  String thirdAdditionalMultilineTextType, String thirdAdditionalMultilineTextName,
-                                  String firstAdditionalCheckboxType, String firstAdditionalCheckboxName,
-                                  String secondAdditionalCheckboxType, String secondAdditionalCheckboxName,
-                                  String thirdAdditionalCheckboxType, String thirdAdditionalCheckboxName,
-                                  String firstAdditionalDateType, String firstAdditionalDateName,
-                                  String secondAdditionalDateType, String secondAdditionalDateName,
-                                  String thirdAdditionalDateType, String thirdAdditionalDateName) {
+    public void saveCollection(Collection collection,
+                               String firstAdditionalStringType, String firstAdditionalStringName, String secondAdditionalStringType, String secondAdditionalStringName, String thirdAdditionalStringType, String thirdAdditionalStringName,
+                               String firstAdditionalIntegerType, String firstAdditionalIntegerName, String secondAdditionalIntegerType, String secondAdditionalIntegerName, String thirdAdditionalIntegerType, String thirdAdditionalIntegerName,
+                               String firstAdditionalMultilineTextType, String firstAdditionalMultilineTextName, String secondAdditionalMultilineTextType, String secondAdditionalMultilineTextName, String thirdAdditionalMultilineTextType, String thirdAdditionalMultilineTextName,
+                               String firstAdditionalCheckboxType, String firstAdditionalCheckboxName, String secondAdditionalCheckboxType, String secondAdditionalCheckboxName, String thirdAdditionalCheckboxType, String thirdAdditionalCheckboxName,
+                               String firstAdditionalDateType, String firstAdditionalDateName, String secondAdditionalDateType, String secondAdditionalDateName, String thirdAdditionalDateType, String thirdAdditionalDateName) {
 
         LinkedList<String> types = new LinkedList<>();
         LinkedList<String> names = new LinkedList<>();
@@ -90,7 +67,9 @@ public class OtherFieldServiceImpl implements OtherFieldService {
 
         addToTheCollection(collection, types, names);
 
+
     }
+
 
     private void addToTheCollection(Collection collection, LinkedList<String> types, LinkedList<String> names) {
         for (int i = 0; i < types.size(); i++){

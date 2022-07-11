@@ -47,7 +47,7 @@ public class CollectionServiceImpl implements CollectionService {
         Optional<Collection> optionalCollection = collectionRepository.findById(id);
 
         if (!optionalCollection.isPresent()){
-            throw new RuntimeException("Collection didn't find");
+            throw new RuntimeException("Collection not found");
         }
 
         return optionalCollection.get();
@@ -65,19 +65,8 @@ public class CollectionServiceImpl implements CollectionService {
     public void deleteCollectionById(int id) {
 
         Collection collection = getCollectionById(id);
-        Imagen imagen = imagenService.getByImageUrl(collection.getImageUrl());
 
-        if(imagen == null)
-            throw  new RuntimeException("Img not found");
-
-
-        try {
-            Map result = cloudinaryService.delete(imagen.getImagenId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        imagenService.deleteImageById(imagen.getId());
-
+        imagenService.deleteImgByCollection(collection);
         collectionRepository.deleteById(id);
     }
 
@@ -88,7 +77,7 @@ public class CollectionServiceImpl implements CollectionService {
         Optional<Collection> optionalCollection = collectionRepository.findCollectionByName(name);
 
         if (!optionalCollection.isPresent()){
-            throw new RuntimeException("Collection didn't find");
+            throw new RuntimeException("Collection not found");
         }
 
         return optionalCollection.get();
@@ -130,11 +119,10 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public Collection getCollectionByNameAndUserId(String collectionName, int userId) {
         User user = userService.findById(userId);
-        List<Collection> collections = user.getCollections();
 
         Collection collection = null;
 
-        for (Collection c: collections){
+        for (Collection c:  user.getCollections()){
             if (c.getName().equals(collectionName)){
                 collection = c;
             }

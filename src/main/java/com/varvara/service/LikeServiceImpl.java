@@ -41,18 +41,21 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void deleteLikeByUserIdAndItemId(int userId, int itemId) {
-        int likeId = 0;
 
-        for (Like like: getAllLikes()){
-            if (like.getUserId() == userId && like.getItemId() == itemId){
-                likeId = like.getId();
-            }
-        }
+        int likeId = getLikeIdByUserIdAndItemId(userId, itemId, 0);
 
         if (likeId != 0){
             likeRepository.deleteById(likeId);
         }
     }
 
+    public int getLikeIdByUserIdAndItemId(int userId, int itemId, int likeId){
+        for (Like like: getAllLikes()){
+            if (like.getUserId() == userId && like.getItemId() == itemId){
+                likeId = like.getId();
+            }
+        }
+        return likeId;
+    }
 
 }

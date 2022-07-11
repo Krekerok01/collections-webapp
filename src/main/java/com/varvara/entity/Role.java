@@ -1,9 +1,12 @@
 package com.varvara.entity;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "role")
+@ToString
 public class Role {
 
     @Id
@@ -35,10 +38,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
 }
