@@ -110,7 +110,7 @@ public class CollectionController {
     @GetMapping("/showItems")
     public String showItems(@RequestParam("collectionId") int collectionId, Model model){
 
-        Collection collection = collectionService.getCollectionById(collectionId);
+        collection = collectionService.getCollectionById(collectionId);
 
         model.addAttribute("collection", collection);
         model.addAttribute("items", collection.getItems());
@@ -144,9 +144,10 @@ public class CollectionController {
 
 
     @GetMapping("/deleteItem")
-    public String deleteItem(@RequestParam("itemId") int itemId){
+    public String deleteItem(@RequestParam("itemId") int itemId, RedirectAttributes redirectAttributes){
         itemService.deleteItemById(itemId);
-        return "redirect:/user/info";
+        redirectAttributes.addAttribute("collectionId", collection.getId());
+        return "redirect:/user/showItems";
     }
 
 }
