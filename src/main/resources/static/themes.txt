@@ -1,3 +1,5 @@
+Pets
+Sport games
 Cars
 Dogs
 Cats
@@ -9,3 +11,5 @@ Colors
 Shapes
 Fabrics
 Clothes
+Songs
+Types of alcohol
