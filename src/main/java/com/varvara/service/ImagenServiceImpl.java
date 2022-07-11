@@ -16,7 +16,6 @@ import java.util.Optional;
 
 
 @Service
-@Transactional
 public class ImagenServiceImpl implements ImagenService {
 
     private ImagenRepository imagenRepository;
