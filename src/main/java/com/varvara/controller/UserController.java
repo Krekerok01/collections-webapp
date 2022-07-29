@@ -22,9 +22,7 @@ public class UserController {
 
     @GetMapping("/info")
     public String showInfoPage(Model model){
-
         User user = userServiceImpl.findByUsername(authenticationUserName);
-
         model.addAttribute("user", user);
         model.addAttribute("stringOfUserRoles", userServiceImpl.getStringOfUserRoles(user));
         model.addAttribute("collections", user.getCollections());

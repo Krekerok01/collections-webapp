@@ -47,8 +47,7 @@ public class CollectionController {
 
 
     @PostMapping("/saveCollection")
-    public String saveCollection(@ModelAttribute("collection") @Valid Collection collection, BindingResult result,
-                                 @RequestPart(value = "userImg") MultipartFile userImg,
+    public String saveCollection(@ModelAttribute("collection") @Valid Collection collection, BindingResult result, @RequestPart(value = "userImg") MultipartFile userImg,
                                  @RequestParam(value = "firstAdditionalStringType", required = false) String firstAdditionalStringType,
                                  @RequestParam(value = "firstAdditionalStringName", required = false) String firstAdditionalStringName,
                                  @RequestParam(value = "secondAdditionalStringType", required = false) String secondAdditionalStringType,
@@ -109,9 +108,7 @@ public class CollectionController {
 
     @GetMapping("/showItems")
     public String showItems(@RequestParam("collectionId") int collectionId, Model model){
-
         collection = collectionService.getCollectionById(collectionId);
-
         model.addAttribute("collection", collection);
         model.addAttribute("items", collection.getItems());
         return "items-page";
@@ -121,9 +118,7 @@ public class CollectionController {
 
     @GetMapping("/addItem")
     public String addItem(@RequestParam("collectionId") int collectionId, Model model){
-
         collection = collectionService.getCollectionById(collectionId);
-
         model.addAttribute("item", new Item());
         model.addAttribute("otherFields", collectionService.getFieldsWithoutCheckBox(collection));
         model.addAttribute("checkBoxesFields", collectionService.getCheckBoxesFields(collection));
@@ -131,12 +126,9 @@ public class CollectionController {
     }
 
     @PostMapping("/saveItem")
-    public String saveItem(@ModelAttribute("item") Item item,
-                           @RequestParam(value = "tagsString") String tagsString,
+    public String saveItem(@ModelAttribute("item") Item item, @RequestParam(value = "tagsString") String tagsString,
                            @RequestParam(value = "enterValues", required = false) LinkedList<String> enterValues,
-                           @RequestParam(value = "checkboxValue", required = false) String checkboxValue,
-                           RedirectAttributes redirectAttributes){
-
+                           @RequestParam(value = "checkboxValue", required = false) String checkboxValue, RedirectAttributes redirectAttributes){
         itemService.checkingTheRequestParametersForNullAndCallingTheDesiredMethod(item, tagsString,collection, enterValues, checkboxValue);
         redirectAttributes.addAttribute("collectionId", collection.getId());
         return "redirect:/user/showItems";
@@ -149,5 +141,4 @@ public class CollectionController {
         redirectAttributes.addAttribute("collectionId", collection.getId());
         return "redirect:/user/showItems";
     }
-
 }

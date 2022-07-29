@@ -37,9 +37,7 @@ public class RegistrationController {
 
 	@PostMapping("/processRegistrationForm")
 	public String processRegistrationForm(@ModelAttribute("userDataFromInput") @Valid UserDataFromInput userDataFromInput, BindingResult result, Model theModel) {
-
 		if (result.hasErrors()) return "registration";
-
         userServiceImpl.saveUserDataFromInput(userDataFromInput);
         logger.info("Successfully created user: " + userDataFromInput.getUsername());
         return "registration-confirmation";		

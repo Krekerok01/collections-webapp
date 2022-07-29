@@ -22,7 +22,6 @@ public class ItemController {
     private Item item;
     private User user;
 
-
     private ItemService itemService;
     private CommentService commentService;
     private UserServiceImpl userService;
@@ -40,9 +39,7 @@ public class ItemController {
 
     @GetMapping("/showItemInfo")
     public String showItemInfo(@RequestParam(value = "itemId") int itemId, Model model){
-
         item = itemService.getItemById(itemId);
-
         model.addAttribute("comment", new Comment());
         model.addAttribute("item", item);
         model.addAttribute("otherFieldsValuesMap", otherFieldValueService.getOtherFieldsValuesMap(item));
@@ -54,7 +51,6 @@ public class ItemController {
 
     @GetMapping("/addLikeForTheItem")
     public String addLikeForTheItem(RedirectAttributes redirectAttributes){
-
         likeService.likeOrDislikeItem(authenticationUserId, item.getId());
         redirectAttributes.addAttribute("itemId", item.getId());
         return "redirect:showItemInfo" ;
@@ -63,9 +59,7 @@ public class ItemController {
 
     @PostMapping("/saveComment")
     public String saveComment(@ModelAttribute("comment") Comment comment,  RedirectAttributes redirectAttributes){
-
         user = userService.findById(authenticationUserId);
-
         commentService.saveComment(comment, user, item);
         redirectAttributes.addAttribute("itemId", item.getId());
         return "redirect:showItemInfo" ;

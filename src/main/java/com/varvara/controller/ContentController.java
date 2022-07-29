@@ -29,7 +29,6 @@ public class ContentController {
 
     @GetMapping("/")
     public String showMainPage(Model model){
-
         model.addAttribute("largestCollectionsList", collectionService.getLargestCollections());
         model.addAttribute("lastAddedItemsList", itemService.getLastAddedItems());
         model.addAttribute("tagsSet", tagService.getSetOfAllTags());
@@ -39,9 +38,7 @@ public class ContentController {
 
     @GetMapping("/showTheSelectedCollection")
     public String showTheSelectedCollection(@RequestParam("collectionId") int collectionId, Model model){
-
         Collection collection = collectionService.getCollectionById(collectionId);
-
         model.addAttribute("collection", collection);
         model.addAttribute("items", collection.getItems());
         model.addAttribute("owner", collection.getUsers().get(0));
@@ -52,9 +49,7 @@ public class ContentController {
 
     @GetMapping("/showItemsByTag")
     public String showItemsByTag(@RequestParam("tagId") int tagId, Model model){
-
         String tagName = tagService.getTagById(tagId).getName();
-
         model.addAttribute("tagName", tagName);
         model.addAttribute("itemsThatContainsSpecificTagList", itemService.getItemsThatContainsTheSpecificTag(tagName));
         return "items-that-contains-a-specific-tag-page";
