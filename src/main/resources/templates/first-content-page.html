@@ -73,6 +73,11 @@
              position: absolute;
              top: 20px;
              left: 500px;
+             font: bold 3em Arial, sans-serif;
+             color: #212529;
+             text-shadow: #5378a3 1px 1px 0, #5378a3 2px 2px 0,
+                          #5378a3 3px 3px 0, #5378a3 4px 4px 0,
+                          #5378a3 5px 5px 0;
         }
 
 
@@ -170,6 +175,11 @@
             left: 200px;
         }
 
+
+        .h3-text {
+            text-shadow: #29488C 1px 0 6px;
+        }
+
     </style>
 
 </head>
@@ -218,7 +228,7 @@
 
 <div>
     <ul class="collections-list">
-        <h3>Largest collections: </h3>
+        <h3 class="h3-text">The five largest collections on our website: </h3>
 
         <li th:each="collection : ${largestCollectionsList}">
             <a th:href="@{showTheSelectedCollection(collectionId=${collection.id})}" th:text="${'Collection: NAME - ' + collection.name + ', THEME - ' + collection.theme + '.'}" />
@@ -231,7 +241,7 @@
 <div>
 
     <ul class="items-list">
-        <h3>Last added items: </h3>
+        <h3 class="h3-text">The five last added items: </h3>
 
         <li th:each="item : ${lastAddedItemsList}">
             <h4 th:text="${item}"/>
@@ -244,7 +254,7 @@
 <div class="tags-info">
 
     <ul class="tags-set" >
-        <h3>All tags: </h3>
+        <h3 class="h3-text">All tags: </h3>
 
         <li th:each="tag : ${tagsSet}">
             <a th:href="@{showItemsByTag(tagId=${tag.id})}" th:text="${'<' + tag.name + '>'}" />
